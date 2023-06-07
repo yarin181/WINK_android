@@ -1,4 +1,5 @@
 package com.example.wink_android;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,7 @@ public class Login extends AppCompatActivity {
 
     private EditText editTextName;
     private EditText editTextPassword;
-    private Button button;
+    private Button loginBtn,registerBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +23,10 @@ public class Login extends AppCompatActivity {
 
         editTextName = findViewById(R.id.editTextText1);
         editTextPassword = findViewById(R.id.editTextTextPassword1);
-        button = findViewById(R.id.button);
+        loginBtn = findViewById(R.id.button);
+        registerBtn=findViewById(R.id.button2);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = editTextName.getText().toString();
@@ -34,6 +36,13 @@ public class Login extends AppCompatActivity {
                 ApiRequests temp = new ApiRequests();
                 temp.getToken(name,password);
                 // Use the name and password variables as needed
+            }
+        });
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
     }
