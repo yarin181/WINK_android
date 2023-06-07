@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/demoBgLayout"
+    android:background="@drawable/demo_bg"
+    android:gravity="center"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/demo_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/usernameEditText"
+            android:layout_margin="10dp"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:hint="Username"
+            android:background="@drawable/input_background"
+            android:textColorHint="#80FFFFFF"
+            android:textColor="#FFFFFF" />
+
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_margin="10dp"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:background="@drawable/input_background"
+            android:textColorHint="#80FFFFFF"
+            android:textColor="#FFFFFF" />
+        <EditText
+            android:id="@+id/confirmEditText"
+            android:layout_margin="10dp"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:hint="Confirm password"
+            android:inputType="textPassword"
+            android:background="@drawable/input_background"
+            android:textColorHint="#80FFFFFF"
+            android:textColor="#FFFFFF" />
+        <EditText
+            android:id="@+id/displayEditText"
+            android:layout_margin="10dp"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:hint="Display name"
+            android:background="@drawable/input_background"
+            android:textColorHint="#80FFFFFF"
+            android:textColor="#FFFFFF" />
+        <Button
+            android:id="@+id/uploadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Image" />
+        <ImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/circle_image"
+            android:scaleType="centerCrop">
+
+        </ImageView>
+
+
+    </LinearLayout>
+</LinearLayout>
