@@ -4,12 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/demo_bg"
+    android:gravity="center"
     tools:context=".Login">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/andika_new_basic"
+        android:layout_margin="5dp"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="@string/login"
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/editTextText1"
-        android:layout_width="369dp"
-        android:layout_height="109dp"
+        android:layout_margin="10dp"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:ems="10"
         android:inputType="text"
         android:hint="@string/username"
@@ -17,19 +31,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.25"
+        android:fontFamily="@font/andika_new_basic"
+        android:background="@drawable/input_background"
+        android:textColorHint="#80FFFFFF"
+        android:textColor="@color/white" />/>
 
     <EditText
         android:id="@+id/editTextTextPassword1"
-        android:layout_width="366dp"
-        android:layout_height="109dp"
+        android:layout_margin="10dp"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:ems="10"
+        android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText1"
-        app:layout_constraintVertical_bias="0.07999998" />
+        app:layout_constraintVertical_bias="0.07999998"
+        android:fontFamily="@font/andika_new_basic"
+        android:background="@drawable/input_background"
+        android:textColorHint="#80FFFFFF"
+        android:textColor="@color/white" />/>
 
     <Button
         android:id="@+id/button"
@@ -47,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="67dp"
-        android:text="@string/register"
+        android:text="@string/signUp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

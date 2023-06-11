@@ -1,0 +1,9 @@
+<resources>
+    <style name="MyTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/MyHintTextAppearance</item>
+    </style>
+
+    <style name="MyHintTextAppearance" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>
