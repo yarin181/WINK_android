@@ -36,8 +36,11 @@ public class Login extends AppCompatActivity {
                 ApiRequests temp = new ApiRequests();
                 temp.getToken(name,password);
                 // Use the name and password variables as needed
+                Intent intent = new Intent(Login.this, UsersActivity.class);
+                startActivity(intent);
             }
         });
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
