@@ -34,7 +34,8 @@ public class Login extends AppCompatActivity {
                 Log.i("Login",name);
                 Log.i("Login",password);
                 ApiRequests temp = new ApiRequests();
-                temp.getToken(name,password);
+//                temp.getToken(name,password);
+                temp.getMyUserData(name,"bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImExIiwiaWF0IjoxNjg2NDkwMDA4fQ.gFRRSuAX2PW2eQqKExjTEh6pbK1OGF397_-823RKBhs");
                 // Use the name and password variables as needed
                 Intent intent = new Intent(Login.this, UsersActivity.class);
                 startActivity(intent);

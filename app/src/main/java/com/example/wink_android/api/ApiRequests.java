@@ -2,9 +2,11 @@ package com.example.wink_android.api;
 
 import android.util.Log;
 
+import com.example.wink_android.requests.BasicUserData;
 import com.example.wink_android.requests.LoginRequest;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -22,6 +24,7 @@ public class ApiRequests {
 public ApiRequests(){
          retrofit = new Retrofit.Builder()
          .baseUrl("http://10.0.2.2:5000")
+//                 .callbackExecutor(Executor.newSingleThread)
          .addConverterFactory(GsonConverterFactory.create())
          .build();
          webServiceAPI = retrofit.create(WebServiceAPI.class);
@@ -39,7 +42,6 @@ public ApiRequests(){
                     try {
                         String token = response.body().string();
                         // Handle the token
-                        // ...
                         Log.i("ApiRequests", "Token: " + token);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -57,6 +59,31 @@ public ApiRequests(){
             }
         });
     }
+    public void getMyUserData(String username,String token) {
+        Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token);
+
+        userData.enqueue(new Callback<BasicUserData>() {
+            @Override
+            public void onResponse(Call<BasicUserData> call, Response<BasicUserData> response) {
+                if (response.isSuccessful()) {
+                    BasicUserData userData = response.body();
+                    if (userData != null) {
+                        Log.i("ApiRequests", "Username: " + userData.getUsername());
+                    }
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("ApiRequests", "Request failed with code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BasicUserData> call, Throwable t) {
+                // Handle failure
+                Log.e("ApiRequests", "Request failed: " + t.getMessage());
+            }
+        });
+    }
+
 }
 
 
