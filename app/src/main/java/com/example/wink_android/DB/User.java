@@ -13,14 +13,12 @@ public class User {
     private String username;
     private String displayName;
     private String profilePic;
-    private List<Integer> chats;
     @Ignore
-    public User(int id,String username,String displayName,String profilePic,List<Integer> chats) {
+    public User(int id,String username,String displayName,String profilePic) {
         this.id = id;
         this.username =username;
         this.displayName = displayName;
         this.profilePic = profilePic;
-        this.chats = chats;
     }
 
     public User(String username) {
@@ -43,10 +41,6 @@ public class User {
         return profilePic;
     }
 
-    public List<Integer> getChats() {
-        return chats;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -63,7 +57,4 @@ public class User {
         this.profilePic = profilePic;
     }
 
-    public void setChats(List<Integer> chats) {
-        this.chats = chats;
-    }
 }
