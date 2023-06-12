@@ -45,6 +45,14 @@ public class Login extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(Login.this, ChatActivity.class);
+                startActivity(i);
+
+
+
+
+
+                /*
                 String name = editTextName.getText().toString();
                 String password = editTextPassword.getText().toString();
                 ApiRequests temp = new ApiRequests();
@@ -63,7 +71,7 @@ public class Login extends AppCompatActivity {
                            popupWindow.dismiss();
                        }
                    }, 5000); // 5000 milliseconds = 5 seconds
-               }
+               }*/
             }
         });
 
