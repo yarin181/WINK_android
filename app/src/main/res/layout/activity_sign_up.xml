@@ -18,74 +18,89 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="13dp"
+            android:layout_margin="15dp"
             android:fontFamily="@font/andika_new_basic"
             android:text="@string/signUp"
             android:textColor="@color/white"
             android:textSize="30sp" />
 
+
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/username_text_input_layout"
+            app:hintTextColor="@color/white"
+            android:textColorHint="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MyTextInputLayoutStyle"
-            app:hintTextColor="@color/white">
+            android:gravity="center">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/usernameEditText"
-                android:layout_width="250dp"
-                android:layout_height="30dp"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
                 android:layout_margin="13dp"
+                android:textSize="12sp"
                 android:background="@drawable/input_background"
                 android:fontFamily="@font/andika_new_basic"
-                android:textColor="#FFFFFF"
-                android:textColorHint="@color/color_selector" />
+                android:hint="@string/username"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_text_input_layout"
+            app:hintTextColor="@color/white"
+            android:textColorHint="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            app:hintTextAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:hintTextColor="#FFFFFF">
+            app:passwordToggleEnabled="true"
+            android:gravity="center">
 
-
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
-                android:layout_width="250dp"
-                android:layout_height="30dp"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
                 android:layout_margin="13dp"
+                android:textSize="12sp"
                 android:background="@drawable/input_background"
                 android:fontFamily="@font/andika_new_basic"
-                android:hint="Password"
-                android:inputType="textPassword" />
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
-
+        <com.google.android.material.textfield.TextInputLayout
+            app:hintTextColor="@color/white"
+            android:textColorHint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
             <EditText
                 android:id="@+id/confirmEditText"
-                android:layout_width="250dp"
-                android:layout_height="30dp"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
                 android:layout_margin="13dp"
+                android:textSize="12sp"
                 android:background="@drawable/input_background"
                 android:fontFamily="@font/andika_new_basic"
-                android:hint="Confirm password"
+                android:hint="@string/confirm_password"
                 android:inputType="textPassword"
-                android:textColor="@color/white"
-                android:textColorHint="#FFFFFF" />
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-
+        <com.google.android.material.textfield.TextInputLayout
+            app:hintTextColor="@color/white"
+            android:textColorHint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
         <EditText
             android:id="@+id/displayEditText"
-            android:layout_width="250dp"
-            android:layout_height="30dp"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
             android:layout_margin="13dp"
+            android:textSize="12sp"
             android:background="@drawable/input_background"
-            android:hint="Display name"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF" />
+            android:hint="@string/display_name"
+            android:textColor="#FFFFFF" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
             <ImageView
@@ -124,9 +139,4 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
 </LinearLayout>

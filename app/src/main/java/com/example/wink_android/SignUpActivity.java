@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -31,7 +30,8 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private EditText confirmEditText;
     private EditText displayEditText;
-    private Button uploadButton;
+    private Button lonInBtn;
+    private Button signUpBtn;
     private ImageView circleImageView;
 
     private String password;
@@ -72,6 +72,8 @@ public class SignUpActivity extends AppCompatActivity {
         confirmEditText = findViewById(R.id.confirmEditText);
         displayEditText = findViewById(R.id.displayEditText);
         circleImageView = findViewById(R.id.circleImageView);
+        lonInBtn = findViewById(R.id.logIn);
+        signUpBtn = findViewById(R.id.signUp);
 
         usernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -90,7 +92,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Initialize the popup layout
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_layout, null);
+        View popupView = inflater.inflate(R.layout.popup_password, null);
 
         // Create the popup window
         int width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -102,6 +104,13 @@ public class SignUpActivity extends AppCompatActivity {
                 if (hasFocus) {
                     // Show the popup when the EditText gains focus
                     popupWindow.showAtLocation(passwordEditText, Gravity.TOP, 0, 0);
+                    // Schedule the dismissal of the popup after 5 seconds
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            popupWindow.dismiss();
+                        }
+                    }, 5000); // 5000 milliseconds = 5 seconds
                 } else {
                     // Dismiss the popup when the EditText loses focus
                     popupWindow.dismiss();
@@ -149,6 +158,22 @@ public class SignUpActivity extends AppCompatActivity {
         circleImageView.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickImageLauncher.launch(intent);
+        });
+        lonInBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUpActivity.this, Login.class);
+                startActivity(intent);
+            }
+        });
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // need to send to the database!
+
+                Intent intent = new Intent(SignUpActivity.this, Login.class);
+                startActivity(intent);
+            }
         });
 
     }

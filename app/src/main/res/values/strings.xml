@@ -18,6 +18,10 @@
     <string name="already">already registered? click the button</string>
     <string name="upload">Upload Image</string>
     <string name="password">password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="display_name">Display name</string>
+    <string name="wink_since_2023">WINK since 2023</string>
+    <string name="not_register">Don\'t hava an account? click the button</string>
 
 
 </resources>
