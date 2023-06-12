@@ -1,0 +1,5 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:drawable="@color/button_background_pressed" android:state_pressed="true" android:color="@color/lightPurple" />
+        <item android:drawable="@color/button_background_normal" android:color="@color/primaryColor" />
+
+</selector>

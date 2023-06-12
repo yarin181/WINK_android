@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/lightBlue" /> <!-- change background color when pressed -->
+    <corners android:radius="50dp" /> <!-- Rounded corners -->
+</selector>
