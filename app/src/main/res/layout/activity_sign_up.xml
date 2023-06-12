@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/demoBgLayout"
@@ -11,63 +12,131 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/demo_bg"
         android:gravity="center"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/usernameEditText"
-            android:layout_margin="10dp"
-            android:layout_width="250dp"
-            android:layout_height="30dp"
-            android:hint="Username"
-            android:background="@drawable/input_background"
-            android:textColorHint="#80FFFFFF"
-            android:textColor="#FFFFFF" />
-
-        <EditText
-            android:id="@+id/passwordEditText"
-            android:layout_margin="10dp"
-            android:layout_width="250dp"
-            android:layout_height="30dp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:background="@drawable/input_background"
-            android:textColorHint="#80FFFFFF"
-            android:textColor="#FFFFFF" />
-        <EditText
-            android:id="@+id/confirmEditText"
-            android:layout_margin="10dp"
-            android:layout_width="250dp"
-            android:layout_height="30dp"
-            android:hint="Confirm password"
-            android:inputType="textPassword"
-            android:background="@drawable/input_background"
-            android:textColorHint="#80FFFFFF"
-            android:textColor="#FFFFFF" />
-        <EditText
-            android:id="@+id/displayEditText"
-            android:layout_margin="10dp"
-            android:layout_width="250dp"
-            android:layout_height="30dp"
-            android:hint="Display name"
-            android:background="@drawable/input_background"
-            android:textColorHint="#80FFFFFF"
-            android:textColor="#FFFFFF" />
-        <Button
-            android:id="@+id/uploadButton"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Upload Image" />
-        <ImageView
-            android:id="@+id/circleImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/circle_image"
-            android:scaleType="centerCrop">
+            android:layout_margin="15dp"
+            android:fontFamily="@font/andika_new_basic"
+            android:text="@string/signUp"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
 
-        </ImageView>
 
+
+        <com.google.android.material.textfield.TextInputLayout
+            app:hintTextColor="@color/white"
+            android:textColorHint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/usernameEditText"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:layout_margin="13dp"
+                android:textSize="12sp"
+                android:background="@drawable/input_background"
+                android:fontFamily="@font/andika_new_basic"
+                android:hint="@string/username"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            app:hintTextColor="@color/white"
+            android:textColorHint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            android:gravity="center">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:layout_margin="13dp"
+                android:textSize="12sp"
+                android:background="@drawable/input_background"
+                android:fontFamily="@font/andika_new_basic"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            app:hintTextColor="@color/white"
+            android:textColorHint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <EditText
+                android:id="@+id/confirmEditText"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:layout_margin="13dp"
+                android:textSize="12sp"
+                android:background="@drawable/input_background"
+                android:fontFamily="@font/andika_new_basic"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            app:hintTextColor="@color/white"
+            android:textColorHint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+        <EditText
+            android:id="@+id/displayEditText"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_margin="13dp"
+            android:textSize="12sp"
+            android:background="@drawable/input_background"
+            android:hint="@string/display_name"
+            android:textColor="#FFFFFF" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+            <ImageView
+                android:id="@+id/circleImageView"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/circle_image"
+                android:scaleType="fitXY" />
+
+
+        <Button
+            android:id="@+id/signUp"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/custom_button_background"
+            android:fontFamily="@font/andika_new_basic"
+            android:text="@string/signUp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/andika_new_basic"
+            android:text="@string/already"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/logIn"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/custom_button_background"
+            android:fontFamily="@font/andika_new_basic"
+            android:text="@string/login" />
 
     </LinearLayout>
+
 </LinearLayout>
