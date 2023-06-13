@@ -10,7 +10,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,6 +30,14 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        TextView textView = new TextView(this);
+        textView.setText("hello");
+        textView.setBackgroundResource(R.drawable.sent_message);
+        RelativeLayout parentLayout = findViewById(R.id.test);
+        parentLayout.addView(textView);
+
 
         editTextName = findViewById(R.id.editTextText1);
         editTextPassword = findViewById(R.id.editTextTextPassword1);

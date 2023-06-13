@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="250dp"
+    android:layout_height="250dp">
+
+    <TextView
+        android:id="@+id/text_message_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sent_message_background"
+        android:padding="8dp"
+        android:text="Hi. How are you? Some random text here and here. I need spend more time for android dev"
+        android:textColor="@android:color/black"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@+id/marginSpacer_beforeMessage"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/marginSpacer_beforeMessage"
+        android:layout_width="10dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/text_message_body"
+        app:layout_constraintEnd_toStartOf="@id/message_tail" />
+
+    <ImageView
+        android:id="@+id/message_tail"
+        android:layout_width="14dp"
+        android:layout_height="13dp"
+        android:src="@drawable/sent_message"
+        app:layout_constraintBottom_toBottomOf="@id/text_message_body"
+        app:layout_constraintEnd_toEndOf="@id/marginSpacer_beforeMessage" />
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/sent_message_background"
+        app:layout_constraintBottom_toBottomOf="@id/text_message_body"
+        app:layout_constraintEnd_toStartOf="@id/message_tail" />
+
+    <TextView
+        android:id="@+id/text_message_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="14:42"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/text_message_body"
+        app:layout_constraintEnd_toEndOf="@id/text_message_body" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
