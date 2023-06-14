@@ -9,6 +9,9 @@ public class BasicUserData {
         this.displayName=displayName;
         this.profilePic=profilePic;
     }
+    public BasicUserData(String username){
+        this.username=username;
+    }
 
     public String getDisplayName() {
         return displayName;

@@ -2,6 +2,8 @@ package com.example.wink_android.api;
 
 import com.example.wink_android.requests.BasicUserData;
 import com.example.wink_android.requests.LoginRequest;
+import com.example.wink_android.requests.MessageAnswer;
+import com.example.wink_android.requests.MessageRequest;
 import com.example.wink_android.requests.RegisterRequest;
 import com.example.wink_android.requests.UserFriend;
 
@@ -11,7 +13,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 
@@ -30,5 +31,9 @@ public interface WebServiceAPI {
     Call <List<UserFriend>>getChats(@Header("Authorization") String token);
     @POST("api/Chats/")
     Call <UserFriend> postChats(@Body LoginRequest loginRequest ,@Header("Authorization") String token);
+    @POST("api/Chats/{id}/Messages")
+    Call <MessageAnswer> postChatsIdMessages(@Path("id") int id, @Header("Authorization") String token, @Body MessageRequest msg);
+    @GET("api/Chats/{id}/Messages")
+    Call <List<MessageAnswer>> getChatsIdMessages(@Path("id") int id, @Header("Authorization") String token);
 
 }

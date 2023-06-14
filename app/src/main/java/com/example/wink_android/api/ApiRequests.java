@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.wink_android.requests.BasicUserData;
 import com.example.wink_android.requests.LoginRequest;
+import com.example.wink_android.requests.MessageAnswer;
+import com.example.wink_android.requests.MessageRequest;
 import com.example.wink_android.requests.RegisterRequest;
 import com.example.wink_android.requests.UserFriend;
 
@@ -143,7 +145,6 @@ public ApiRequests(){
     public void addFriend(String name,String token) {
         LoginRequest request = new LoginRequest(name);
         Call<UserFriend> friendCall = webServiceAPI.postChats(request, token);
-//        Call <List<UserFriend>> chats = webServiceAPI.getChats(token);
 
         friendCall.enqueue(new Callback<UserFriend>() {
             @Override
@@ -166,7 +167,54 @@ public ApiRequests(){
             }
         });
     }
+    public void addMessage(int id,String message,String token) {
+        MessageRequest messageRequest=new MessageRequest(message);
+//        Call<UserFriend> friendCall = webServiceAPI.postChats(request, token);
+        Call<MessageAnswer> messageAnswerCall= webServiceAPI.postChatsIdMessages(id,token,messageRequest);
+        messageAnswerCall.enqueue(new Callback<MessageAnswer>() {
+            @Override
+            public void onResponse(Call<MessageAnswer> call, Response<MessageAnswer> response) {
+                if (response.isSuccessful()) {
+                   MessageAnswer answer = response.body();
+                    if (answer != null) {
+                        Log.i("ApiRequests", "friend id: " + answer.getId());
+                    }
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("ApiRequests", "Request failed with code: " + response.code());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<MessageAnswer> call, Throwable t) {
+                // Handle failure
+                Log.e("ApiRequests", "Request failed: " + t.getMessage());
+            }
+        });
+    }
+    public void getMessages(int id,String token) {
+        Call <List<MessageAnswer>> messageAnswerCall= webServiceAPI.getChatsIdMessages(id,token);
+        messageAnswerCall.enqueue(new Callback<List<MessageAnswer>>() {
+            @Override
+            public void onResponse(Call<List<MessageAnswer>> call, Response<List<MessageAnswer>> response) {
+                if (response.isSuccessful()) {
+                    List<MessageAnswer> answers = response.body();
+                    if (answers != null) {
+                        Log.i("ApiRequests", " id: " + answers.get(2).getId());
+                    }
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("ApiRequests", "Request failed with code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<MessageAnswer>>call, Throwable t) {
+                // Handle failure
+                Log.e("ApiRequests", "Request failed: " + t.getMessage());
+            }
+        });
+    }
 }
 
 
