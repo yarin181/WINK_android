@@ -25,6 +25,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Dao;
 import androidx.room.Room;
 
@@ -32,7 +34,9 @@ import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.DB.User;
 import com.example.wink_android.DB.UserDao;
+import com.example.wink_android.adapters.ChatsListAdapter;
 import com.example.wink_android.databinding.ActivityUsersBinding;
+import com.example.wink_android.general.Utilities;
 import com.example.wink_android.view.ChatViewModel;
 
 import java.util.ArrayList;
@@ -85,10 +89,42 @@ public class UsersActivity extends AppCompatActivity {
                         }
                     }
                 });
+//
+//        RecyclerView lstChats = findViewById(R.id.lstChats);
+
+        final ChatsListAdapter adapter = new ChatsListAdapter(this);
+        binding.lstChats.setAdapter(adapter);
+        binding.lstChats.setLayoutManager(new LinearLayoutManager(this));
+//        lstChats.setAdapter(adapter);
+//        lstChats.setLayoutManager(new LinearLayoutManager(this));
+
+//        List<Chat> tempLst= new ArrayList<>();
+//        tempLst.add(new Chat("robo1","Robo"," 2121"));
+//        tempLst.add(new Chat("robo2","Robo"," 2121"));
+//        tempLst.add(new Chat("robo3","Robo"," 2121"));
+//        tempLst.add(new Chat("robo4","Robo"," 2121"));
+//        tempLst.add(new Chat("robo5","Robo"," 2121"));
+//        tempLst.add(new Chat("robo6","Robo"," 2121"));
+//        tempLst.add(new Chat("robo7","Robo"," 2121"));
+//        tempLst.add(new Chat("robo1","Robo"," 2121"));
+//        tempLst.add(new Chat("robo2","Robo"," 2121"));
+//        tempLst.add(new Chat("robo3","Robo"," 2121"));
+//        tempLst.add(new Chat("robo4","Robo"," 2121"));
+//        tempLst.add(new Chat("robo5","Robo"," 2121"));
+//        tempLst.add(new Chat("robo6","Robo"," 2121"));
+//        tempLst.add(new Chat("robo7","Robo"," 2121"));
+//        adapter.setChats(tempLst);
+
+//        binding.lstChats.setAdapter(adapter);
+//        binding.lstChats.setLayoutManager(new LinearLayoutManager(this));
 
         viewModel.getChats().observe(this, v->{
-            if (v.size() != 0){
-                Toast.makeText(getApplicationContext(), v.get(v.size()-1).getOtherDisplayName(), Toast.LENGTH_LONG).show();
+            if (v != null && v.size() != 0){
+                for (int i =0; i < v.size();i++){
+                    Toast.makeText(getApplicationContext(), v.get(i).getOtherDisplayName(), Toast.LENGTH_SHORT).show();
+                }
+                adapter.setChats(v);
+
             }
         });
 
@@ -105,15 +141,14 @@ public class UsersActivity extends AppCompatActivity {
             Log.i("logout","the IP is : "+ viewModel.getIp());
         });
 
+
         setConnectUser();
     }
 
 
     private void setConnectUser(){
         user = viewModel.getConnectUser();
-        byte[] decodedImage = Base64.decode(user.getProfilePic(), Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length);
-        binding.userPhoto.setImageBitmap(bitmap);
+        binding.userPhoto.setImageBitmap(Utilities.stringToBitmap(user.getProfilePic()));
         binding.userName.setText(user.getUsername());
     }
 //
