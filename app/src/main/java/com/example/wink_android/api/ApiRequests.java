@@ -4,8 +4,11 @@ import android.util.Log;
 
 import com.example.wink_android.requests.BasicUserData;
 import com.example.wink_android.requests.LoginRequest;
+import com.example.wink_android.requests.RegisterRequest;
+import com.example.wink_android.requests.UserFriend;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 import okhttp3.ResponseBody;
@@ -78,6 +81,86 @@ public ApiRequests(){
 
             @Override
             public void onFailure(Call<BasicUserData> call, Throwable t) {
+                // Handle failure
+                Log.e("ApiRequests", "Request failed: " + t.getMessage());
+            }
+        });
+
+    }
+    public void registerUser(String username, String password,String displayName,String profilePic) {
+        RegisterRequest registerRequest= new RegisterRequest(username,password,displayName,profilePic);
+        Call<ResponseBody> answer = webServiceAPI.postUsers(registerRequest);
+
+        answer.enqueue(new Callback<ResponseBody>() {
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+
+
+                        Log.i("ApiRequests", "new user added");
+
+                } else {
+                    // Handle error response
+                    Log.e("ApiRequests", "Error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Handle failure
+                Log.e("ApiRequests", "Failure: " + t.getMessage());
+            }
+        });
+    }
+    public void getFriends(String token) {
+    Call <List<UserFriend>> chats = webServiceAPI.getChats(token);
+        //        Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token);
+
+        chats.enqueue(new Callback<List<UserFriend>>() {
+            @Override
+            public void onResponse(Call<List<UserFriend>> call, Response<List<UserFriend>> response) {
+                if (response.isSuccessful()) {
+                    List<UserFriend> chats = response.body();
+                    if (chats != null) {
+                        Log.i("ApiRequests", "id: " + chats.get(2).getLastMessage().getContent());
+                    }
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("ApiRequests", "Request failed with code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UserFriend>> call, Throwable t) {
+                // Handle failure
+                Log.e("ApiRequests", "Request failed: " + t.getMessage());
+            }
+        });
+
+
+    }
+    public void addFriend(String name,String token) {
+        LoginRequest request = new LoginRequest(name);
+        Call<UserFriend> friendCall = webServiceAPI.postChats(request, token);
+//        Call <List<UserFriend>> chats = webServiceAPI.getChats(token);
+
+        friendCall.enqueue(new Callback<UserFriend>() {
+            @Override
+            public void onResponse(Call<UserFriend> call, Response<UserFriend> response) {
+                if (response.isSuccessful()) {
+                    UserFriend friend = response.body();
+                    if (friend != null) {
+                        Log.i("ApiRequests", "friend id: " + friend.getId());
+                    }
+                } else {
+                    // Handle unsuccessful response
+                    Log.e("ApiRequests", "Request failed with code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserFriend> call, Throwable t) {
                 // Handle failure
                 Log.e("ApiRequests", "Request failed: " + t.getMessage());
             }

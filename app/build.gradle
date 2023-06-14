@@ -3,6 +3,10 @@ plugins {
 }
 
 android {
+
+    buildFeatures {
+        viewBinding true
+    }
     namespace 'com.example.wink_android'
     compileSdk 33
 

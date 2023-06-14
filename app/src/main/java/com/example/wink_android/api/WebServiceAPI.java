@@ -2,6 +2,10 @@ package com.example.wink_android.api;
 
 import com.example.wink_android.requests.BasicUserData;
 import com.example.wink_android.requests.LoginRequest;
+import com.example.wink_android.requests.RegisterRequest;
+import com.example.wink_android.requests.UserFriend;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -20,5 +24,11 @@ public interface WebServiceAPI {
     Call<ResponseBody> postToken(@Body LoginRequest loginRequest);
     @GET("/api/Users/{username}/")
     Call<BasicUserData> getUsersUsername(@Path("username") String username, @Header("Authorization") String token);
+    @POST("/api/Users/")
+    Call<ResponseBody> postUsers(@Body RegisterRequest registerRequest );
+    @GET("api/Chats/")
+    Call <List<UserFriend>>getChats(@Header("Authorization") String token);
+    @POST("api/Chats/")
+    Call <UserFriend> postChats(@Body LoginRequest loginRequest ,@Header("Authorization") String token);
 
 }

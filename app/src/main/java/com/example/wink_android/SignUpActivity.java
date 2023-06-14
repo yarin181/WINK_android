@@ -40,6 +40,8 @@ public class SignUpActivity extends AppCompatActivity {
     private String displayName;
 
 
+
+
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
