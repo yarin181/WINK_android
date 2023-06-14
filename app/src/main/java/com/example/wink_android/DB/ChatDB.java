@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {User.class, Chat.class, Message.class}, version = 6)
+@Database(entities = {User.class, Chat.class, Message.class}, version = 7)
 @TypeConverters({Converters.class})
 public abstract class ChatDB extends RoomDatabase {
     private static ChatDB instance;
@@ -25,4 +25,8 @@ public abstract class ChatDB extends RoomDatabase {
         }
         return instance;
     }
+    public static synchronized ChatDB getInstance() {
+        return instance;
+    }
+
 }

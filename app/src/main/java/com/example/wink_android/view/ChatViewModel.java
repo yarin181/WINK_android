@@ -48,9 +48,9 @@ public class ChatViewModel extends ViewModel {
     }
 
     public void editSettings(){
-        mRepository.increaseIP();
+
     }
-    public int getIp(){
+    public String getIp(){
         return mRepository.getIp();
     }
 

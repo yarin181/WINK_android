@@ -70,13 +70,7 @@ public class UsersActivity extends AppCompatActivity {
         chatDB = ChatDB.getInstance(getApplicationContext());
 
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-        viewModel.setConnectUser("yarin!!");
-////        viewModel.getChats().observe(this, chat -> {
-////
-////        });
-
-
-        //renderUsers();
+        viewModel.setConnectUser("yarin!!121"); /// edit to the name got from Login Page/
 
         activityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -85,12 +79,9 @@ public class UsersActivity extends AppCompatActivity {
                         Intent intent = result.getData();
                         if (intent != null) {
                             String username = intent.getStringExtra("username");
-                            viewModel.addContactByUsername(username);
-                            Log.i("Viwe","chats: " + viewModel.getChats().toString());
-                            //chat= viewModel.getChatByUsername(username);
-
-                            //userDao.insertUser(new User(username));
-                            //viewModel.getChats().setValue(new Chat(username,username,connectPhotoString));
+                            if (!viewModel.addContactByUsername(username)){
+                                Toast.makeText(getApplicationContext(), "not a Valid user name !", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 });

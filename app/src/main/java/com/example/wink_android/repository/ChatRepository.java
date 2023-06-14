@@ -20,16 +20,13 @@ public class ChatRepository {
 
     private ChatDao chatDao;
 
-    private int ip;
+    private String ip;
 
     public ChatRepository(){
-//        chatDB = Room.databaseBuilder(getApplicationContext(),ChatDB.class,"ChatDB")
-//                .allowMainThreadQueries().fallbackToDestructiveMigration().build();
-
-        chatDB = ChatDB.getInstance(null);
+        chatDB = ChatDB.getInstance();
         userDao = chatDB.userDao();
         chatDao = chatDB.chatDao();
-        ip = 0;
+        ip = "10.0.2.2";
 
     }
 
@@ -48,17 +45,14 @@ public class ChatRepository {
         ///reload
     }
 
-    public void increaseIP(){
-        this.ip++;
-    }
-
-    public int getIp() {
+    public String getIp() {
         return ip;
     }
 
-    public void setIp(int ip) {
+    public void setIp(String ip) {
         this.ip = ip;
     }
+
     public LiveData<Chat> getChatByUsername(String username){
         return chatDao.getChatByUsername(username);
     }
