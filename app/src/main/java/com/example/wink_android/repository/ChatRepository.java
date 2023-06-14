@@ -35,6 +35,7 @@ public class ChatRepository {
     }
 
     public void add(Chat chat){
+
         chatDao.insertChat(chat);
     }
 
