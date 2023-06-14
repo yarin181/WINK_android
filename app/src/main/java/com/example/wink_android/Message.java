@@ -8,16 +8,16 @@ public class Message {
     private int id;
     private String time;
     //the id of the user that created the msg
-    private int created;
+    private int sender;
     private String content;
 
     public Message() {
     }
 
-    public Message(int id, String time, int created, String content) {
+    public Message(int id, String time, int sender, String content) {
         this.id = id;
         this.time = time;
-        this.created = created;
+        this.sender = sender;
         this.content = content;
     }
 
@@ -40,12 +40,12 @@ public class Message {
     }
 
 
-    public int getCreated() {
-        return created;
+    public int getSender() {
+        return sender;
     }
 
-    public void setCreated(int created) {
-        this.created = created;
+    public void setSender(int sender) {
+        this.sender = sender;
     }
 
     public String getContent() {

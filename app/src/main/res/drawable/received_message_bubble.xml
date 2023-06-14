@@ -7,23 +7,13 @@
             android:pivotY="100%"
             android:toDegrees="0">
             <shape android:shape="rectangle">
-                <gradient
-                    android:type="linear"
-                    android:startColor="#3C0849"
-                    android:centerColor="#7251CA"
-                    android:endColor="#6594A6"
-                    android:angle="225" />
+            <solid android:color="@color/white"/>
             </shape>
         </rotate>
     </item>
     <item android:right="5dp">
         <shape android:shape="rectangle">
-            <gradient
-                android:type="linear"
-                android:startColor="#3C0849"
-                android:centerColor="#7251CA"
-                android:endColor="#6594A6"
-                android:angle="225" />
+            <solid android:color="@color/white" />
             <corners android:radius="5dp" />
         </shape>
     </item>

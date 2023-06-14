@@ -13,18 +13,30 @@ import java.util.ArrayList;
 
 public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_RecycleView_Adapter.MyVieHolder>  {
     private Context context;
+    private int connectedId;
     private ArrayList<Message> messages;
 
-    public Messages_RecycleView_Adapter(Context context, ArrayList<Message> messages){
+    public Messages_RecycleView_Adapter(Context context, ArrayList<Message> messages,int connectedId){
         this.context = context;
         this.messages = messages;
+        this.connectedId = connectedId;
     }
     @NonNull
     @Override
     //inflate the layout (giving look to our msg)
     public Messages_RecycleView_Adapter.MyVieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater  inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.sent_message,parent,false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        // Get the id's sender of the new message item
+        int senderId = messages.get(viewType).getSender();
+        View view;
+        if(senderId ==connectedId){
+            view = inflater.inflate(R.layout.sent_message,parent,false);
+        }
+        else{
+            view = inflater.inflate(R.layout.received_message,parent,false);
+        }
+
         return new Messages_RecycleView_Adapter.MyVieHolder(view);
 
     }

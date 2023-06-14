@@ -46,7 +46,6 @@ public class SignUpActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri selectedImageUri = result.getData().getData();
 
-
                     InputStream inputStream = null;
                     try {
                         inputStream = getContentResolver().openInputStream(selectedImageUri);
