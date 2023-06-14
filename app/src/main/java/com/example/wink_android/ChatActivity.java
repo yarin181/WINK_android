@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -85,8 +86,12 @@ public class ChatActivity extends AppCompatActivity {
                 //get rhe current time
                 String currentTime = getCurrentTime();
                 //insert the to the msg Array
-                Message newMessage = new Message(1, currentTime, 0, messageContent);
+                Message newMessage = new Message(1, currentTime, connectedUserId, messageContent);
+                Message replyMessage = new Message(1, currentTime, 0, messageContent);
+
+
                 messagesArr.add(newMessage);
+                messagesArr.add(replyMessage);
                 // add to the recycle view
                 Messages_RecycleView_Adapter adapter = new Messages_RecycleView_Adapter(this,messagesArr,connectedUserId);
                 binding.recyclerView.setAdapter(adapter);

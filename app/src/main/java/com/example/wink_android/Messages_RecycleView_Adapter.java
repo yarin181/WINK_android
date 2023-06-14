@@ -1,6 +1,7 @@
 package com.example.wink_android;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,15 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
     private Context context;
     private int connectedId;
     private ArrayList<Message> messages;
+    private static final int CONNECTED_VIEW_TYPE = 0;
+    private static final int CONTACT_VIEW_TYPE = 1;
 
     public Messages_RecycleView_Adapter(Context context, ArrayList<Message> messages,int connectedId){
         this.context = context;
         this.messages = messages;
         this.connectedId = connectedId;
+        Log.i("the contact", String.valueOf(messages.get(1).getSender()));
+        Log.i("the sender", String.valueOf(messages.get(0).getSender()));
     }
     @NonNull
     @Override
@@ -30,12 +35,15 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
         // Get the id's sender of the new message item
         int senderId = messages.get(viewType).getSender();
         View view;
-        if(senderId ==connectedId){
-            view = inflater.inflate(R.layout.sent_message,parent,false);
+        //this is the connected
+        if(viewType == CONNECTED_VIEW_TYPE){
+           view = inflater.inflate(R.layout.sent_message,parent,false);
         }
         else{
             view = inflater.inflate(R.layout.received_message,parent,false);
         }
+       // Log.i("the id", String.valueOf(senderId));
+
 
         return new Messages_RecycleView_Adapter.MyVieHolder(view);
 
@@ -52,6 +60,17 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
     public int getItemCount() {
         return messages.size();
     }
+    @Override
+    public int getItemViewType(int position) {
+        // the sender of the msg is the connected user
+        if (messages.get(position).getSender() == connectedId) {
+            // Return the view type for the header item
+            return CONNECTED_VIEW_TYPE;
+        } else {
+            return CONTACT_VIEW_TYPE;
+        }
+    }
+
     public static class MyVieHolder extends RecyclerView.ViewHolder{
         // grabbing the views from the recycle_view_layout like the text view
 
@@ -63,4 +82,5 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
             time = itemView.findViewById(R.id.time);
         }
     }
+
 }
