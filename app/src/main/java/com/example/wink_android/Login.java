@@ -2,23 +2,16 @@ package com.example.wink_android;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.wink_android.api.ApiRequests;
 
 public class Login extends AppCompatActivity {
 
@@ -32,11 +25,6 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        TextView textView = new TextView(this);
-        textView.setText("hello");
-        textView.setBackgroundResource(R.drawable.sent_message);
-        RelativeLayout parentLayout = findViewById(R.id.test);
-        parentLayout.addView(textView);
 
 
         editTextName = findViewById(R.id.editTextText1);
