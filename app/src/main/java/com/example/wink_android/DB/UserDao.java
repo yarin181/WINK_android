@@ -1,5 +1,6 @@
 package com.example.wink_android.DB;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -22,8 +23,8 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE username = :username")
     User getUser(String username);
 
-    @Query("SELECT * FROM users")
-    List<User> getAllUsers();
+//    @Query("SELECT * FROM users")
+//    List<User> getAllUsers();
 //    @Query("SELECT * FROM chats WHERE id = :chatId")
 //    Chat getChatById(int chatId);
 //

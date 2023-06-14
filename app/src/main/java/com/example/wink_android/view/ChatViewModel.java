@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.wink_android.DB.Chat;
+import com.example.wink_android.DB.User;
 import com.example.wink_android.repository.ChatRepository;
 
 import java.util.List;
@@ -15,18 +16,50 @@ public class ChatViewModel extends ViewModel {
 
     private LiveData<List<Chat>> chats;
 
+    private User ConnectUser;
+
 
     public ChatViewModel (){
         mRepository = new ChatRepository();
         chats = mRepository.getChats();
+
     }
 
-    public LiveData<List<Chat>> get() { return chats; }
+    public User getConnectUser() {
+        return ConnectUser;
+    }
+
+    public void setConnectUser(String connectUser) {
+        ConnectUser = mRepository.getUserDetails(connectUser);
+    }
+
+    public LiveData<List<Chat>> getChats() { return chats; }
+
+    public LiveData<Chat> getChatByUsername(String username){
+        return mRepository.getChatByUsername(username);
+    }
 
     public void add(Chat chat){mRepository.add(chat);}
 
     public void delete(Chat chat){mRepository.delete(chat);}
 
-    public void reload(){mRepository.reload();}
+    public void reload(){
+        this.chats = mRepository.getChats();
+    }
 
+    public void editSettings(){
+        mRepository.increaseIP();
+    }
+    public int getIp(){
+        return mRepository.getIp();
+    }
+
+
+    public boolean addContactByUsername(String username){
+        if (!mRepository.addChat(username)){
+            return false;
+        }
+        reload();
+        return true;
+    }
 }

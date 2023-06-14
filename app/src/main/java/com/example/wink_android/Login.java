@@ -45,16 +45,19 @@ public class Login extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = editTextName.getText().toString();
-                String password = editTextPassword.getText().toString();
-                ApiRequests temp = new ApiRequests();
-                temp.getToken(name,password);
+                //String name = editTextName.getText().toString();
+                //String password = editTextPassword.getText().toString();
+                //ApiRequests temp = new ApiRequests();
+                //temp.getToken(name,password);
                 // Use the name and password variables as needed
                 Intent intent = new Intent(Login.this, UsersActivity.class);
                 startActivity(intent);
 
                 //if the username already exist in the database (ask yoav)
-               if(true){
+               /*
+
+
+                if(true){
                    // Show the popup when the EditText gains focus
                    popupWindow.showAtLocation(loginBtn, Gravity.TOP, 0, 0);
                    new Handler().postDelayed(new Runnable() {
@@ -63,7 +66,7 @@ public class Login extends AppCompatActivity {
                            popupWindow.dismiss();
                        }
                    }, 5000); // 5000 milliseconds = 5 seconds
-               }
+               }*/
             }
         });
 

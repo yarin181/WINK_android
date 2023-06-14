@@ -14,8 +14,7 @@ public class User {
     private String displayName;
     private String profilePic;
     @Ignore
-    public User(int id,String username,String displayName,String profilePic) {
-        this.id = id;
+    public User(String username,String displayName,String profilePic) {
         this.username =username;
         this.displayName = displayName;
         this.profilePic = profilePic;
