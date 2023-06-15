@@ -47,11 +47,13 @@ public class ChatActivity extends AppCompatActivity {
         setConnectUser();
 
 
+
         // back to the contact list
         binding.backBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddUserActivity.class);
             startActivity(intent);
         });
+
 
         // an observer to the massageInput
         binding.massageInput.addTextChangedListener(new TextWatcher() {
@@ -96,6 +98,7 @@ public class ChatActivity extends AppCompatActivity {
                 Messages_RecycleView_Adapter adapter = new Messages_RecycleView_Adapter(this,messagesArr,connectedUserId);
                 binding.recyclerView.setAdapter(adapter);
                 binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                binding.recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
             }
 
 
