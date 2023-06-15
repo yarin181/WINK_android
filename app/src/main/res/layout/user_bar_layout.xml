@@ -21,6 +21,7 @@
                 android:id="@+id/lastMessageTextView"
                 android:layout_width="222dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/andika_new_basic"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
@@ -32,6 +33,7 @@
                 android:id="@+id/usernameTextView"
                 android:layout_width="115dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/andika_new_basic"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="TextView"
@@ -50,6 +52,7 @@
 
             <TextView
                 android:id="@+id/dateTextView"
+                android:fontFamily="@font/andika_new_basic"
                 android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

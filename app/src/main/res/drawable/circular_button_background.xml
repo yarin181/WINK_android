@@ -1,10 +1,17 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="oval">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/white" />
+            <stroke
+                android:color="@color/lightPurple"
+                android:width="1dp" />
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/ic_add_person"
+        android:gravity="center"
+        android:paddingRight="4dp"
+        android:width="35dp"
+        android:height="35dp"/>
 
-    <solid android:color="@color/primaryColor" />
-
-    <size
-        android:width="56dp"
-        android:height="56dp" />
-
-</shape>
+</layer-list>

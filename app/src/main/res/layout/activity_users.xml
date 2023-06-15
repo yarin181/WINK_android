@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/darkBackground"
     android:layout_height="match_parent">
-    <!-- Upper Bar -->
 
     <!-- Contacts List -->
     <View
@@ -23,7 +23,7 @@
             android:id="@+id/upperBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primaryColor"
+            android:background="@drawable/contact_bar"
             android:orientation="horizontal"
             android:padding="16dp"
             tools:ignore="MissingConstraints">
@@ -38,7 +38,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="16dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/user_photo" />
+                android:src="@drawable/circle_image" />
 
             <!-- User Name -->
 
@@ -73,7 +73,7 @@
 
             <ImageButton
                 android:id="@+id/logoutButton"
-                android:layout_width="48dp"
+                android:layout_width="60dp"
                 android:layout_height="48dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
@@ -87,43 +87,31 @@
 
         </RelativeLayout>
 
-        <!--    <ListView-->
-        <!--        android:id="@+id/contactsList"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="match_parent"-->
-        <!--        android:layout_below="@id/upperBar"-->
-        <!--        android:paddingTop="8dp"-->
-        <!--        android:paddingBottom="8dp" />-->
-
-        <!-- Floating Button for Person Adding -->
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/refreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lstChats"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray" />
+            android:layout_height="match_parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addContact"
+            android:layout_margin="10dp"
+            android:layout_alignEnd="@id/lstChats"
+            android:layout_alignBottom="@id/lstChats"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@null"
+            android:background="@drawable/circular_button_background"
+            android:contentDescription="@string/add_person"
+            />
+        </RelativeLayout>
+
 
     </LinearLayout>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addContact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/circular_button_background"
-        android:contentDescription="@string/add_person"
-        android:padding="8dp"
-        android:src="@drawable/ic_add_person" />
+
 
 
 </RelativeLayout>

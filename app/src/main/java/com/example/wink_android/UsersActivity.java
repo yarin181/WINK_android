@@ -36,6 +36,7 @@ import com.example.wink_android.DB.User;
 import com.example.wink_android.DB.UserDao;
 import com.example.wink_android.adapters.ChatsListAdapter;
 import com.example.wink_android.databinding.ActivityUsersBinding;
+import com.example.wink_android.general.OvalImageDrawable;
 import com.example.wink_android.general.Utilities;
 import com.example.wink_android.view.ChatViewModel;
 
@@ -148,7 +149,7 @@ public class UsersActivity extends AppCompatActivity {
 
     private void setConnectUser(){
         user = viewModel.getConnectUser();
-        binding.userPhoto.setImageBitmap(Utilities.stringToBitmap(user.getProfilePic()));
+        binding.userPhoto.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(user.getProfilePic())));
         binding.userName.setText(user.getUsername());
     }
 //
