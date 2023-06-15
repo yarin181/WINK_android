@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import com.example.wink_android.adapters.Messages_RecycleView_Adapter;
-import com.example.wink_android.databinding.ActivityChatBinding;
+
 import com.example.wink_android.general.OvalImageDrawable;
 
 import java.text.SimpleDateFormat;
@@ -45,7 +45,8 @@ public class ChatActivity extends AppCompatActivity {
 
         setConnectUser();
 
-
+        //make the last msg be seen
+        binding.recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
 
         // back to the contact list
         binding.backBtn.setOnClickListener(view -> {
