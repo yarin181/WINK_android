@@ -7,15 +7,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
-import android.util.Log;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
+import com.example.wink_android.adapters.Messages_RecycleView_Adapter;
 import com.example.wink_android.databinding.ActivityChatBinding;
+import com.example.wink_android.general.OvalImageDrawable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

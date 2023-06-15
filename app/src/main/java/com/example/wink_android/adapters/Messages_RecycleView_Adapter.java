@@ -1,4 +1,4 @@
-package com.example.wink_android;
+package com.example.wink_android.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wink_android.Message;
+import com.example.wink_android.R;
+
 import java.util.ArrayList;
 
 public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_RecycleView_Adapter.MyVieHolder>  {
@@ -19,7 +22,7 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
     private static final int CONNECTED_VIEW_TYPE = 0;
     private static final int CONTACT_VIEW_TYPE = 1;
 
-    public Messages_RecycleView_Adapter(Context context, ArrayList<Message> messages,int connectedId){
+    public Messages_RecycleView_Adapter(Context context, ArrayList<Message> messages, int connectedId){
         this.context = context;
         this.messages = messages;
         this.connectedId = connectedId;
@@ -29,7 +32,7 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
     @NonNull
     @Override
     //inflate the layout (giving look to our msg)
-    public Messages_RecycleView_Adapter.MyVieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyVieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Get the id's sender of the new message item
@@ -45,7 +48,7 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
        // Log.i("the id", String.valueOf(senderId));
 
 
-        return new Messages_RecycleView_Adapter.MyVieHolder(view);
+        return new MyVieHolder(view);
 
     }
     //assigning value to the views we created in the recycle view

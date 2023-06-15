@@ -20,6 +20,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wink_android.general.OvalImageDrawable;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
