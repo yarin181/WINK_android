@@ -8,6 +8,9 @@ public class LoginRequest {
         this.username = username;
         this.password = password;
     }
+    public LoginRequest(String username) {
+        this.username = username;
+    }
 
     // Getters and setters (or you can use Lombok annotations)
 }

@@ -2,6 +2,7 @@ package com.example.wink_android.DB;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
@@ -13,13 +14,22 @@ public class Chat {
     private String otherUsername;
     private String otherDisplayName;
     private String otherProfilePic;
-    private List<Integer> messages;
 
-    public Chat(@NonNull String otherUsername, String otherDisplayName, String otherProfilePic, List<Integer> messages) {
+    @Ignore
+    Message lsatMessage;
+
+    public Chat(@NonNull String otherUsername, String otherDisplayName, String otherProfilePic) {
         this.otherUsername = otherUsername;
         this.otherDisplayName = otherDisplayName;
         this.otherProfilePic = otherProfilePic;
-        this.messages = messages;
+    }
+
+    public Message getLsatMessage() {
+        return lsatMessage;
+    }
+
+    public void setLsatMessage(Message lsatMessage) {
+        this.lsatMessage = lsatMessage;
     }
 
     @NonNull
@@ -35,10 +45,6 @@ public class Chat {
         return otherProfilePic;
     }
 
-    public List<Integer> getMessages() {
-        return messages;
-    }
-
     public void setOtherUsername(@NonNull String otherUsername) {
         this.otherUsername = otherUsername;
     }
@@ -51,8 +57,5 @@ public class Chat {
         this.otherProfilePic = otherProfilePic;
     }
 
-    public void setMessages(List<Integer> messages) {
-        this.messages = messages;
-    }
 }
 
