@@ -6,5 +6,6 @@
     <color name="lightBlue">#AAEFF8</color>
     <color name="lightPurple">#9A99F2</color>
     <color name="primaryColor">#B185FF</color>
+    <color name="darkBackground">#DC1C1230</color>
 
 </resources>

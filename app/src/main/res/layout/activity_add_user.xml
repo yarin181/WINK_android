@@ -1,8 +1,7 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="200dp"
-    android:background="@color/primaryColor"
+    android:background="@drawable/add_contact_layout"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp">
@@ -11,27 +10,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/enter_username"
-        android:textColor="#938A8A"
+        android:textColor="@color/lightPurple"
+        android:fontFamily="@font/andika_new_basic"
         android:textSize="18sp"
+        android:layout_marginTop="20dp"
+       android:layout_marginBottom="20dp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/usernameEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        android:background="@drawable/input_background"
         android:hint="@string/username"
         android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
+        android:textColorHint="@android:color/white"
         android:padding="8dp" />
 
     <Button
+        android:layout_margin="20dp"
         android:id="@+id/addBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add"
-        android:textColor="@android:color/white"
-        android:background="@color/primaryColor"
-        android:layout_marginTop="16dp" />
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/custom_button_background"
+        android:fontFamily="@font/andika_new_basic"
+        android:text="@string/add" />
 
 </LinearLayout>

@@ -8,10 +8,9 @@
         </shape>
     </item>
     <item
-        android:drawable="@drawable/ic_add_person"
+        android:drawable="@drawable/ic_send"
         android:gravity="center"
         android:paddingRight="4dp"
         android:width="35dp"
         android:height="35dp"/>
-
 </layer-list>

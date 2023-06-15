@@ -1,4 +1,4 @@
-package com.example.wink_android;
+package com.example.wink_android.general;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

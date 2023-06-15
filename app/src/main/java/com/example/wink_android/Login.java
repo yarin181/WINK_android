@@ -2,19 +2,16 @@ package com.example.wink_android;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.wink_android.api.ApiRequests;
 
 public class Login extends AppCompatActivity {
 
@@ -26,6 +23,9 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+
 
         editTextName = findViewById(R.id.editTextText1);
         editTextPassword = findViewById(R.id.editTextTextPassword1);
@@ -45,6 +45,14 @@ public class Login extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(Login.this, UsersActivity.class);
+                startActivity(i);
+
+
+
+
+
+                /*
                 String name = editTextName.getText().toString();
                 String password = editTextPassword.getText().toString();
                 ApiRequests temp = new ApiRequests();
@@ -69,7 +77,7 @@ public class Login extends AppCompatActivity {
                            popupWindow.dismiss();
                        }
                    }, 5000); // 5000 milliseconds = 5 seconds
-               }
+               }*/
             }
         });
 

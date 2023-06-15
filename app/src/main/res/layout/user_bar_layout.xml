@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_margin="3dp"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
@@ -15,12 +16,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#DCD6E6">
 
             <TextView
                 android:id="@+id/lastMessageTextView"
                 android:layout_width="222dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/andika_new_basic"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
@@ -32,6 +35,7 @@
                 android:id="@+id/usernameTextView"
                 android:layout_width="115dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/andika_new_basic"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="TextView"
@@ -50,6 +54,7 @@
 
             <TextView
                 android:id="@+id/dateTextView"
+                android:fontFamily="@font/andika_new_basic"
                 android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
