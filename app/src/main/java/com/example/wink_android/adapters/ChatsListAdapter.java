@@ -2,10 +2,12 @@ package com.example.wink_android.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,8 @@ import com.example.wink_android.view.ChatViewModel;
 
 import java.util.List;
 public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.ChatViewHolder> {
+    private GestureDetector gestureDetector;
+    private AdapterView.OnItemClickListener listener;
 
     public static class ChatViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvUsername;
@@ -50,6 +54,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
     @Override
     public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.user_bar_layout,parent,false);
+
         return new ChatsListAdapter.ChatViewHolder(itemView);
     }
 

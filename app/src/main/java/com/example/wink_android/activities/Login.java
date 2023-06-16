@@ -1,4 +1,4 @@
-package com.example.wink_android;
+package com.example.wink_android.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +8,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.wink_android.R;
 
 public class Login extends AppCompatActivity {
 
@@ -47,11 +47,6 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(Login.this, UsersActivity.class);
                 startActivity(i);
-
-
-
-
-
                 /*
                 String name = editTextName.getText().toString();
                 String password = editTextPassword.getText().toString();

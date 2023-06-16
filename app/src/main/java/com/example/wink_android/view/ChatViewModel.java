@@ -20,7 +20,7 @@ public class ChatViewModel extends ViewModel {
 
 
     public ChatViewModel (){
-        mRepository = new ChatRepository();
+        mRepository = ChatRepository.getInstance();
         chats = mRepository.getChats();
 
     }
