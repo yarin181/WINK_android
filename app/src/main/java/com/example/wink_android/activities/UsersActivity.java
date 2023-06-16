@@ -1,47 +1,35 @@
-package com.example.wink_android;
+package com.example.wink_android.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Dao;
-import androidx.room.Room;
 
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.DB.User;
-import com.example.wink_android.DB.UserDao;
+import com.example.wink_android.activities.popuosActivities.AddUserActivity;
 import com.example.wink_android.adapters.ChatsListAdapter;
+import com.example.wink_android.adapters.RecyclerViewItemClickListener;
 import com.example.wink_android.databinding.ActivityUsersBinding;
 import com.example.wink_android.general.OvalImageDrawable;
 import com.example.wink_android.general.Utilities;
 import com.example.wink_android.view.ChatViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class UsersActivity extends AppCompatActivity {
@@ -53,7 +41,6 @@ public class UsersActivity extends AppCompatActivity {
     private List<User> dbUsers;
     private List<Chat> chats;
     private ArrayAdapter<Chat> chatsAdapter;
-
     private ChatDB chatDB;
 
     private ChatViewModel viewModel;
@@ -63,12 +50,12 @@ public class UsersActivity extends AppCompatActivity {
     LiveData<Chat> chat;
 
     User user;
-    String connectUsernameString;
+   // String connectUsernameString;
     boolean flag =false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        connectUsernameString= "yarin";
+        //connectUsernameString= "yarin";
 
         binding = ActivityUsersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -94,8 +81,24 @@ public class UsersActivity extends AppCompatActivity {
 //        RecyclerView lstChats = findViewById(R.id.lstChats);
 
         final ChatsListAdapter adapter = new ChatsListAdapter(this);
-        binding.lstChats.setAdapter(adapter);
-        binding.lstChats.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView recyclerView = binding.lstChats;
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerViewItemClickListener.OnItemClickListener itemClickListener = new RecyclerViewItemClickListener.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(UsersActivity.this, ChatActivity.class);
+                intent.putExtra("id", Objects.requireNonNull(viewModel.getChats().getValue()).get(position).getId());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(getApplicationContext(), "Relax why so Long click...", Toast.LENGTH_LONG).show();
+            }
+        };
+        RecyclerViewItemClickListener itemTouchListener = new RecyclerViewItemClickListener(this, recyclerView, itemClickListener);
+        recyclerView.addOnItemTouchListener(itemTouchListener);
 //        lstChats.setAdapter(adapter);
 //        lstChats.setLayoutManager(new LinearLayoutManager(this));
 
@@ -118,6 +121,7 @@ public class UsersActivity extends AppCompatActivity {
 
 //        binding.lstChats.setAdapter(adapter);
 //        binding.lstChats.setLayoutManager(new LinearLayoutManager(this));
+
 
         viewModel.getChats().observe(this, v->{
             if (v != null && v.size() != 0){
@@ -152,6 +156,7 @@ public class UsersActivity extends AppCompatActivity {
         binding.userPhoto.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(user.getProfilePic())));
         binding.userName.setText(user.getUsername());
     }
+
 //
 //    @Override
 //    protected void onResume() {

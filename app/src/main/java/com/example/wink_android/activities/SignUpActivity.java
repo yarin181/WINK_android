@@ -1,4 +1,4 @@
-package com.example.wink_android;
+package com.example.wink_android.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wink_android.R;
 import com.example.wink_android.general.OvalImageDrawable;
 
 import java.io.FileNotFoundException;
@@ -162,21 +163,14 @@ public class SignUpActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickImageLauncher.launch(intent);
         });
-        lonInBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignUpActivity.this, Login.class);
-                startActivity(intent);
-            }
+        lonInBtn.setOnClickListener(v -> {
+            this.finish();
         });
-        signUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // need to send to the database!
+        signUpBtn.setOnClickListener(v -> {
+            // need to send to the database!
 
-                Intent intent = new Intent(SignUpActivity.this, Login.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(SignUpActivity.this, Login.class);
+            startActivity(intent);
         });
 
     }

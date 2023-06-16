@@ -1,21 +1,12 @@
-package com.example.wink_android;
+package com.example.wink_android.activities.popuosActivities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
-import com.example.wink_android.DB.ChatDB;
-import com.example.wink_android.DB.User;
-import com.example.wink_android.DB.UserDao;
 import com.example.wink_android.databinding.ActivityAddUserBinding;
 
 public class AddUserActivity extends AppCompatActivity {

@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Login"
+            android:name=".activities.Login"
             android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".activities.SignUpActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UsersActivity"
+            android:name=".activities.UsersActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddUserActivity"
+            android:name=".activities.popuosActivities.AddUserActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,7 +56,7 @@
         </activity>
 
         <activity
-            android:name=".ChatActivity"
+            android:name=".activities.ChatActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>

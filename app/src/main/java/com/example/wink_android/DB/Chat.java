@@ -11,6 +11,8 @@ import java.util.List;
 @Entity(tableName = "chats")
 public class Chat {
     @PrimaryKey @NonNull
+    private int id;
+
     private String otherUsername;
     private String otherDisplayName;
     private String otherProfilePic;
@@ -18,7 +20,8 @@ public class Chat {
     @Ignore
     Message lsatMessage;
 
-    public Chat(@NonNull String otherUsername, String otherDisplayName, String otherProfilePic) {
+    public Chat(int id, String otherUsername, String otherDisplayName, String otherProfilePic) {
+        this.id = id;
         this.otherUsername = otherUsername;
         this.otherDisplayName = otherDisplayName;
         this.otherProfilePic = otherProfilePic;
@@ -51,6 +54,10 @@ public class Chat {
 
     public void setOtherDisplayName(String otherDisplayName) {
         this.otherDisplayName = otherDisplayName;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setOtherProfilePic(String otherProfilePic) {
