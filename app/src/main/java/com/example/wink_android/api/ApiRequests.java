@@ -181,7 +181,9 @@ this.repository=repository;
                         for (Chat chat: chats) {
                             repository.add(chat);
                         }
-                        Log.i("ApiRequests", "id: " + chats.get(0).getId());
+                        if (chats.size()>0)    {
+                            Log.i("ApiRequests", "id: " + chats.get(0).getId());
+                        }
                         repository.setStatus("success get chats");
                     }
 
