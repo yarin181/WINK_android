@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.User;
+import com.example.wink_android.DB.UserDao;
 import com.example.wink_android.repository.ChatRepository;
+import com.example.wink_android.requests.RegisterRequest;
 
 import java.util.List;
 
@@ -15,25 +17,47 @@ public class ChatViewModel extends ViewModel {
     private ChatRepository mRepository;
 
     private LiveData<List<Chat>> chats;
-
+//    private String token;
+    private MutableLiveData<String> status;
     private User ConnectUser;
+
+
 
 
     public ChatViewModel (){
         mRepository = ChatRepository.getInstance();
         chats = mRepository.getChats();
+        status=mRepository.getStatus();
+
 
     }
+    public void deleteUserDetails(){
+        mRepository.deleteUserDetailsFromRepo();
+        //        mRepository.getUserDao().deleteAllUsers();
+//        mRepository
+    }
+
+    public MutableLiveData<String> getStatus() {
+        return status;
+    }
+
     public void switchThemMode(){
         mRepository.switchTheme();
     }
 
     public User getConnectUser() {
-        return ConnectUser;
+//        mRepository.
+        return mRepository.getConnectedUser();
     }
 
     public void setConnectUser(String connectUser) {
-        ConnectUser = mRepository.getUserDetails(connectUser);
+       mRepository.getUserDetails(connectUser);
+    }
+    public void tryToLogin(String username,String password){
+        mRepository.repositoryLogIn(username,password);
+    }
+    public void tryToRegister(RegisterRequest registerRequest){
+        mRepository.repositoryRegister(registerRequest);
     }
 
     public LiveData<List<Chat>> getChats() { return chats; }
@@ -62,10 +86,11 @@ public class ChatViewModel extends ViewModel {
     }
 
     public boolean addContactByUsername(String username){
-        if (!mRepository.addChat(username)){
-            return false;
-        }
-        reload();
+//        if (!mRepository.addChat(username)){
+//            return false;
+//        }
+//        reload();
+//        return true;
         return true;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.wink_android.requests;
 
-public class UserFriend {
+public class UserFriend implements Request{
     private int id;
     private BasicUserData user;
     private LastMessage lastMessage;
@@ -16,6 +16,10 @@ public class UserFriend {
 
     public int getId() {
         return id;
+    }
+
+    public BasicUserData getUser() {
+        return user;
     }
 
     public LastMessage getLastMessage() {

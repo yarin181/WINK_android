@@ -1,6 +1,6 @@
 package com.example.wink_android.requests;
 
-public class MessageAnswer {
+public class MessageAnswer implements Request{
     private int id;
     private String created;
     private BasicUserData sender;

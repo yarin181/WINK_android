@@ -1,6 +1,6 @@
 package com.example.wink_android.requests;
 
-public class LoginRequest {
+public class LoginRequest implements Request{
     private String username;
     private String password;
 
