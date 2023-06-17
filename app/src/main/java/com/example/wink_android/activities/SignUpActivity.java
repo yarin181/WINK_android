@@ -22,9 +22,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wink_android.R;
 import com.example.wink_android.general.OvalImageDrawable;
+import com.example.wink_android.requests.RegisterRequest;
+import com.example.wink_android.view.ChatViewModel;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import android.util.Base64;
+import java.io.ByteArrayOutputStream;
+
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -41,6 +46,8 @@ public class SignUpActivity extends AppCompatActivity {
     private String confirm;
     private String username;
     private String displayName;
+    private RegisterRequest registerRequest;
+    private ChatViewModel viewModel;
 
 
 
@@ -58,6 +65,13 @@ public class SignUpActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+                    // Convert bitmap to byte array and the to base 64
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream.toByteArray();
+                    String profilePic = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    registerRequest.setProfilePic(profilePic);
 
                     circleImageView.setImageDrawable(new OvalImageDrawable(bitmap));
 
@@ -78,6 +92,12 @@ public class SignUpActivity extends AppCompatActivity {
         circleImageView = findViewById(R.id.circleImageView);
         lonInBtn = findViewById(R.id.logIn);
         signUpBtn = findViewById(R.id.signUp);
+        viewModel=new ChatViewModel();
+
+
+        registerRequest=new RegisterRequest();
+
+
 
         usernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -90,6 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
                     } else {
                         usernameEditText.setBackgroundResource(R.drawable.input_success);
                     }
+
                 }
             }
         });
@@ -167,7 +188,12 @@ public class SignUpActivity extends AppCompatActivity {
             this.finish();
         });
         signUpBtn.setOnClickListener(v -> {
-            // need to send to the database!
+
+            //todo -  enter to the data base here
+            registerRequest.setUsername(username);
+            registerRequest.setPassword(password);
+            registerRequest.setDisplayName(displayName);
+            viewModel.tryToRegister(registerRequest);
 
             Intent intent = new Intent(SignUpActivity.this, Login.class);
             startActivity(intent);

@@ -2,6 +2,8 @@ package com.example.wink_android.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -11,20 +13,32 @@ import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wink_android.DB.Chat;
+import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.R;
+import com.example.wink_android.view.ChatViewModel;
+
+import java.util.Objects;
 
 public class Login extends AppCompatActivity {
-
+private ChatViewModel viewModel;
     private EditText editTextName;
     private EditText editTextPassword;
+    private String enteredUserName;
     private Button loginBtn,registerBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
+        ChatDB.getInstance(this);
+        viewModel=new ChatViewModel();
+//        viewModel.deleteUserDetails();
+        if(viewModel.getConnectUser()!= null){
+            Intent i = new Intent(Login.this, UsersActivity.class);
+            i.putExtra("connected",true);
+            startActivity(i);
+        }
 
 
         editTextName = findViewById(R.id.editTextText1);
@@ -45,11 +59,15 @@ public class Login extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Login.this, UsersActivity.class);
-                startActivity(i);
-                /*
+
                 String name = editTextName.getText().toString();
+                enteredUserName=name;
                 String password = editTextPassword.getText().toString();
+                viewModel.tryToLogin(name,password);
+
+
+                /*
+
                 ApiRequests temp = new ApiRequests();
 //                temp.getToken(name,password);
 //                temp.getMyUserData(name,"bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImExIiwiaWF0IjoxNjg2NDkwMDA4fQ.gFRRSuAX2PW2eQqKExjTEh6pbK1OGF397_-823RKBhs");
@@ -64,15 +82,24 @@ public class Login extends AppCompatActivity {
 
                 //if the username already exist in the database (ask yoav)
                if(true){
-                   // Show the popup when the EditText gains focus
-                   popupWindow.showAtLocation(loginBtn, Gravity.TOP, 0, 0);
-                   new Handler().postDelayed(new Runnable() {
-                       @Override
-                       public void run() {
-                           popupWindow.dismiss();
-                       }
-                   }, 5000); // 5000 milliseconds = 5 seconds
+
                }*/
+            }
+        });
+        viewModel.getStatus().observe(this, v->{
+            if(Objects.equals(v, "exist")){
+                Intent i = new Intent(Login.this, UsersActivity.class);
+                i.putExtra("nameFromLogin",enteredUserName);
+                startActivity(i);
+            }else{
+//                // Show the popup when the EditText gains focus
+//                popupWindow.showAtLocation(loginBtn, Gravity.TOP, 0, 0);
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        popupWindow.dismiss();
+//                    }
+//                }, 5000); // 5000 milliseconds = 5 seconds
             }
         });
 

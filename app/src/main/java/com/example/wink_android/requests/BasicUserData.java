@@ -1,6 +1,6 @@
 package com.example.wink_android.requests;
 
-public class BasicUserData {
+public class BasicUserData implements Request{
     private String username;
     private String displayName;
     private String profilePic;
