@@ -62,6 +62,7 @@ public class UsersActivity extends AppCompatActivity {
         chatDB = ChatDB.getInstance(getApplicationContext());
 
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+        viewModel.updateChats();
         Intent thisIntent = getIntent();
         if(thisIntent.getBooleanExtra("connected",false)){
             setConnectUser();
@@ -78,9 +79,10 @@ public class UsersActivity extends AppCompatActivity {
                         Intent intent = result.getData();
                         if (intent != null) {
                             String username = intent.getStringExtra("username");
-                            if (!viewModel.addContactByUsername(username)){
-                                Toast.makeText(getApplicationContext(), "not a Valid user name !", Toast.LENGTH_LONG).show();
-                            }
+                            viewModel.addContactByUsername(username);
+//                            if (!){
+//                                Toast.makeText(getApplicationContext(), "not a Valid user name !", Toast.LENGTH_LONG).show();
+//                            }
                         }
                     }
                 });
@@ -104,13 +106,14 @@ public class UsersActivity extends AppCompatActivity {
 
         viewModel.getChats().observe(this, v->{
             if (v != null && v.size() != 0){
-                for (int i =0; i < v.size();i++){
-                    Toast.makeText(getApplicationContext(), v.get(i).getOtherDisplayName(), Toast.LENGTH_SHORT).show();
-                }
+//                for (int i =0; i < v.size();i++){
+//                    Toast.makeText(getApplicationContext(), v.get(i).getOtherDisplayName(), Toast.LENGTH_SHORT).show();
+//                }
                 adapter.setChats(v);
 
             }
         });
+
 
         binding.addContact.setOnClickListener(view -> {
             Intent intent = new Intent(UsersActivity.this, AddUserActivity.class);
@@ -138,6 +141,7 @@ public class UsersActivity extends AppCompatActivity {
                 //todo - disconnect if the user is inc
             }
         });
+
     }
 
 
@@ -145,6 +149,7 @@ public class UsersActivity extends AppCompatActivity {
     private void setConnectUser(){
         user = viewModel.getConnectUser();
 //        binding.userPhoto.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(user.getProfilePic())));
+        binding.userPhoto.setImageBitmap(Utilities.stringToBitmap(user.getProfilePic()));
         binding.userName.setText(user.getDisplayName());
     }
 

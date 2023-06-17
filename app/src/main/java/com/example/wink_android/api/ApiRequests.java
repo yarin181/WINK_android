@@ -18,6 +18,7 @@ import com.example.wink_android.requests.ServerAnswer;
 import com.example.wink_android.requests.UserFriend;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -42,6 +43,7 @@ this.repository=repository;
          .build();
          webServiceAPI = retrofit.create(WebServiceAPI.class);
 }
+
     public void getToken(String username, String password) {
         LoginRequest loginRequest=new LoginRequest(username,password);
         Call<ResponseBody> token = webServiceAPI.postToken(loginRequest);
@@ -154,20 +156,39 @@ this.repository=repository;
             }
         });
     }
+
+    public List<Chat> friendsToChats(List<UserFriend> friends){
+        List<Chat> chats=new ArrayList<>();
+        if(friends != null){
+            for (UserFriend friend: friends) {
+                BasicUserData user=friend.getUser();
+                chats.add(new Chat(friend.getId(), user.getUsername(), user.getDisplayName(), user.getProfilePic()));
+            }
+        }
+        return chats;
+    }
     public void getFriends(String token) {
     Call <List<UserFriend>> chats = webServiceAPI.getChats(token);
-        //        Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token);
+        //Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token);
 
         chats.enqueue(new Callback<List<UserFriend>>() {
             @Override
             public void onResponse(Call<List<UserFriend>> call, Response<List<UserFriend>> response) {
                 if (response.isSuccessful()) {
-                    List<UserFriend> chats = response.body();
-                    if (chats != null) {
-                        Log.i("ApiRequests", "id: " + chats.get(2).getLastMessage().getContent());
+                    List<UserFriend> friends = response.body();
+                    List<Chat> chats=friendsToChats(friends);
+                    if(chats!=null){
+                        for (Chat chat: chats) {
+                            repository.add(chat);
+                        }
+                        Log.i("ApiRequests", "id: " + chats.get(0).getId());
+                        repository.setStatus("success get chats");
                     }
+
                 } else {
                     // Handle unsuccessful response
+                    repository.setStatus("failed get chats");
+
                     Log.e("ApiRequests", "Request failed with code: " + response.code());
                 }
             }
@@ -175,6 +196,7 @@ this.repository=repository;
             @Override
             public void onFailure(Call<List<UserFriend>> call, Throwable t) {
                 // Handle failure
+                repository.setStatus("failed get chats");
                 Log.e("ApiRequests", "Request failed: " + t.getMessage());
             }
         });

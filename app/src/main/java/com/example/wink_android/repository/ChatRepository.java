@@ -43,6 +43,11 @@ public class ChatRepository {
         ip = "10.0.2.2";
         status=new MutableLiveData<>();
         status.setValue(" ");
+        deleteUserDetailsFromRepo();
+    }
+    //making the api update the chats
+    public void repositoryUpdateChats(){
+    API.getFriends(token);
         darkMode = false;
     }
     public void switchTheme(){
@@ -58,7 +63,7 @@ public class ChatRepository {
     }
     public void deleteUserDetailsFromRepo(){
         userDao.deleteAllUsers();
-        chatDB.chatDao().deleteAllChats();
+        chatDao.deleteAllChats();
     }
     public void repositoryLogIn(String username,String password){
         API.getToken(username,password);
@@ -74,6 +79,7 @@ public class ChatRepository {
     public UserDao getUserDao() {
         return userDao;
     }
+    public ChatDao getChatDao(){return chatDao;}
 
     public MutableLiveData<String> getStatus() {
         return status;

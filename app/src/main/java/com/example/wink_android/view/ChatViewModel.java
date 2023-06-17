@@ -59,6 +59,10 @@ public class ChatViewModel extends ViewModel {
     public void tryToRegister(RegisterRequest registerRequest){
         mRepository.repositoryRegister(registerRequest);
     }
+    //making the api update the chats
+    public void updateChats(){
+        mRepository.repositoryUpdateChats();
+    }
 
     public LiveData<List<Chat>> getChats() { return chats; }
 
@@ -85,12 +89,12 @@ public class ChatViewModel extends ViewModel {
         mRepository.setIp(ip);
     }
 
-    public boolean addContactByUsername(String username){
+    public void addContactByUsername(String username){
 //        if (!mRepository.addChat(username)){
 //            return false;
 //        }
 //        reload();
 //        return true;
-        return true;
+        return;
     }
 }
