@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,7 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.DB.User;
-import com.example.wink_android.activities.popuosActivities.AddUserActivity;
+import com.example.wink_android.activities.popupsActivities.AddUserActivity;
+import com.example.wink_android.activities.popupsActivities.SettingsActivity;
 import com.example.wink_android.adapters.ChatsListAdapter;
 import com.example.wink_android.adapters.RecyclerViewItemClickListener;
 import com.example.wink_android.databinding.ActivityUsersBinding;
@@ -139,6 +139,8 @@ public class UsersActivity extends AppCompatActivity {
         });
 
         binding.settingsButton.setOnClickListener(v-> {
+            Intent intent = new Intent(UsersActivity.this, SettingsActivity.class);
+            startActivity(intent);
             Log.i("UsersActivity" ,"settings");
             viewModel.editSettings();
         });

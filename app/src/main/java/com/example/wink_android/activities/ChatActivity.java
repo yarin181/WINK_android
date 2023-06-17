@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.Message;
 import com.example.wink_android.R;
-import com.example.wink_android.activities.popuosActivities.AddUserActivity;
 import com.example.wink_android.adapters.Messages_RecycleView_Adapter;
 
 import com.example.wink_android.databinding.ActivityChatBinding;

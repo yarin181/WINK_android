@@ -22,7 +22,10 @@
     <string name="display_name">Display name</string>
     <string name="wink_since_2023">WINK since 2023</string>
     <string name="not_register">Don\'t hava an account? click the button</string>
-    <string name="type_a_message">Type a message...</string>
+    <string name="type_a_message">Type a message…</string>
+    <string name="enter_ip_address">Enter server IP address</string>
+    <string name="server_ip_address">server IP here</string>
+    <string name="dark_mode">Dark mode</string>
 
 
 </resources>
