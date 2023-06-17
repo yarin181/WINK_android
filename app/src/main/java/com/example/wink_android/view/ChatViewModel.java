@@ -41,6 +41,9 @@ public class ChatViewModel extends ViewModel {
         return status;
     }
 
+    public void switchThemMode(){
+        mRepository.switchTheme();
+    }
 
     public User getConnectUser() {
 //        mRepository.
@@ -78,6 +81,9 @@ public class ChatViewModel extends ViewModel {
         return mRepository.getIp();
     }
 
+    public void setIP(String ip){
+        mRepository.setIp(ip);
+    }
 
     public boolean addContactByUsername(String username){
 //        if (!mRepository.addChat(username)){

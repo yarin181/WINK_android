@@ -54,7 +54,7 @@
                 android:layout_marginStart="29dp"
                 android:layout_marginTop="30dp"
                 android:layout_toEndOf="@+id/userPhoto"
-                android:text="John Doe"
+                android:text="User"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 

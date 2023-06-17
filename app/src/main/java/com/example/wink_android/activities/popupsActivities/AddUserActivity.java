@@ -1,4 +1,4 @@
-package com.example.wink_android.activities.popuosActivities;
+package com.example.wink_android.activities.popupsActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,9 +20,8 @@ public class AddUserActivity extends AppCompatActivity {
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.width = 700;
-        params.height = 500;
+        params.height = 800;
         getWindow().setAttributes(params);
-
         resultIntent = new Intent();
 
         binding.addBtn.setOnClickListener(view -> {

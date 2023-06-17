@@ -31,6 +31,7 @@ public class ChatRepository {
     private MutableLiveData<String> status;
     ApiRequests API=new ApiRequests(this);
     private String token;
+    private boolean darkMode;
 
     private static ChatRepository instance;
     private ChatRepository(){
@@ -42,7 +43,16 @@ public class ChatRepository {
         ip = "10.0.2.2";
         status=new MutableLiveData<>();
         status.setValue(" ");
+        darkMode = false;
     }
+    public void switchTheme(){
+        darkMode = !darkMode;
+    }
+
+    public boolean getTheme(){
+        return darkMode;
+    }
+
     public User getConnectedUser(){
         return userDao.getUser();
     }
