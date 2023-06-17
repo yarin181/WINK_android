@@ -1,14 +1,17 @@
 package com.example.wink_android.activities;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.R;
+import com.example.wink_android.activities.popupsActivities.SettingsActivity;
 import com.example.wink_android.view.ChatViewModel;
 
 import java.util.Objects;
@@ -26,7 +30,8 @@ private ChatViewModel viewModel;
     private EditText editTextPassword;
     private String enteredUserName;
     private Button loginBtn,registerBtn;
-
+    private ImageButton settingsBtn;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,7 @@ private ChatViewModel viewModel;
         editTextPassword = findViewById(R.id.editTextTextPassword1);
         loginBtn = findViewById(R.id.button);
         registerBtn=findViewById(R.id.button2);
+        settingsBtn = findViewById(R.id.settingsButtonLogin);
 
 
         // Initialize the popup layout
@@ -55,6 +61,12 @@ private ChatViewModel viewModel;
         int height = WindowManager.LayoutParams.WRAP_CONTENT;
         PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
 
+        settingsBtn.setOnClickListener(v-> {
+            Intent intent = new Intent(Login.this, SettingsActivity.class);
+            startActivity(intent);
+            Log.i("UsersActivity" ,"settings");
+            viewModel.editSettings();
+        });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

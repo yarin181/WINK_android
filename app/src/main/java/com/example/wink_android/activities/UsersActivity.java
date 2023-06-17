@@ -90,45 +90,17 @@ public class UsersActivity extends AppCompatActivity {
         final ChatsListAdapter adapter = new ChatsListAdapter(this);
         RecyclerView recyclerView = binding.lstChats;
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerViewItemClickListener.OnItemClickListener itemClickListener = new RecyclerViewItemClickListener.OnItemClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = new Intent(UsersActivity.this, ChatActivity.class);
-                intent.putExtra("id", Objects.requireNonNull(viewModel.getChats().getValue()).get(position).getId());
-                startActivity(intent);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                Toast.makeText(getApplicationContext(), "Relax why so Long click...", Toast.LENGTH_LONG).show();
-            }
-        };
-        RecyclerViewItemClickListener itemTouchListener = new RecyclerViewItemClickListener(this, recyclerView, itemClickListener);
-        recyclerView.addOnItemTouchListener(itemTouchListener);
-//        lstChats.setAdapter(adapter);
-//        lstChats.setLayoutManager(new LinearLayoutManager(this));
-
-//        List<Chat> tempLst= new ArrayList<>();
-//        tempLst.add(new Chat("robo1","Robo"," 2121"));
-//        tempLst.add(new Chat("robo2","Robo"," 2121"));
-//        tempLst.add(new Chat("robo3","Robo"," 2121"));
-//        tempLst.add(new Chat("robo4","Robo"," 2121"));
-//        tempLst.add(new Chat("robo5","Robo"," 2121"));
-//        tempLst.add(new Chat("robo6","Robo"," 2121"));
-//        tempLst.add(new Chat("robo7","Robo"," 2121"));
-//        tempLst.add(new Chat("robo1","Robo"," 2121"));
-//        tempLst.add(new Chat("robo2","Robo"," 2121"));
-//        tempLst.add(new Chat("robo3","Robo"," 2121"));
-//        tempLst.add(new Chat("robo4","Robo"," 2121"));
-//        tempLst.add(new Chat("robo5","Robo"," 2121"));
-//        tempLst.add(new Chat("robo6","Robo"," 2121"));
-//        tempLst.add(new Chat("robo7","Robo"," 2121"));
-//        adapter.setChats(tempLst);
-
-//        binding.lstChats.setAdapter(adapter);
-//        binding.lstChats.setLayoutManager(new LinearLayoutManager(this));
-
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        RecyclerViewItemClickListener.OnItemClickListener itemClickListener = new RecyclerViewItemClickListener.OnItemClickListener() {
+//            @Override
+//            public void onClick(View view, int position) {
+//                Intent intent = new Intent(UsersActivity.this, ChatActivity.class);
+//                intent.putExtra("id", Objects.requireNonNull(viewModel.getChats().getValue()).get(position).getId());
+//                startActivity(intent);
+//            }
+//        };
+//        RecyclerViewItemClickListener itemTouchListener = new RecyclerViewItemClickListener(this, recyclerView, itemClickListener);
+//        recyclerView.addOnItemTouchListener(itemTouchListener);
 
         viewModel.getChats().observe(this, v->{
             if (v != null && v.size() != 0){
