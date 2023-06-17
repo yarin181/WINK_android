@@ -23,9 +23,6 @@ import com.example.wink_android.view.ChatViewModel;
 
 import java.util.List;
 public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.ChatViewHolder> {
-    private GestureDetector gestureDetector;
-    private AdapterView.OnItemClickListener listener;
-
     public static class ChatViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvUsername;
         private final TextView tvLastMessage;
@@ -67,7 +64,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
     public void onBindViewHolder(ChatViewHolder holder, int position) {
         if (chats !=null){
             final Chat current = chats.get(position);
-//            holder.ivProfilePic.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(current.getOtherProfilePic())));
+            holder.ivProfilePic.setImageBitmap(Utilities.stringToBitmap(current.getOtherProfilePic()));
             holder.tvUsername.setText(current.getOtherUsername());
             holder.tvLastMessage.setText("last msg...");
             holder.tvDate.setText("3/4/2222");
