@@ -2,19 +2,17 @@ package com.example.wink_android.api;
 
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
+import androidx.annotation.NonNull;
 
 import com.example.wink_android.DB.Chat;
-import com.example.wink_android.DB.ChatDao;
 import com.example.wink_android.DB.User;
+import com.example.wink_android.general.Utilities;
 import com.example.wink_android.repository.ChatRepository;
-import com.example.wink_android.requests.AddFriendCallback;
 import com.example.wink_android.requests.BasicUserData;
 import com.example.wink_android.requests.LoginRequest;
 import com.example.wink_android.requests.MessageAnswer;
 import com.example.wink_android.requests.MessageRequest;
 import com.example.wink_android.requests.RegisterRequest;
-import com.example.wink_android.requests.ServerAnswer;
 import com.example.wink_android.requests.UserFriend;
 
 import java.io.IOException;
@@ -31,7 +29,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiRequests {
     Retrofit retrofit;
  WebServiceAPI webServiceAPI;
- private ChatRepository repository;
+ private final ChatRepository repository;
+
 
 //String.valueOf(R.string.BaseUrl)
 public ApiRequests( ChatRepository repository){
@@ -43,6 +42,15 @@ this.repository=repository;
          .build();
          webServiceAPI = retrofit.create(WebServiceAPI.class);
 }
+
+    public void changeBaseUrl(String ip) {
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://" + ip + ":5000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        webServiceAPI = retrofit.create(WebServiceAPI.class);
+    }
+
 
     public void getToken(String username, String password) {
         LoginRequest loginRequest=new LoginRequest(username,password);
@@ -71,7 +79,7 @@ this.repository=repository;
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, @NonNull Throwable t) {
                 repository.setStatus("not exist");
                 // Handle failure
                 Log.e("ApiRequests", "Failure: " + t.getMessage());
@@ -110,7 +118,8 @@ this.repository=repository;
                 if (response.isSuccessful()) {
                     BasicUserData userData = response.body();
                     if (userData != null) {
-                        repository.getUserDao().insertUser(new User(userData.getUsername(),userData.getDisplayName(),userData.getProfilePic(),token));
+                        repository.getUserDao().insertUser(new User(userData.getUsername(),
+                                userData.getDisplayName(),Utilities.compressImage(userData.getProfilePic(),200),token));
                         repository.setStatus("success user details");
                         Log.i("ApiRequests getMyUserData", "Username: " + userData.getUsername());
                     }
@@ -162,7 +171,7 @@ this.repository=repository;
         if(friends != null){
             for (UserFriend friend: friends) {
                 BasicUserData user=friend.getUser();
-                chats.add(new Chat(friend.getId(), user.getUsername(), user.getDisplayName(), user.getProfilePic()));
+                chats.add(new Chat(friend.getId(), user.getUsername(), user.getDisplayName(), Utilities.compressImage(user.getProfilePic(),200)));
             }
         }
         return chats;
