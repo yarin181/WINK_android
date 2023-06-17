@@ -62,7 +62,14 @@ public class UsersActivity extends AppCompatActivity {
         chatDB = ChatDB.getInstance(getApplicationContext());
 
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-        viewModel.setConnectUser("yarin!!121"); /// edit to the name got from Login Page/
+        Intent thisIntent = getIntent();
+        if(thisIntent.getBooleanExtra("connected",false)){
+            setConnectUser();
+        }else{
+            String receivedString = thisIntent.getStringExtra("nameFromLogin");
+            viewModel.setConnectUser(receivedString); /// edit to the name got from Login Page/
+        }
+
 
         activityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -143,18 +150,28 @@ public class UsersActivity extends AppCompatActivity {
             viewModel.editSettings();
         });
         binding.logoutButton.setOnClickListener(v ->{
+            viewModel.deleteUserDetails();
             Log.i("logout","the IP is : "+ viewModel.getIp());
         });
 
 
-        setConnectUser();
+//        setConnectUser();
+        viewModel.getStatus().observe(this,v->{
+            if(Objects.equals(v, "success user details")){
+                setConnectUser();
+            }else {
+                Toast.makeText(getApplicationContext(), v, Toast.LENGTH_SHORT).show();
+                //todo - disconnect if the user is inc
+            }
+        });
     }
+
 
 
     private void setConnectUser(){
         user = viewModel.getConnectUser();
-        binding.userPhoto.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(user.getProfilePic())));
-        binding.userName.setText(user.getUsername());
+//        binding.userPhoto.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(user.getProfilePic())));
+        binding.userName.setText(user.getDisplayName());
     }
 
 //

@@ -1,6 +1,6 @@
 package com.example.wink_android.requests;
 
-public class LastMessage {
+public class LastMessage implements Request {
     private int id;
     private String created;
     private String content;

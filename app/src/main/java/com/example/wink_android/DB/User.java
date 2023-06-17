@@ -13,11 +13,22 @@ public class User {
     private String username;
     private String displayName;
     private String profilePic;
+    private String token;
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
     @Ignore
-    public User(String username,String displayName,String profilePic) {
+    public User(String username,String displayName,String profilePic,String token) {
         this.username =username;
         this.displayName = displayName;
         this.profilePic = profilePic;
+        this.token=token;
     }
 
     public User(String username) {
