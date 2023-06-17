@@ -12,6 +12,18 @@ public class MessageAnswer implements Request{
         this.content=content;
     }
 
+    public String getCreated() {
+        return created;
+    }
+
+    public BasicUserData getSender() {
+        return sender;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
     public int getId() {
         return id;
     }
