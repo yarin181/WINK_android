@@ -13,7 +13,7 @@ public class Message {
     private String sender;
     private String content;
 
-    public Message(int chatId,String created, String sender, String content) {
+    public Message(int id,int chatId,String created, String sender, String content) {
         this.id = chatId;
         this.created = created;
         this.sender = sender;

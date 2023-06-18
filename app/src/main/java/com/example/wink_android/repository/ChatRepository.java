@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.DB.ChatDao;
+import com.example.wink_android.DB.Message;
 import com.example.wink_android.DB.MessageDao;
 import com.example.wink_android.DB.MessageDao;
 import com.example.wink_android.DB.User;
@@ -66,6 +67,7 @@ public class ChatRepository {
         return darkMode;
     }
 
+
     public User getConnectedUser(){
         User u=userDao.getUser();
         return u;
@@ -109,7 +111,7 @@ public class ChatRepository {
     }
 
     public void add(Chat chat){
-        List<Chat> chats=chatDao.getAllChats().getValue();
+        List<Chat> chats= chatDao.getAllChats().getValue();
         if(chats != null){
             if(!chats.contains(chat)){
                 chatDao.insertChat(chat);
@@ -126,6 +128,11 @@ public class ChatRepository {
         ///reload
     }
 
+    //get a chat by Cha id
+    public LiveData<Chat> getChatById(int id){
+        return chatDao.getChatById(id);
+    }
+
     public String getIp() {
         return ip;
     }
@@ -134,6 +141,17 @@ public class ChatRepository {
         API.changeBaseUrl(ip);
     }
 
+    public void addMessage(Message message){
+        messageDao.insertMessage(message);
+    }
+
+    //send a message to the api
+    public void sendMessage(int id ,String messageContent){
+        API.sendMessage(id,messageContent,token);
+    }
+    public LiveData<List<Message>> getMessagesByChatId(int chatId){
+        return messageDao.getMessagesByChatId(chatId);
+    }
     public LiveData<Chat> getChatByUsername(String username){
         return chatDao.getChatByUsername(username);
     }
@@ -147,15 +165,6 @@ public class ChatRepository {
                API.getMyUserData(username,token);
             }).start();
         }
-        //need to go to the Api thread and get the user details.
-        //must happen now
-
-
-        //*temp delete after adding the API and return a valid LiveData
-//        userDao.insertUser(new User(username,username,connectPhotoString));
-        return;
-        //*temp delete after adding the API and return a valid LiveData
-
     }
 
     public void addChat(String username){

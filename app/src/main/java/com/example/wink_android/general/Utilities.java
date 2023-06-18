@@ -48,47 +48,55 @@ public class Utilities {
         if (parts.length > 1) {
             base64Image = parts[1];
         }
-        byte[] decodedBytes = Base64.decode(base64Image, Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+        try{
+            byte[] decodedBytes = Base64.decode(base64Image, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            // Remove EXIF orientation
+            bitmap = removeExifOrientation(bitmap, decodedBytes);
 
-        // Remove EXIF orientation
-        bitmap = removeExifOrientation(bitmap, decodedBytes);
+            // Create a ByteArrayOutputStream to hold the compressed image
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        // Create a ByteArrayOutputStream to hold the compressed image
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            // Start with a quality of 100
+            int quality = 100;
+            boolean compressionSuccess = false;
 
-        // Start with a quality of 100
-        int quality = 100;
-        boolean compressionSuccess = false;
+            while (!compressionSuccess && quality >= 0) {
+                // Compress the Bitmap with the current quality
+                bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
 
-        while (!compressionSuccess && quality >= 0) {
-            // Compress the Bitmap with the current quality
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+                // Convert the compressed Bitmap to a byte array
+                byte[] compressedBytes = outputStream.toByteArray();
 
-            // Convert the compressed Bitmap to a byte array
-            byte[] compressedBytes = outputStream.toByteArray();
+                // Calculate the file size in KB
+                int fileSizeKB = compressedBytes.length / 1024;
 
-            // Calculate the file size in KB
-            int fileSizeKB = compressedBytes.length / 1024;
+                if (fileSizeKB <= targetFileSizeKB) {
+                    compressionSuccess = true;
+                } else {
+                    // Reduce the quality for the next iteration
+                    quality -= 10;
 
-            if (fileSizeKB <= targetFileSizeKB) {
-                compressionSuccess = true;
-            } else {
-                // Reduce the quality for the next iteration
-                quality -= 10;
-
-                // Reset the ByteArrayOutputStream for the next compression
-                outputStream.reset();
+                    // Reset the ByteArrayOutputStream for the next compression
+                    outputStream.reset();
+                }
             }
+
+            // Encode the byte array to a Base64 string
+            String compressedBase64 = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+
+            // Clear the memory used by the original Bitmap
+            bitmap.recycle();
+
+            return compressedBase64;
+        } catch (Exception e) {
+            e.printStackTrace();
+            base64Image = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC";
+            return  base64Image; // return default image
         }
 
-        // Encode the byte array to a Base64 string
-        String compressedBase64 = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
 
-        // Clear the memory used by the original Bitmap
-        bitmap.recycle();
 
-        return compressedBase64;
     }
 
     private static Bitmap removeExifOrientation(Bitmap bitmap, byte[] imageData) {

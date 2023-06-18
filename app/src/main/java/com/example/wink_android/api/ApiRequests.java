@@ -7,7 +7,8 @@ import androidx.annotation.NonNull;
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDao;
 import com.example.wink_android.DB.User;
-import com.example.wink_android.Message;
+import com.example.wink_android.general.Utilities;
+import com.example.wink_android.DB.Message;
 import com.example.wink_android.repository.ChatRepository;
 import com.example.wink_android.requests.AddFriendCallback;
 import com.example.wink_android.requests.BasicUserData;
@@ -122,7 +123,7 @@ this.repository=repository;
                     BasicUserData userData = response.body();
                     if (userData != null) {
                         repository.getUserDao().insertUser(new User(userData.getUsername(),
-                                userData.getDisplayName(),Utilities.compressImage(userData.getProfilePic(),200),token));
+                                userData.getDisplayName(), Utilities.compressImage(userData.getProfilePic(),200),token));
                         repository.setStatus("success user details");
                         Log.i("ApiRequests getMyUserData", "Username: " + userData.getUsername());
                     }
@@ -252,7 +253,7 @@ this.repository=repository;
             if (response.isSuccessful()) {
                 UserFriend friend = response.body();
                 if (friend != null) {
-                    BasicUserData user=friend.getUser();
+                    BasicUserData user = friend.getUser();
                     Chat chat = new Chat(friend.getId(),user.getUsername(),user.getDisplayName(), user.getProfilePic());
                     repository.add(chat);
                     repository.setStatus("success add chat");
@@ -282,7 +283,7 @@ this.repository=repository;
     });
 }
 
-    public void addMessage(int id,String message,String token) {
+    public void sendMessage(int id,String message,String token) {
         MessageRequest messageRequest=new MessageRequest(message);
 //        Call<UserFriend> friendCall = webServiceAPI.postChats(request, token);
         Call<MessageAnswer> messageAnswerCall= webServiceAPI.postChatsIdMessages(id,token,messageRequest);
@@ -311,7 +312,8 @@ this.repository=repository;
         List<Message> messages=new ArrayList<>();
         if(answers !=null){
             for (MessageAnswer answer: answers) {
-                messages.add(new Message(id,answer.getCreated(),answer.getId(),answer.getContent()));
+                messages.add(new Message(answer.getId(),id,answer.getCreated(),answer.getSender().getUsername(),answer.getContent()));
+                       // id,answer.getId(),answer.getCreated(),answer.getContent()));
             }
         }
         return messages;
@@ -324,11 +326,10 @@ this.repository=repository;
             public void onResponse(Call<List<MessageAnswer>> call, Response<List<MessageAnswer>> response) {
                 if (response.isSuccessful()) {
                     List<MessageAnswer> answers = response.body();
-                    List<Message> messages=answersToMessages(answers,friendId);
+                    List<Message> messages= answersToMessages(answers,friendId);
                     for (Message message:messages) {
-//                        repository.getMessageDao().insertMessage(message);
+                        repository.addMessage(message);
                     }
-
                     if (messages.size()>0) {
                         Log.i("ApiRequests", " id: " + answers.get(0).getId());
                     }
