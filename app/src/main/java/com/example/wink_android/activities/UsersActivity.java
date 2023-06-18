@@ -159,8 +159,8 @@ public class UsersActivity extends AppCompatActivity {
 
     private void setConnectUser(){
         user = viewModel.getConnectUser();
-//        binding.userPhoto.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(user.getProfilePic())));
-        binding.userPhoto.setImageBitmap(Utilities.stringToBitmap(user.getProfilePic()));
+        binding.userPhoto.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(user.getProfilePic())));
+        //binding.userPhoto.setImageBitmap(Utilities.stringToBitmap(user.getProfilePic()));
         binding.userName.setText(user.getDisplayName());
     }
 
