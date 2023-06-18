@@ -313,7 +313,6 @@ this.repository=repository;
         if(answers !=null){
             for (MessageAnswer answer: answers) {
                 messages.add(new Message(answer.getId(),id,answer.getCreated(),answer.getSender().getUsername(),answer.getContent()));
-                       // id,answer.getId(),answer.getCreated(),answer.getContent()));
             }
         }
         return messages;

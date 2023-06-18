@@ -25,7 +25,7 @@ public class ChatViewModel extends ViewModel {
     public ChatViewModel (){
         mRepository = ChatRepository.getInstance();
         chats = mRepository.getChats();
-        status=mRepository.getStatus();
+        status=  mRepository.getStatus();
     }
     public void deleteUserDetails(){
         mRepository.deleteUserDetailsFromRepo();
@@ -66,7 +66,7 @@ public class ChatViewModel extends ViewModel {
 
     //get chat by id
     public Chat getChatById(int chatId){
-        return mRepository.getChatById(chatId).getValue();
+        return mRepository.getChatById(chatId);
     }
 
 

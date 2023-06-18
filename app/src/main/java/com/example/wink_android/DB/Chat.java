@@ -10,8 +10,8 @@ import java.util.List;
 
 @Entity(tableName = "chats")
 public class Chat {
-    @PrimaryKey @NonNull
-    private int id;
+    @PrimaryKey
+    private final int id;
 
     private String otherUsername;
     private String otherDisplayName;

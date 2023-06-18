@@ -28,8 +28,6 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
         this.context = context;
         this.messages = messages;
         this.connectedUsername = connectedUsername;
-        Log.i("the contact", String.valueOf(messages.get(1).getSender()));
-        Log.i("the sender", String.valueOf(messages.get(0).getSender()));
     }
     @NonNull
     @Override
@@ -41,7 +39,7 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
         String username = messages.get(viewType).getSender();
         View view;
         //this is the connected
-        if(viewType == CONNECTED_VIEW_TYPE){
+        if(viewType != CONNECTED_VIEW_TYPE){
            view = inflater.inflate(R.layout.sent_message,parent,false);
         }
         else{

@@ -28,7 +28,7 @@ public interface ChatDao {
 
 
     @Query("SELECT * FROM chats WHERE id = :id")
-    LiveData<Chat> getChatById(int id);
+    Chat getChatById(int id);
 
     @Query("DELETE FROM chats")
     void deleteAllChats();

@@ -60,6 +60,7 @@ public class ChatActivity extends AppCompatActivity {
         chat = viewModel.getChatById(chatId);
         setConnectUser();
         messagesArr = new ArrayList<>();
+        adapter = new Messages_RecycleView_Adapter(this, messagesArr, chat.getOtherUsername());
         //make the last msg be seen
         //binding.recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
 
