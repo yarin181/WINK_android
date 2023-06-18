@@ -112,9 +112,9 @@ public class UsersActivity extends AppCompatActivity {
 
         viewModel.getChats().observe(this, v->{
             if (v != null && v.size() != 0){
-//                for (int i =0; i < v.size();i++){
-//                    Toast.makeText(getApplicationContext(), v.get(i).getOtherDisplayName(), Toast.LENGTH_SHORT).show();
-//                }
+                for (int i =0; i < v.size();i++){
+                    Toast.makeText(getApplicationContext(), v.get(i).getOtherDisplayName(), Toast.LENGTH_SHORT).show();
+                }
                 adapter.setChats(v);
 
             }
@@ -140,11 +140,16 @@ public class UsersActivity extends AppCompatActivity {
 
 //        setConnectUser();
         viewModel.getStatus().observe(this,v->{
+            //the user details arrived successfully
             if(Objects.equals(v, "success user details")){
                 setConnectUser();
-            }else {
+            //the user tried to add a chat the doesn't exist
+            }else if(Objects.equals(v, "failed add chat - incorrect user")){
+                //todo - alert that the user doesn't exist
+            //disconnect the user
+            } else{
                 Toast.makeText(getApplicationContext(), v, Toast.LENGTH_SHORT).show();
-                //todo - disconnect if the user is inc
+                //todo - disconnect if the user is incorrect
             }
         });
 

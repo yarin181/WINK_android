@@ -90,6 +90,7 @@ public class ChatViewModel extends ViewModel {
     }
 
     public void addContactByUsername(String username){
+        mRepository.addChat(username);
 //        if (!mRepository.addChat(username)){
 //            return false;
 //        }

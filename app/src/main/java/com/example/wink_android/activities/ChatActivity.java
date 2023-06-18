@@ -39,7 +39,7 @@ public class ChatActivity extends AppCompatActivity {
 
     Chat chat;
 
-    ChatViewModel chatViewModel;
+    ChatViewModel ViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
 
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ViewModel=new ChatViewModel();
 
 
         Intent intent = getIntent();
