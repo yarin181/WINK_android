@@ -231,16 +231,14 @@ public class SignUpActivity extends AppCompatActivity {
             if(Objects.equals(v, "exist")){
                 View existPopupView = inflater.inflate(R.layout.popup_already_exist, null);
                 PopupWindow existPopupWindow = new PopupWindow(existPopupView, width, height, true);
-
-                //Show popup of incorrect username or password
-                existPopupWindow.showAtLocation(signUpBtn, Gravity.TOP, 0, 0);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        existPopupWindow.dismiss();
+                        //Show popup of incorrect username or password
+                        existPopupWindow.showAtLocation(signUpBtn, Gravity.TOP, 0, 0);
                     }
                 }, 5000); // 5000 milliseconds = 5 seconds
-            }else{
+            }else if(Objects.equals(v, "not exist")){
                 finish();
             }
         });
