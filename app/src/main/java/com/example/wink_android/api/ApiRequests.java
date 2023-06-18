@@ -2,17 +2,20 @@ package com.example.wink_android.api;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.annotation.NonNull;
-
 import com.example.wink_android.DB.Chat;
+import com.example.wink_android.DB.ChatDao;
 import com.example.wink_android.DB.User;
-import com.example.wink_android.general.Utilities;
+import com.example.wink_android.Message;
 import com.example.wink_android.repository.ChatRepository;
+import com.example.wink_android.requests.AddFriendCallback;
 import com.example.wink_android.requests.BasicUserData;
 import com.example.wink_android.requests.LoginRequest;
 import com.example.wink_android.requests.MessageAnswer;
 import com.example.wink_android.requests.MessageRequest;
 import com.example.wink_android.requests.RegisterRequest;
+import com.example.wink_android.requests.ServerAnswer;
 import com.example.wink_android.requests.UserFriend;
 
 import java.io.IOException;
@@ -29,8 +32,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiRequests {
     Retrofit retrofit;
  WebServiceAPI webServiceAPI;
+ private int friendId;
  private final ChatRepository repository;
-
 
 //String.valueOf(R.string.BaseUrl)
 public ApiRequests( ChatRepository repository){
@@ -79,7 +82,7 @@ this.repository=repository;
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, @NonNull Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 repository.setStatus("not exist");
                 // Handle failure
                 Log.e("ApiRequests", "Failure: " + t.getMessage());
@@ -186,7 +189,7 @@ this.repository=repository;
                 if (response.isSuccessful()) {
                     List<UserFriend> friends = response.body();
                     List<Chat> chats=friendsToChats(friends);
-                    if(chats!=null){
+                    if(chats.size()>0){
                         for (Chat chat: chats) {
                             repository.add(chat);
                         }
@@ -239,38 +242,45 @@ this.repository=repository;
 //            Log.e("ApiRequests", "Request failed: " + e.getMessage());
 //        }
 //    }
-//public void addFriend(String name, String token, AddFriendCallback callback) {
-//    LoginRequest request = new LoginRequest(name);
-//    Call<UserFriend> friendCall = webServiceAPI.postChats(request, token);
-//
-//    friendCall.enqueue(new Callback<UserFriend>() {
-//        @Override
-//        public void onResponse(Call<UserFriend> call, Response<UserFriend> response) {
-//            if (response.isSuccessful()) {
-//                UserFriend friend = response.body();
-//                if (friend != null) {
-////                    Chat chat = new Chat(friend.getUser().getUsername(), friend.getUser().getDisplayName(), friend.getUser().getProfilePic());
-////                    repository.add(chat);
-////                    repository.setStatus(response.code());
-//                    Log.i("ApiRequests", "friend id: " + friend.getId());
-//                    callback.onSuccess(friend);
-//                }
-//            } else {
-//                // Handle unsuccessful response
-////                repository.setStatus(response.code());
-//                Log.e("ApiRequests", "Request failed with code: " + response.code());
-//                callback.onFailure(response.code(), "Request failed with code: " + response.code());
-//            }
-//        }
+    public void addFriend(String name, String token) {
+    LoginRequest request = new LoginRequest(name);
+    Call<UserFriend> friendCall = webServiceAPI.postChats(request, token);
 
-//        @Override
-//        public void onFailure(Call<UserFriend> call, Throwable t) {
-//            // Handle failure
-//            Log.e("ApiRequests", "Request failed: " + t.getMessage());
-//            callback.onFailure(0, "Request failed: " + t.getMessage());
-//        }
-//    });
-//}
+    friendCall.enqueue(new Callback<UserFriend>() {
+        @Override
+        public void onResponse(Call<UserFriend> call, Response<UserFriend> response) {
+            if (response.isSuccessful()) {
+                UserFriend friend = response.body();
+                if (friend != null) {
+                    BasicUserData user=friend.getUser();
+                    Chat chat = new Chat(friend.getId(),user.getUsername(),user.getDisplayName(), user.getProfilePic());
+                    repository.add(chat);
+                    repository.setStatus("success add chat");
+//                    repository.setStatus(response.code());
+                    Log.i("ApiRequests", "friend id: " + friend.getId());
+                }
+            } else {
+                // Handle unsuccessful response
+//                repository.setStatus(response.code());
+                if(response.code()==400){
+                    repository.setStatus("failed add chat - incorrect user");
+                }else{
+                    repository.setStatus("failed add chat");
+                }
+
+
+                Log.e("ApiRequests", "Request failed with code: " + response.code());
+            }
+        }
+
+        @Override
+        public void onFailure(Call<UserFriend> call, Throwable t) {
+            // Handle failure
+            repository.setStatus("failed add chat");
+            Log.e("ApiRequests", "Request failed: " + t.getMessage());
+        }
+    });
+}
 
     public void addMessage(int id,String message,String token) {
         MessageRequest messageRequest=new MessageRequest(message);
@@ -297,15 +307,30 @@ this.repository=repository;
             }
         });
     }
+    public List<Message> answersToMessages(List<MessageAnswer> answers,int id){
+        List<Message> messages=new ArrayList<>();
+        if(answers !=null){
+            for (MessageAnswer answer: answers) {
+                messages.add(new Message(id,answer.getCreated(),answer.getId(),answer.getContent()));
+            }
+        }
+        return messages;
+    }
     public void getMessagesFromApi(int id,String token) {
-        Call <List<MessageAnswer>> messageAnswerCall= webServiceAPI.getChatsIdMessages(id,token);
+    friendId=id;
+    Call <List<MessageAnswer>> messageAnswerCall= webServiceAPI.getChatsIdMessages(id,token);
         messageAnswerCall.enqueue(new Callback<List<MessageAnswer>>() {
             @Override
             public void onResponse(Call<List<MessageAnswer>> call, Response<List<MessageAnswer>> response) {
                 if (response.isSuccessful()) {
                     List<MessageAnswer> answers = response.body();
-                    if (answers != null) {
-                        Log.i("ApiRequests", " id: " + answers.get(2).getId());
+                    List<Message> messages=answersToMessages(answers,friendId);
+                    for (Message message:messages) {
+//                        repository.getMessageDao().insertMessage(message);
+                    }
+
+                    if (messages.size()>0) {
+                        Log.i("ApiRequests", " id: " + answers.get(0).getId());
                     }
                 } else {
                     // Handle unsuccessful response
