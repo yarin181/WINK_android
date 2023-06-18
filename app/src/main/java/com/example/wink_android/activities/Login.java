@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -53,18 +54,11 @@ private ChatViewModel viewModel;
         settingsBtn = findViewById(R.id.settingsButtonLogin);
 
 
-        // Initialize the popup layout
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_already_exist, null);
-        // Create the popup window
-        int width = WindowManager.LayoutParams.MATCH_PARENT;
-        int height = WindowManager.LayoutParams.WRAP_CONTENT;
-        PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
 
         settingsBtn.setOnClickListener(v-> {
             Intent intent = new Intent(Login.this, SettingsActivity.class);
             startActivity(intent);
-            Log.i("UsersActivity" ,"settings");
             viewModel.editSettings();
         });
 
@@ -76,6 +70,9 @@ private ChatViewModel viewModel;
                 enteredUserName=name;
                 String password = editTextPassword.getText().toString();
                 viewModel.tryToLogin(name,password);
+
+
+
 
 
                 /*
@@ -103,15 +100,25 @@ private ChatViewModel viewModel;
                 Intent i = new Intent(Login.this, UsersActivity.class);
                 i.putExtra("nameFromLogin",enteredUserName);
                 startActivity(i);
-            }else{
-//                // Show the popup when the EditText gains focus
-//                popupWindow.showAtLocation(loginBtn, Gravity.TOP, 0, 0);
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        popupWindow.dismiss();
-//                    }
-//                }, 5000); // 5000 milliseconds = 5 seconds
+            }else if(Objects.equals(v, "notExist")) {
+
+                // Initialize the popup layout
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                // Create the popup window
+                int width = WindowManager.LayoutParams.MATCH_PARENT;
+                int height = WindowManager.LayoutParams.WRAP_CONTENT;
+                View popupView = inflater.inflate(R.layout.popup_incorrect_details, null);
+                PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+                editTextName.setBackgroundResource(R.drawable.input_failure);
+                editTextPassword.setBackgroundResource(R.drawable.input_failure);
+
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        //Show popup of incorrect username or password
+                        popupWindow.showAtLocation(loginBtn, Gravity.TOP, 0, 0);
+                    }
+                }, 500);
             }
         });
 
@@ -122,5 +129,9 @@ private ChatViewModel viewModel;
                 startActivity(intent);
             }
         });
+
     }
+
+
+
 }

@@ -28,7 +28,10 @@ import com.example.wink_android.view.ChatViewModel;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import android.util.Base64;
+import android.widget.Toast;
+
 import java.io.ByteArrayOutputStream;
+import java.util.Objects;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -41,11 +44,18 @@ public class SignUpActivity extends AppCompatActivity {
     private Button lonInBtn;
     private Button signUpBtn;
     private ImageView circleImageView;
+    private boolean isProfilePic = false;
 
     private String password;
+    private boolean isPassword = false;
+
     private String confirm;
+    private boolean isConfirm = false;
     private String username;
+    private boolean isUsername = false;
     private String displayName;
+    private boolean isDisplayName= false;
+
     private RegisterRequest registerRequest;
     private ChatViewModel viewModel;
 
@@ -74,6 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
                     registerRequest.setProfilePic(profilePic);
 
                     circleImageView.setImageDrawable(new OvalImageDrawable(bitmap));
+                    isProfilePic = true;
 
                 }
             }
@@ -107,8 +118,10 @@ public class SignUpActivity extends AppCompatActivity {
                     // Check if the username is empty
                     if (username.isEmpty()) {
                         usernameEditText.setBackgroundResource(R.drawable.input_failure);
+                        isUsername = false;
                     } else {
                         usernameEditText.setBackgroundResource(R.drawable.input_success);
+                        isUsername = true;
                     }
 
                 }
@@ -144,8 +157,10 @@ public class SignUpActivity extends AppCompatActivity {
                     boolean isValidPassword = password.matches("^(?=.*[A-Z])(?=.*\\d).{8,16}$");
                     if (!isValidPassword) {
                         passwordEditText.setBackgroundResource(R.drawable.input_failure);
+                        isPassword = false;
                     } else {
                         passwordEditText.setBackgroundResource(R.drawable.input_success);
+                        isPassword = true;
                     }
                 }
             }
@@ -159,8 +174,10 @@ public class SignUpActivity extends AppCompatActivity {
                     confirm = confirmEditText.getText().toString().trim();
                     if (!confirm.equals(password) || confirm.isEmpty()) {
                         confirmEditText.setBackgroundResource(R.drawable.input_failure);
+                        isConfirm = false;
                     } else {
                         confirmEditText.setBackgroundResource(R.drawable.input_success);
+                        isConfirm = true;
                     }
                 }
 
@@ -173,8 +190,10 @@ public class SignUpActivity extends AppCompatActivity {
                     displayName = displayEditText.getText().toString().trim();
                     if (displayName.isEmpty()) {
                         displayEditText.setBackgroundResource(R.drawable.input_failure);
+                        isDisplayName = false;
                     } else {
                         displayEditText.setBackgroundResource(R.drawable.input_success);
+                        isDisplayName = true;
                     }
                 }
 
@@ -189,14 +208,41 @@ public class SignUpActivity extends AppCompatActivity {
         });
         signUpBtn.setOnClickListener(v -> {
 
-            //todo -  enter to the data base here
+            // loss focus from all the editText
+            usernameEditText.getOnFocusChangeListener().onFocusChange(usernameEditText, false);
+            passwordEditText.getOnFocusChangeListener().onFocusChange(passwordEditText, false);
+            confirmEditText.getOnFocusChangeListener().onFocusChange(confirmEditText, false);
+            displayEditText.getOnFocusChangeListener().onFocusChange(displayEditText, false);
+
+            // only when all the fields are full
+            if(isConfirm && isPassword && isDisplayName && isUsername && isProfilePic){
+                //todo -  enter to the data base here
             registerRequest.setUsername(username);
             registerRequest.setPassword(password);
             registerRequest.setDisplayName(displayName);
+           // registerRequest.setProfilePic();
             viewModel.tryToRegister(registerRequest);
+            }
 
-            Intent intent = new Intent(SignUpActivity.this, Login.class);
-            startActivity(intent);
+        });
+
+
+        viewModel.getStatus().observe(this, v->{
+            if(Objects.equals(v, "exist")){
+                View existPopupView = inflater.inflate(R.layout.popup_already_exist, null);
+                PopupWindow existPopupWindow = new PopupWindow(existPopupView, width, height, true);
+
+                //Show popup of incorrect username or password
+                existPopupWindow.showAtLocation(signUpBtn, Gravity.TOP, 0, 0);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        existPopupWindow.dismiss();
+                    }
+                }, 5000); // 5000 milliseconds = 5 seconds
+            }else{
+                finish();
+            }
         });
 
     }
