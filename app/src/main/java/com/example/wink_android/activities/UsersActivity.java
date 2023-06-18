@@ -112,9 +112,9 @@ public class UsersActivity extends AppCompatActivity {
 
         viewModel.getChats().observe(this, v->{
             if (v != null && v.size() != 0){
-                for (int i =0; i < v.size();i++){
-                    Toast.makeText(getApplicationContext(), v.get(i).getOtherDisplayName(), Toast.LENGTH_SHORT).show();
-                }
+//                for (int i =0; i < v.size();i++){
+//                    Toast.makeText(getApplicationContext(), v.get(i).getOtherDisplayName(), Toast.LENGTH_SHORT).show();
+//                }
                 adapter.setChats(v);
 
             }

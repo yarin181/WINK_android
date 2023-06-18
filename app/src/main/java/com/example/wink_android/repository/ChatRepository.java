@@ -129,7 +129,7 @@ public class ChatRepository {
     }
 
     //get a chat by Cha id
-    public LiveData<Chat> getChatById(int id){
+    public Chat getChatById(int id){
         return chatDao.getChatById(id);
     }
 
@@ -150,6 +150,7 @@ public class ChatRepository {
         API.sendMessage(id,messageContent,token);
     }
     public LiveData<List<Message>> getMessagesByChatId(int chatId){
+        API.getMessagesFromApi(chatId,token);
         return messageDao.getMessagesByChatId(chatId);
     }
     public LiveData<Chat> getChatByUsername(String username){
