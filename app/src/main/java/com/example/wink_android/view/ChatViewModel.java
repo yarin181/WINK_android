@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.wink_android.DB.Chat;
+import com.example.wink_android.DB.Message;
 import com.example.wink_android.DB.User;
 import com.example.wink_android.DB.UserDao;
 import com.example.wink_android.repository.ChatRepository;
@@ -21,15 +22,10 @@ public class ChatViewModel extends ViewModel {
     private MutableLiveData<String> status;
     private User ConnectUser;
 
-
-
-
     public ChatViewModel (){
         mRepository = ChatRepository.getInstance();
         chats = mRepository.getChats();
-        status=mRepository.getStatus();
-
-
+        status=  mRepository.getStatus();
     }
     public void deleteUserDetails(){
         mRepository.deleteUserDetailsFromRepo();
@@ -62,6 +58,26 @@ public class ChatViewModel extends ViewModel {
     //making the api update the chats
     public void updateChats(){
         mRepository.repositoryUpdateChats();
+    }
+
+    public LiveData<List<Message>> getMessagesByChatId(int chatId){
+        return mRepository.getMessagesByChatId(chatId);
+    }
+
+    //get chat by id
+    public Chat getChatById(int chatId){
+        return mRepository.getChatById(chatId);
+    }
+
+
+    //add message to the database
+    public void addMessage(Message message){
+        mRepository.addMessage(message);
+    }
+
+    //send message to the server
+    public void sendMessage(int chatId, String message){
+        mRepository.sendMessage(chatId,message);
     }
 
     public LiveData<List<Chat>> getChats() { return chats; }

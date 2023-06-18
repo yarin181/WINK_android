@@ -2,19 +2,17 @@ package com.example.wink_android.general;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.util.Base64;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class Utilities {
     public  static Bitmap stringToBitmap(String string){
         try {
-            String[] parts = string.split(",", 2);
-            byte[] decodedBytes;
-            if (parts.length > 1) {
-                decodedBytes = Base64.decode(parts[1], 0);
-
-            } else {
-                decodedBytes = Base64.decode(string, 0);
-            }
+            byte[] decodedBytes = Base64.decode(string, 0);
             return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -43,6 +41,93 @@ public class Utilities {
 
     public static String convertBlobToImage(byte[] blobData) {
         return Base64.encodeToString(blobData, 0);
+    }
+
+    public static String compressImage(String base64Image, int targetFileSizeKB) {
+        String[] parts = base64Image.split(",", 2);
+        if (parts.length > 1) {
+            base64Image = parts[1];
+        }
+        try{
+            byte[] decodedBytes = Base64.decode(base64Image, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            // Remove EXIF orientation
+            bitmap = removeExifOrientation(bitmap, decodedBytes);
+
+            // Create a ByteArrayOutputStream to hold the compressed image
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            // Start with a quality of 100
+            int quality = 100;
+            boolean compressionSuccess = false;
+
+            while (!compressionSuccess && quality >= 0) {
+                // Compress the Bitmap with the current quality
+                bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+
+                // Convert the compressed Bitmap to a byte array
+                byte[] compressedBytes = outputStream.toByteArray();
+
+                // Calculate the file size in KB
+                int fileSizeKB = compressedBytes.length / 1024;
+
+                if (fileSizeKB <= targetFileSizeKB) {
+                    compressionSuccess = true;
+                } else {
+                    // Reduce the quality for the next iteration
+                    quality -= 10;
+
+                    // Reset the ByteArrayOutputStream for the next compression
+                    outputStream.reset();
+                }
+            }
+
+            // Encode the byte array to a Base64 string
+            String compressedBase64 = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+
+            // Clear the memory used by the original Bitmap
+            bitmap.recycle();
+
+            return compressedBase64;
+        } catch (Exception e) {
+            e.printStackTrace();
+            base64Image = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC";
+            return  base64Image; // return default image
+        }
+
+
+
+    }
+
+    private static Bitmap removeExifOrientation(Bitmap bitmap, byte[] imageData) {
+        try {
+            ExifInterface exifInterface = new ExifInterface(String.valueOf(imageData));
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+            int rotationDegrees = 0;
+
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotationDegrees = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotationDegrees = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotationDegrees = 270;
+                    break;
+                default:
+                    rotationDegrees = 0;
+                    break;
+            }
+
+            Matrix matrix = new Matrix();
+            matrix.setRotate(rotationDegrees);
+            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
     }
 
 

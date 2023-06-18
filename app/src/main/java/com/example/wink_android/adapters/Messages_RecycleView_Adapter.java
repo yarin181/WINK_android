@@ -10,24 +10,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wink_android.Message;
+import com.example.wink_android.DB.Message;
 import com.example.wink_android.R;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_RecycleView_Adapter.MyVieHolder>  {
     private Context context;
-    private int connectedId;
-    private ArrayList<Message> messages;
+    private String connectedUsername;
+    private List<Message> messages;
     private static final int CONNECTED_VIEW_TYPE = 0;
     private static final int CONTACT_VIEW_TYPE = 1;
 
-    public Messages_RecycleView_Adapter(Context context, ArrayList<Message> messages, int connectedId){
+    public Messages_RecycleView_Adapter(Context context, List<Message> messages, String connectedUsername){
         this.context = context;
         this.messages = messages;
-        this.connectedId = connectedId;
-        Log.i("the contact", String.valueOf(messages.get(1).getSender()));
-        Log.i("the sender", String.valueOf(messages.get(0).getSender()));
+        this.connectedUsername = connectedUsername;
     }
     @NonNull
     @Override
@@ -35,11 +35,11 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
     public MyVieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        // Get the id's sender of the new message item
-        int senderId = messages.get(viewType).getSender();
+        // Get the sender username of the new message item
+        String username = messages.get(viewType).getSender();
         View view;
         //this is the connected
-        if(viewType == CONNECTED_VIEW_TYPE){
+        if(viewType != CONNECTED_VIEW_TYPE){
            view = inflater.inflate(R.layout.sent_message,parent,false);
         }
         else{
@@ -51,11 +51,20 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
         return new MyVieHolder(view);
 
     }
+
+
+    //set the messages in the recycle view
+    public void setMessages(List<com.example.wink_android.DB.Message> messages){
+        this.messages = messages;
+        notifyDataSetChanged();
+    }
+
+
     //assigning value to the views we created in the recycle view
     @Override
     public void onBindViewHolder(@NonNull MyVieHolder holder, int position) {
         holder.content.setText(messages.get(position).getContent());
-        holder.time.setText(messages.get(position).getTime());
+        holder.time.setText(messages.get(position).getCreated());
 
     }
     //the number of items we displayed
@@ -66,7 +75,7 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
     @Override
     public int getItemViewType(int position) {
         // the sender of the msg is the connected user
-        if (messages.get(position).getSender() == connectedId) {
+        if (Objects.equals(messages.get(position).getSender(), connectedUsername)) {
             // Return the view type for the header item
             return CONNECTED_VIEW_TYPE;
         } else {
