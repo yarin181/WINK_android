@@ -3,9 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="10dp"
     android:layout_height="match_parent"
     android:background="@drawable/demo_bg"
     android:gravity="center">
+    <ImageButton
+        android:id="@+id/backBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@null"
+        android:background="@drawable/ic_back_btn"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
 
@@ -88,7 +96,7 @@
                 app:hintTextColor="@color/white">
 
                 <EditText
-                    android:id="@+id/confirmEditText"
+                    android:id="@+id/editTextServerIP"
                     android:layout_width="300dp"
                     android:layout_height="45dp"
                     android:layout_margin="13dp"

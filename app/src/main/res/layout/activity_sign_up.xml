@@ -8,13 +8,21 @@
     android:gravity="center"
     android:padding="20dp"
     android:orientation="vertical">
+    <ImageButton
+        android:id="@+id/settingsBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="end"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/settings"
+        android:scaleType="fitEnd"
+        android:src="@drawable/ic_settings" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -137,6 +145,8 @@
             android:fontFamily="@font/andika_new_basic"
             android:text="@string/login" />
 
+
     </LinearLayout>
+
 
 </LinearLayout>

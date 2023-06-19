@@ -31,6 +31,9 @@ public class SettingsActivity extends AppCompatActivity {
             chatViewModel.setIP(binding.editTextServerIP.getText().toString());
             Toast.makeText(this, "IP Changed to : " + binding.editTextServerIP.getText().toString(), Toast.LENGTH_SHORT).show();
         });
+        binding.backBtn.setOnClickListener((View v) -> {
+            finish();
+        });
 
     }
 

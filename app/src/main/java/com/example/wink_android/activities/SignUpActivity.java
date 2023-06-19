@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
@@ -21,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wink_android.R;
+import com.example.wink_android.activities.popupsActivities.SettingsActivity;
 import com.example.wink_android.general.OvalImageDrawable;
 import com.example.wink_android.requests.RegisterRequest;
 import com.example.wink_android.view.ChatViewModel;
@@ -40,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private EditText confirmEditText;
+    private ImageButton settingsBtn;
     private EditText displayEditText;
     private Button lonInBtn;
     private Button signUpBtn;
@@ -97,6 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         usernameEditText = findViewById(R.id.usernameEditText);
+        settingsBtn = findViewById(R.id.settingsBtn);
         passwordEditText = findViewById(R.id.passwordEditText);
         confirmEditText = findViewById(R.id.confirmEditText);
         displayEditText = findViewById(R.id.displayEditText);
@@ -220,7 +224,6 @@ public class SignUpActivity extends AppCompatActivity {
             registerRequest.setUsername(username);
             registerRequest.setPassword(password);
             registerRequest.setDisplayName(displayName);
-           // registerRequest.setProfilePic();
             viewModel.tryToRegister(registerRequest);
             }
 
@@ -241,6 +244,11 @@ public class SignUpActivity extends AppCompatActivity {
             }else if(Objects.equals(v, "not exist")){
                 finish();
             }
+        });
+        settingsBtn.setOnClickListener(v-> {
+            Intent intent = new Intent(SignUpActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            viewModel.editSettings();
         });
 
     }
