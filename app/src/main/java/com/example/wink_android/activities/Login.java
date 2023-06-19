@@ -40,12 +40,13 @@ private ChatViewModel viewModel;
         viewModel=new ChatViewModel();
 //        viewModel.deleteUserDetails();
         if(viewModel.getConnectUser()!= null){
+            viewModel.setToken(viewModel.getConnectUser().getToken());
             Intent i = new Intent(Login.this, UsersActivity.class);
             i.putExtra("connected",true);
             startActivity(i);
         }
 
-
+        ImageButton logOutBtn = findViewById(R.id.logoutButton);
         editTextName = findViewById(R.id.editTextText1);
         editTextPassword = findViewById(R.id.editTextTextPassword1);
         loginBtn = findViewById(R.id.button);

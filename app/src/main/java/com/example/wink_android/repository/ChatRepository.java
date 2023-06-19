@@ -42,8 +42,6 @@ public class ChatRepository {
         userDao = chatDB.userDao();
         chatDao = chatDB.chatDao();
         messageDao= chatDB.messageDao();
-        chatDao.deleteAllChats();
-        userDao.deleteAllUsers();
         ip = "10.0.2.2";
         status=new MutableLiveData<>();
         status.setValue(" ");
