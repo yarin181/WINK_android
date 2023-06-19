@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
@@ -85,6 +86,11 @@ public class ChatRepository {
         this.token = token;
     }
 
+    //get messages by chat id
+    public LiveData<List<Message>> getMessagesByChatId(int chatId){
+        return messageDao.getMessagesByChatId(chatId);
+    }
+
     public UserDao getUserDao() {
         return userDao;
     }
@@ -109,14 +115,22 @@ public class ChatRepository {
     }
 
     public void add(Chat chat){
-        List<Chat> chats= chatDao.getAllChats().getValue();
-        if(chats != null){
-            if(!chats.contains(chat)){
+        chatDao.getAllChats().observeForever(chats -> {
+            if (chats != null) {
+                boolean chatExists = false;
+                for (Chat existingChat : chats) {
+                    if (existingChat.getId() == chat.getId()) {
+                        chatExists = true;
+                        break;
+                    }
+                }
+                if (!chatExists) {
+                    chatDao.insertChat(chat);
+                }
+            } else {
                 chatDao.insertChat(chat);
             }
-        }else {
-            chatDao.insertChat(chat);
-        }
+        });
     }
 
     public void delete(Chat chat){
@@ -139,18 +153,35 @@ public class ChatRepository {
         API.changeBaseUrl(ip);
     }
 
-    public void addMessage(Message message){
-        messageDao.insertMessage(message);
+    public void addMessage(Message message,int id){
+        messageDao.getMessagesByChatId(id).observeForever(messages -> {
+            if (messages != null) {
+                boolean messageExists = false;
+                for (Message existingMessage : messages) {
+                    if (existingMessage.getId() == message.getId()) {
+                        messageExists = true;
+                        break;
+                    }
+                }
+                if (!messageExists) {
+                    messageDao.insertMessage(message);
+                }
+            } else {
+                messageDao.insertMessage(message);
+            }
+        });
+        //messageDao.insertMessage(message);
     }
 
     //send a message to the api
     public void sendMessage(int id ,String messageContent){
         API.sendMessage(id,messageContent,token);
     }
-    public LiveData<List<Message>> getMessagesByChatId(int chatId){
+    public void updateMessagesByChatId(int chatId){
         API.getMessagesFromApi(chatId,token);
-        return messageDao.getMessagesByChatId(chatId);
+        //return messageDao.getMessagesByChatId(chatId);
     }
+
     public LiveData<Chat> getChatByUsername(String username){
         return chatDao.getChatByUsername(username);
     }
@@ -177,5 +208,9 @@ public class ChatRepository {
 //        }).start();
 
         return;
+    }
+
+    public LiveData<List<Message>> getMessages() {
+        return messageDao.getAllMessages();
     }
 }

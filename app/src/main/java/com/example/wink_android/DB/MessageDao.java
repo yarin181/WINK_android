@@ -26,4 +26,6 @@ public interface MessageDao {
     @Query("DELETE FROM messages")
     void deleteAllMessages();
 
+    @Query("SELECT * FROM messages")
+    LiveData<List<Message>> getAllMessages();
 }

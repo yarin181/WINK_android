@@ -327,7 +327,7 @@ this.repository=repository;
                     List<MessageAnswer> answers = response.body();
                     List<Message> messages= answersToMessages(answers,friendId);
                     for (Message message:messages) {
-                        repository.addMessage(message);
+                        repository.addMessage(message,friendId);
                     }
                     if (messages.size()>0) {
                         Log.i("ApiRequests", " id: " + answers.get(0).getId());

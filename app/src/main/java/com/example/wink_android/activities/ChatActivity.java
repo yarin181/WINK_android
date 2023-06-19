@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
@@ -72,9 +73,19 @@ public class ChatActivity extends AppCompatActivity {
             this.finish();
         });
 
-        viewModel.getMessagesByChatId(chat.getId()).observe(this, messages -> {
+        //adapter.setMessages(viewModel.getMessagesByChatId(chat.getId()));
+        viewModel.updateMessagesByChatId(chat.getId());
+
+
+        viewModel.getMessages().observe(this, messages -> {
+            //filter messages by chat id
+            int current_len = adapter.getItemCount();
+            messages = messages.stream().filter(message -> message.getChatId() == chat.getId()).collect(Collectors.toList());
             adapter.setMessages(messages);
-            binding.recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+            //if message is added scroll to the last message
+            if(current_len != adapter.getItemCount()){
+                binding.recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+            }
         });
 
         // an observer to the massageInput
@@ -110,6 +121,7 @@ public class ChatActivity extends AppCompatActivity {
                 binding.buttonSend.setBackgroundResource(R.drawable.unable_send_btn);
 
                 viewModel.sendMessage(chat.getId(), messageContent);
+                viewModel.updateMessagesByChatId(chat.getId());
                 ///////////////////////////
 
                 // send the message to the server through the view model
