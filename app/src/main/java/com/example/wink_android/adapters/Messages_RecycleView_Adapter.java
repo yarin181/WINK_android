@@ -24,9 +24,9 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
     private static final int CONNECTED_VIEW_TYPE = 0;
     private static final int CONTACT_VIEW_TYPE = 1;
 
-    public Messages_RecycleView_Adapter(Context context, List<Message> messages, String connectedUsername){
+    public Messages_RecycleView_Adapter(Context context, String connectedUsername){
         this.context = context;
-        this.messages = messages;
+        this.messages = new ArrayList<>();
         this.connectedUsername = connectedUsername;
     }
     @NonNull
@@ -35,8 +35,6 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
     public MyVieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        // Get the sender username of the new message item
-        String username = messages.get(viewType).getSender();
         View view;
         //this is the connected
         if(viewType != CONNECTED_VIEW_TYPE){
@@ -54,7 +52,7 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
 
 
     //set the messages in the recycle view
-    public void setMessages(List<com.example.wink_android.DB.Message> messages){
+    public void setMessages(List<Message> messages){
         this.messages = messages;
         notifyDataSetChanged();
     }
