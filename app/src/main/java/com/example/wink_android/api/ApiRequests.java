@@ -123,7 +123,7 @@ this.repository=repository;
                     BasicUserData userData = response.body();
                     if (userData != null) {
                         repository.getUserDao().insertUser(new User(userData.getUsername(),
-                                userData.getDisplayName(), Utilities.compressImage(userData.getProfilePic(),200),token));
+                                userData.getDisplayName(), Utilities.compressImage(userData.getProfilePic()),token));
                         repository.setStatus("success user details");
                         Log.i("ApiRequests getMyUserData", "Username: " + userData.getUsername());
                     }
@@ -175,7 +175,7 @@ this.repository=repository;
         if(friends != null){
             for (UserFriend friend: friends) {
                 BasicUserData user=friend.getUser();
-                chats.add(new Chat(friend.getId(), user.getUsername(), user.getDisplayName(), Utilities.compressImage(user.getProfilePic(),200)));
+                chats.add(new Chat(friend.getId(), user.getUsername(), user.getDisplayName(), Utilities.compressImage(user.getProfilePic())));
             }
         }
         return chats;
@@ -254,7 +254,8 @@ this.repository=repository;
                 UserFriend friend = response.body();
                 if (friend != null) {
                     BasicUserData user = friend.getUser();
-                    Chat chat = new Chat(friend.getId(),user.getUsername(),user.getDisplayName(), user.getProfilePic());
+                    Chat chat = new Chat(friend.getId(),user.getUsername()
+                            ,user.getDisplayName(), Utilities.compressImage(user.getProfilePic()));
                     repository.add(chat);
                     repository.setStatus("success add chat");
 //                    repository.setStatus(response.code());
@@ -327,7 +328,7 @@ this.repository=repository;
                     List<MessageAnswer> answers = response.body();
                     List<Message> messages= answersToMessages(answers,friendId);
                     for (Message message:messages) {
-                        repository.addMessage(message);
+                        repository.addMessage(message,friendId);
                     }
                     if (messages.size()>0) {
                         Log.i("ApiRequests", " id: " + answers.get(0).getId());
