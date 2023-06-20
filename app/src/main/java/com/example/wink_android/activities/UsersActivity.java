@@ -122,10 +122,25 @@ public class UsersActivity extends AppCompatActivity {
             startActivity(intent);
             viewModel.editSettings();
         });
+
         binding.logoutButton.setOnClickListener(v ->{
             viewModel.deleteUserDetails();
             finish();
         });
+
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
+            viewModel.updateChats();
+            binding.swipeRefreshLayout.setRefreshing(false);
+        });
+
+//        binding.swipeRefreshLayout.setOnRefreshListener(=> {
+//            // Perform your refresh logic here
+//            // This code will be executed when the user pulls down on the screen
+//            // You can fetch new data, update the RecyclerView, etc.
+//
+//            // Once your refresh logic is complete, call setRefreshing(false) to stop the loading indicator
+//            binding.swipeRefreshLayout.isRefreshing = false;
+//        }
 
 
 //        setConnectUser();

@@ -66,7 +66,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
             final Chat current = chats.get(position);
             holder.ivProfilePic.setImageBitmap(Utilities.stringToBitmap(current.getOtherProfilePic()));
             holder.tvUsername.setText(current.getOtherUsername());
-            holder.tvLastMessage.setText("last msg...");
+            holder.tvLastMessage.setText("fsdddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
             holder.tvDate.setText("3/4/2222");
         }
     }

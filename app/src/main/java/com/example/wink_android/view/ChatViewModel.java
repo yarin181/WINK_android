@@ -74,6 +74,8 @@ public class ChatViewModel extends ViewModel {
         mRepository.repositoryUpdateChats();
     }
 
+
+
     public void updateMessagesByChatId(int chatId){
         mRepository.updateMessagesByChatId(chatId);
     }

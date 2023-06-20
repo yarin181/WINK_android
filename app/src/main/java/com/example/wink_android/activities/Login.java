@@ -44,6 +44,8 @@ private ChatViewModel viewModel;
             Intent i = new Intent(Login.this, UsersActivity.class);
             i.putExtra("connected",true);
             startActivity(i);
+        }else {
+            viewModel.deleteUserDetails();
         }
 
 

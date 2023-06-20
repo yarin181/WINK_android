@@ -51,8 +51,10 @@ public class ChatRepository {
     }
     //making the api update the chats
     public void repositoryUpdateChats(){
-    API.getFriends(token);
-        darkMode = false;
+        Thread thread = new Thread(() -> {
+            API.getFriends(token);
+        });
+        thread.start();
     }
     public void switchTheme(){
         darkMode = !darkMode;
