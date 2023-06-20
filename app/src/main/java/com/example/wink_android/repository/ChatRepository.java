@@ -108,8 +108,8 @@ public class ChatRepository {
         return chatDao.getAllChats();
     }
 
-    public void add(Chat chat){
-        List<Chat> chats= chatDao.getAllChats().getValue();
+    public synchronized void add(Chat chat){
+        List<Chat> chats= getChats().getValue();
         if(chats != null){
             if(!chats.contains(chat)){
                 chatDao.insertChat(chat);

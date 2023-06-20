@@ -285,6 +285,7 @@ this.repository=repository;
 
     public void sendMessage(int id,String message,String token) {
         MessageRequest messageRequest=new MessageRequest(message);
+        friendId=id;
 //        Call<UserFriend> friendCall = webServiceAPI.postChats(request, token);
         Call<MessageAnswer> messageAnswerCall= webServiceAPI.postChatsIdMessages(id,token,messageRequest);
         messageAnswerCall.enqueue(new Callback<MessageAnswer>() {
@@ -292,17 +293,23 @@ this.repository=repository;
             public void onResponse(Call<MessageAnswer> call, Response<MessageAnswer> response) {
                 if (response.isSuccessful()) {
                    MessageAnswer answer = response.body();
-                    if (answer != null) {
-                        Log.i("ApiRequests", "friend id: " + answer.getId());
-                    }
+                   if (answer != null) {
+                   Message message=new Message(answer.getId(),friendId, answer.getCreated(), answer.getSender().getUsername(), answer.getContent());
+                   repository.addMessage(message);
+                   repository.setStatus("success send message");
+                   Log.i("ApiRequests", "friend id: " + answer.getId());
+                   }
                 } else {
                     // Handle unsuccessful response
+                    repository.setStatus("failed send message");
                     Log.e("ApiRequests", "Request failed with code: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<MessageAnswer> call, Throwable t) {
+                repository.setStatus("failed send message");
+
                 // Handle failure
                 Log.e("ApiRequests", "Request failed: " + t.getMessage());
             }
@@ -312,7 +319,8 @@ this.repository=repository;
         List<Message> messages=new ArrayList<>();
         if(answers !=null){
             for (MessageAnswer answer: answers) {
-                messages.add(new Message(answer.getId(),id,answer.getCreated(),answer.getSender().getUsername(),answer.getContent()));
+//                messages.add(new Message())
+                messages.add(new Message(answer.getId(),id,answer.getCreated(),answer.getSender().getDisplayName(),answer.getContent()));
             }
         }
         return messages;
@@ -329,10 +337,14 @@ this.repository=repository;
                     for (Message message:messages) {
                         repository.addMessage(message);
                     }
+
                     if (messages.size()>0) {
+                        repository.setStatus("success get messages");
                         Log.i("ApiRequests", " id: " + answers.get(0).getId());
                     }
                 } else {
+                    repository.setStatus("failed get messages");
+
                     // Handle unsuccessful response
                     Log.e("ApiRequests", "Request failed with code: " + response.code());
                 }
@@ -340,6 +352,8 @@ this.repository=repository;
 
             @Override
             public void onFailure(Call<List<MessageAnswer>>call, Throwable t) {
+                repository.setStatus("failed get messages");
+
                 // Handle failure
                 Log.e("ApiRequests", "Request failed: " + t.getMessage());
             }

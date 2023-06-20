@@ -38,7 +38,7 @@ private ChatViewModel viewModel;
         setContentView(R.layout.activity_login);
         ChatDB.getInstance(this);
         viewModel=new ChatViewModel();
-//        viewModel.deleteUserDetails();
+        viewModel.deleteUserDetails();
         if(viewModel.getConnectUser()!= null){
             viewModel.setToken(viewModel.getConnectUser().getToken());
             Intent i = new Intent(Login.this, UsersActivity.class);

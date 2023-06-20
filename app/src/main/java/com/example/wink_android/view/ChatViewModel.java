@@ -64,6 +64,7 @@ public class ChatViewModel extends ViewModel {
         return mRepository.getMessagesByChatId(chatId);
     }
 
+
     //get chat by id
     public Chat getChatById(int chatId){
         return mRepository.getChatById(chatId);
