@@ -40,6 +40,9 @@ public class ChatViewModel extends ViewModel {
     public void switchThemMode(){
         mRepository.switchTheme();
     }
+    public boolean getTheme(){
+        return mRepository.getTheme();
+    }
 
     public User getConnectUser() {
 //        mRepository.

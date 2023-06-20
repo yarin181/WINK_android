@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/demo_bg"
+    android:background="?android:attr/windowBackground"
     android:gravity="center"
     tools:context=".activities.Login">
 
@@ -29,7 +29,7 @@
             android:fontFamily="@font/andika_new_basic"
             android:gravity="center"
             android:text="@string/login"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="35sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -77,6 +77,7 @@
             android:id="@+id/button"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:textColor="?android:attr/textColorPrimary"
             android:layout_margin="15dp"
             android:layout_marginBottom="30dp"
             android:backgroundTint="@color/custom_button_background"
@@ -90,12 +91,13 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/andika_new_basic"
             android:text="@string/not_register"
-            android:textColor="@color/white" />
+            android:textColor="?android:attr/textColorPrimary" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:textColor="?android:attr/textColorPrimary"
             android:layout_margin="15dp"
             android:backgroundTint="@color/custom_button_background"
             android:fontFamily="@font/andika_new_basic"
@@ -122,7 +124,7 @@
                 android:fontFamily="@font/andika_new_basic"
                 android:gravity="center"
                 android:text="@string/wink_since_2023"
-                android:textColor="@color/white"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -136,7 +138,7 @@
         android:background="?android:selectableItemBackground"
         android:contentDescription="@string/settings"
         android:scaleType="fitEnd"
-        android:src="@drawable/ic_settings"
+        android:src="@drawable/ic_settings_dark"
         tools:layout_editor_absoluteX="347dp"
         tools:layout_editor_absoluteY="16dp"
         tools:ignore="MissingConstraints" />

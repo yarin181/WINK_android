@@ -1,9 +1,4 @@
 package com.example.wink_android.repository;
-import java.util.Random;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,14 +8,10 @@ import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.DB.ChatDao;
 import com.example.wink_android.DB.Message;
 import com.example.wink_android.DB.MessageDao;
-import com.example.wink_android.DB.MessageDao;
 import com.example.wink_android.DB.User;
 import com.example.wink_android.DB.UserDao;
 import com.example.wink_android.api.ApiRequests;
-import com.example.wink_android.requests.AddFriendCallback;
 import com.example.wink_android.requests.RegisterRequest;
-import com.example.wink_android.requests.ServerAnswer;
-import com.example.wink_android.requests.UserFriend;
 
 import java.util.List;
 
@@ -38,6 +29,7 @@ public class ChatRepository {
 
     private static ChatRepository instance;
     private ChatRepository(){
+        darkMode = false;
         chatDB = ChatDB.getInstance(null);
         userDao = chatDB.userDao();
         chatDao = chatDB.chatDao();

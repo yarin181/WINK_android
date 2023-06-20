@@ -6,6 +6,9 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.util.Base64;
 
+import com.example.wink_android.R;
+import com.example.wink_android.repository.ChatRepository;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 

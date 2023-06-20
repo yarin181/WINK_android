@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,10 +17,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.R;
 import com.example.wink_android.activities.popupsActivities.SettingsActivity;
+import com.example.wink_android.repository.ChatRepository;
 import com.example.wink_android.view.ChatViewModel;
 
 import java.util.Objects;
@@ -33,11 +32,11 @@ private ChatViewModel viewModel;
     private String enteredUserName;
     private Button loginBtn,registerBtn;
     private ImageButton settingsBtn;
+    private ChatRepository repository;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+
         ChatDB.getInstance(this);
         viewModel=new ChatViewModel();
         if(viewModel.getConnectUser()!= null){
@@ -46,14 +45,21 @@ private ChatViewModel viewModel;
             startActivity(i);
         }
 
+        //setTheme();
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_login);
+
+
         editTextName = findViewById(R.id.editTextText1);
         editTextPassword = findViewById(R.id.editTextTextPassword1);
         loginBtn = findViewById(R.id.button);
         registerBtn=findViewById(R.id.button2);
         settingsBtn = findViewById(R.id.settingsButtonLogin);
 
-
         settingsBtn.setOnClickListener(v-> {
+            Log.i("in onclick","setting btn");
+            showToast("in setting");
+
             Intent intent = new Intent(Login.this, SettingsActivity.class);
             startActivity(intent);
             viewModel.editSettings();
@@ -99,11 +105,31 @@ private ChatViewModel viewModel;
 
             @Override
             public void onClick(View v) {
+                showToast("in setting");
                 Intent intent = new Intent(Login.this, SignUpActivity.class);
                 startActivity(intent);
             }
         });
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTheme();
+    }
+    private void setTheme(){
+        boolean isDarkMode = viewModel.getTheme();
+        if (isDarkMode) {
+            setTheme(R.style.AppTheme_Dark);
+
+        } else {
+            setTheme(R.style.AppTheme_Day);
+            settingsBtn.setImageResource(R.drawable.ic_setting_day);
+        }
+        setContentView(R.layout.activity_login);
+    }
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 }
