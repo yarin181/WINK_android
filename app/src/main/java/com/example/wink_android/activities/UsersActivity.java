@@ -81,15 +81,9 @@ public class UsersActivity extends AppCompatActivity {
                         if (intent != null) {
                             String username = intent.getStringExtra("username");
                             viewModel.addContactByUsername(username);
-//                            if (!){
-//                                Toast.makeText(getApplicationContext(), "not a Valid user name !", Toast.LENGTH_LONG).show();
-//                            }
                         }
                     }
                 });
-//
-//        RecyclerView lstChats = findViewById(R.id.lstChats);
-
         final ChatsListAdapter adapter = new ChatsListAdapter(this);
         RecyclerView recyclerView = binding.lstChats;
         recyclerView.setAdapter(adapter);
@@ -112,9 +106,6 @@ public class UsersActivity extends AppCompatActivity {
 
         viewModel.getChats().observe(this, v->{
             if (v != null && v.size() != 0){
-//                for (int i =0; i < v.size();i++){
-//                    Toast.makeText(getApplicationContext(), v.get(i).getOtherDisplayName(), Toast.LENGTH_SHORT).show();
-//                }
                 adapter.setChats(v);
 
             }
@@ -129,12 +120,11 @@ public class UsersActivity extends AppCompatActivity {
         binding.settingsButton.setOnClickListener(v-> {
             Intent intent = new Intent(UsersActivity.this, SettingsActivity.class);
             startActivity(intent);
-            Log.i("UsersActivity" ,"settings");
             viewModel.editSettings();
         });
         binding.logoutButton.setOnClickListener(v ->{
             viewModel.deleteUserDetails();
-            Log.i("logout","the IP is : "+ viewModel.getIp());
+            finish();
         });
 
 

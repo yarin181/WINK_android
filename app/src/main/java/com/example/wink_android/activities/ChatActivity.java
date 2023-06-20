@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
@@ -59,19 +60,26 @@ public class ChatActivity extends AppCompatActivity {
 
         chat = viewModel.getChatById(chatId);
         setConnectUser();
-        messagesArr = new ArrayList<>();
-        adapter = new Messages_RecycleView_Adapter(this, messagesArr, chat.getOtherUsername());
-        //make the last msg be seen
-        //binding.recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+        adapter = new Messages_RecycleView_Adapter(this, chat.getOtherUsername());
+        binding.recyclerView.setAdapter(adapter);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // back to the contact list
         binding.backBtn.setOnClickListener(view -> {
             this.finish();
         });
+        viewModel.updateMessagesByChatId(chat.getId());
+        binding.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
 
-        viewModel.getMessagesByChatId(chat.getId()).observe(this, messages -> {
+        viewModel.getMessages().observe(this, messages -> {
+            //filter messages by chat id
+            int current_len = adapter.getItemCount();
+            messages = messages.stream().filter(message -> message.getChatId() == chat.getId()).collect(Collectors.toList());
             adapter.setMessages(messages);
-            binding.recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+            //if message is added scroll to the last message
+            if(current_len != adapter.getItemCount()){
+                binding.recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+            }
         });
 
         // an observer to the massageInput
@@ -79,7 +87,6 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             // when the user adds some text, change the send btn state
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -89,7 +96,6 @@ public class ChatActivity extends AppCompatActivity {
                     binding.buttonSend.setBackgroundResource(R.drawable.unable_send_btn);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -102,28 +108,10 @@ public class ChatActivity extends AppCompatActivity {
             String messageContent = binding.massageInput.getText().toString();
             //if there is some text
             if(!messageContent.isEmpty()){
-               //Reset the message input to empty
                 binding.massageInput.setText("");
                 binding.buttonSend.setBackgroundResource(R.drawable.unable_send_btn);
-
                 viewModel.sendMessage(chat.getId(), messageContent);
-                ///////////////////////////
-
-                // send the message to the server through the view model
-
-                //get rhe current time
-                //String currentTime = getCurrentTime();
-                //insert the to the msg Array
-                //Message newMessage = new Message(1, currentTime, connectedUserId, messageContent);
-                //Message replyMessage = new Message(1, currentTime, 0, messageContent);
-
-
-                //messagesArr.add(newMessage);
-                //messagesArr.add(replyMessage);
-
-                // add to the recycle view
-                ////////
-
+                viewModel.updateMessagesByChatId(chat.getId());
             }
         });
 
@@ -131,14 +119,10 @@ public class ChatActivity extends AppCompatActivity {
     private void setConnectUser(){
         binding.contactName.setText(chat.getOtherUsername());
         binding.profilePic.setImageBitmap(Utilities.stringToBitmap(chat.getOtherProfilePic()));
-//        byte[] decodedImage = Base64.decode(connectPhotoString, Base64.DEFAULT);
-//        Bitmap bitmap = BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length);
-//        binding.profilePic.setImageDrawable(new OvalImageDrawable(bitmap));
     }
-
-    private String getCurrentTime() {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        return sdf.format(calendar.getTime());
-    }
+//    private String getCurrentTime() {
+//        Calendar calendar = Calendar.getInstance();
+//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+//        return sdf.format(calendar.getTime());
+//    }
 }

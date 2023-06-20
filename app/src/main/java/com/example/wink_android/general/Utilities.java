@@ -46,13 +46,18 @@ public class Utilities {
         return Base64.encodeToString(blobData, 0);
     }
 
-    public static String compressImage(String base64Image, int targetFileSizeKB) {
+    public static String removePrefixFromBase64Image(String base64Image) {
         String[] parts = base64Image.split(",", 2);
         if (parts.length > 1) {
-            base64Image = parts[1];
+            return parts[1];
+        } else {
+            return base64Image;
         }
+    }
+
+    public static String compressImage(String base64Image) {
         try{
-            byte[] decodedBytes = Base64.decode(base64Image, Base64.DEFAULT);
+            byte[] decodedBytes = Base64.decode(removePrefixFromBase64Image(base64Image), Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
             // Remove EXIF orientation
             bitmap = removeExifOrientation(bitmap, decodedBytes);
@@ -74,7 +79,7 @@ public class Utilities {
                 // Calculate the file size in KB
                 int fileSizeKB = compressedBytes.length / 1024;
 
-                if (fileSizeKB <= targetFileSizeKB) {
+                if (fileSizeKB <= Constants.IMAGE_MAX_SIZE) {
                     compressionSuccess = true;
                 } else {
                     // Reduce the quality for the next iteration

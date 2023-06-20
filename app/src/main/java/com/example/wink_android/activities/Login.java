@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.R;
 import com.example.wink_android.activities.popupsActivities.SettingsActivity;
@@ -40,6 +41,7 @@ private ChatViewModel viewModel;
         ChatDB.getInstance(this);
         viewModel=new ChatViewModel();
         if(viewModel.getConnectUser()!= null){
+            viewModel.setToken(viewModel.getConnectUser().getToken());
             Intent i = new Intent(Login.this, UsersActivity.class);
             i.putExtra("connected",true);
             startActivity(i);
@@ -110,6 +112,7 @@ private ChatViewModel viewModel;
                 startActivity(intent);
             }
         });
+
 
     }
     @Override
