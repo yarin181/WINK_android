@@ -29,6 +29,16 @@ public class ChatViewModel extends ViewModel {
         status=  mRepository.getStatus();
         messages = mRepository.getMessages();
     }
+
+    public LiveData<Message> getLastMessageForChat(int id) {
+        return mRepository.getLastMessageForChat(id);
+    }
+
+    //get messages by id
+    public Message getMessageById(int id){
+        return mRepository.getMessageById(id);
+    }
+
     public void deleteUserDetails(){
         mRepository.deleteUserDetailsFromRepo();
         //        mRepository.getUserDao().deleteAllUsers();

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "messages")
 public class Message {
     @PrimaryKey
-    private int id;
+    private Integer id;
 
     private int chatId;
     private String created;

@@ -2,6 +2,8 @@ package com.example.wink_android.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
+import com.example.wink_android.DB.Message;
 import com.example.wink_android.DB.User;
 import com.example.wink_android.activities.popupsActivities.AddUserActivity;
 import com.example.wink_android.activities.popupsActivities.SettingsActivity;
@@ -104,12 +107,31 @@ public class UsersActivity extends AppCompatActivity {
         RecyclerViewItemClickListener itemTouchListener = new RecyclerViewItemClickListener(this, recyclerView, itemClickListener);
         recyclerView.addOnItemTouchListener(itemTouchListener);
 
-        viewModel.getChats().observe(this, v->{
-            if (v != null && v.size() != 0){
+        viewModel.getChats().observe(this, v -> {
+            if (v != null && v.size() != 0) {
                 adapter.setChats(v);
-
+                // Set the last message of each chat
+//                Thread thread = new Thread(() -> {
+//                    for (Chat chat : v) {
+//                        if (chat.getLastMessageId() > 0) {
+//                            Message message = viewModel.getMessageById(chat.getLastMessageId());
+//                            if (message != null) {
+//                                chat.setLsatMessage(message);
+//                            }else
+//                            {
+//                                int x=5;
+//                            }
+//                        }
+//                    }
+//                    // Post a runnable to update the adapter on the main thread (UI thread)
+//                    new Handler(Looper.getMainLooper()).post(() -> {
+//
+//                    });
+//                });
+//                thread.start();
             }
         });
+
 
 
         binding.addContact.setOnClickListener(view -> {

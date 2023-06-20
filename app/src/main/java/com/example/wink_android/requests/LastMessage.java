@@ -10,7 +10,27 @@ public class LastMessage implements Request {
         this.content=content;
     }
 
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public String getContent() {
         return content;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
