@@ -74,6 +74,7 @@ public class ChatRepository {
     public void deleteUserDetailsFromRepo(){
         userDao.deleteAllUsers();
         chatDao.deleteAllChats();
+        messageDao.deleteAllMessages();
     }
     public void repositoryLogIn(String username,String password){
         API.getToken(username,password);
@@ -199,15 +200,6 @@ public class ChatRepository {
 
     public void addChat(String username){
         API.addFriend(username,token);
-
-        // get the username display name and profile pic
-        // if the user isn't exists return here false
-//        Random random = new Random();
-//        new Thread(()->{
-//            chatDao.insertChat(new Chat(random.nextInt(),username,username,connectPhotoString));
-//        }).start();
-
-        return;
     }
 
     public LiveData<List<Message>> getMessages() {
