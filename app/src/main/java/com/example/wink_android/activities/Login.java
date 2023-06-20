@@ -46,7 +46,7 @@ private ChatViewModel viewModel;
             startActivity(i);
         }
 
-        ImageButton logOutBtn = findViewById(R.id.logoutButton);
+
         editTextName = findViewById(R.id.editTextText1);
         editTextPassword = findViewById(R.id.editTextTextPassword1);
         loginBtn = findViewById(R.id.button);
@@ -123,5 +123,6 @@ private ChatViewModel viewModel;
                 startActivity(intent);
             }
         });
+
     }
 }

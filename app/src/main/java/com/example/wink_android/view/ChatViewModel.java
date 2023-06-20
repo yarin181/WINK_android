@@ -18,6 +18,7 @@ public class ChatViewModel extends ViewModel {
     private ChatRepository mRepository;
 
     private LiveData<List<Chat>> chats;
+    private LiveData<List<Message>> messages;
 //    private String token;
     private MutableLiveData<String> status;
     private User ConnectUser;
@@ -26,11 +27,24 @@ public class ChatViewModel extends ViewModel {
         mRepository = ChatRepository.getInstance();
         chats = mRepository.getChats();
         status=  mRepository.getStatus();
+        messages = mRepository.getMessages();
     }
     public void deleteUserDetails(){
         mRepository.deleteUserDetailsFromRepo();
         //        mRepository.getUserDao().deleteAllUsers();
 //        mRepository
+    }
+
+    public LiveData<List<Message>> getMessages() {
+        //reloadMessages();
+        return messages;
+    }
+
+    //get messages by chat id
+
+
+    public void setMessagesByChatId(int chatId){
+        messages = mRepository.getMessagesByChatId(chatId);
     }
 
     public MutableLiveData<String> getStatus() {
@@ -60,8 +74,8 @@ public class ChatViewModel extends ViewModel {
         mRepository.repositoryUpdateChats();
     }
 
-    public LiveData<List<Message>> getMessagesByChatId(int chatId){
-        return mRepository.getMessagesByChatId(chatId);
+    public void updateMessagesByChatId(int chatId){
+        mRepository.updateMessagesByChatId(chatId);
     }
 
 
@@ -72,9 +86,11 @@ public class ChatViewModel extends ViewModel {
 
 
     //add message to the database
-    public void addMessage(Message message){
-        mRepository.addMessage(message);
+    public void addMessage(Message message,int id){
+        mRepository.addMessage(message, id);
     }
+
+
 
     //send message to the server
     public void sendMessage(int chatId, String message){
@@ -100,6 +116,10 @@ public class ChatViewModel extends ViewModel {
         this.chats = mRepository.getChats();
     }
 
+    public void reloadMessages(){
+        this.messages = mRepository.getMessages();
+    }
+
     public void editSettings(){
 
     }
@@ -113,11 +133,5 @@ public class ChatViewModel extends ViewModel {
 
     public void addContactByUsername(String username){
         mRepository.addChat(username);
-//        if (!mRepository.addChat(username)){
-//            return false;
-//        }
-//        reload();
-//        return true;
-        return;
     }
 }
