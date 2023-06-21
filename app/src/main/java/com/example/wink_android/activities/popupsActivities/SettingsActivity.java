@@ -77,11 +77,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        setTheme();
-    }
     private void setTheme() {
 
         boolean isDarkMode = chatViewModel.getTheme();
