@@ -41,10 +41,22 @@ public class ChatRepository {
 //        deleteUserDetailsFromRepo();
         API = new ApiRequests(this);
     }
+
+    //get the last message for a chat
+    public LiveData<Message> getLastMessageForChat(int id) {
+        return messageDao.getLastMessageForChat();
+    }
+
+    public Message getMessageById(int id){
+        return messageDao.getMessageById(id);
+    }
+
     //making the api update the chats
     public void repositoryUpdateChats(){
-    API.getFriends(token);
-        darkMode = false;
+        Thread thread = new Thread(() -> {
+            API.getFriends(token);
+        });
+        thread.start();
     }
     public void switchTheme(){
         darkMode = !darkMode;
@@ -196,5 +208,9 @@ public class ChatRepository {
 
     public LiveData<List<Message>> getMessages() {
         return messageDao.getAllMessages();
+    }
+
+    public void updateChat(Chat updatedChat) {
+        chatDao.updateChat(updatedChat);
     }
 }

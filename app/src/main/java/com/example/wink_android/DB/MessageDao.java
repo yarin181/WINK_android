@@ -28,4 +28,12 @@ public interface MessageDao {
 
     @Query("SELECT * FROM messages")
     LiveData<List<Message>> getAllMessages();
+
+    //get last message for chat
+    @Query("SELECT * FROM messages LIMIT 1")
+    LiveData<Message> getLastMessageForChat();
+
+    //get messages by id
+    @Query("SELECT * FROM messages WHERE id = :id")
+    Message getMessageById(int id);
 }

@@ -2,6 +2,8 @@ package com.example.wink_android.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
+import com.example.wink_android.DB.Message;
 import com.example.wink_android.DB.User;
 import com.example.wink_android.R;
 import com.example.wink_android.activities.popupsActivities.AddUserActivity;
@@ -109,12 +112,31 @@ public class UsersActivity extends AppCompatActivity {
         RecyclerViewItemClickListener itemTouchListener = new RecyclerViewItemClickListener(this, recyclerView, itemClickListener);
         recyclerView.addOnItemTouchListener(itemTouchListener);
 
-        viewModel.getChats().observe(this, v->{
-            if (v != null && v.size() != 0){
+        viewModel.getChats().observe(this, v -> {
+            if (v != null && v.size() != 0) {
                 adapter.setChats(v);
-
+                // Set the last message of each chat
+//                Thread thread = new Thread(() -> {
+//                    for (Chat chat : v) {
+//                        if (chat.getLastMessageId() > 0) {
+//                            Message message = viewModel.getMessageById(chat.getLastMessageId());
+//                            if (message != null) {
+//                                chat.setLsatMessage(message);
+//                            }else
+//                            {
+//                                int x=5;
+//                            }
+//                        }
+//                    }
+//                    // Post a runnable to update the adapter on the main thread (UI thread)
+//                    new Handler(Looper.getMainLooper()).post(() -> {
+//
+//                    });
+//                });
+//                thread.start();
             }
         });
+
 
 
         binding.addContact.setOnClickListener(view -> {
@@ -127,10 +149,25 @@ public class UsersActivity extends AppCompatActivity {
             startActivity(intent);
             viewModel.editSettings();
         });
+
         binding.logoutButton.setOnClickListener(v ->{
             viewModel.deleteUserDetails();
             finish();
         });
+
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
+            viewModel.updateChats();
+            binding.swipeRefreshLayout.setRefreshing(false);
+        });
+
+//        binding.swipeRefreshLayout.setOnRefreshListener(=> {
+//            // Perform your refresh logic here
+//            // This code will be executed when the user pulls down on the screen
+//            // You can fetch new data, update the RecyclerView, etc.
+//
+//            // Once your refresh logic is complete, call setRefreshing(false) to stop the loading indicator
+//            binding.swipeRefreshLayout.isRefreshing = false;
+//        }
 
 
 //        setConnectUser();

@@ -34,7 +34,6 @@ public class Login extends AppCompatActivity {
     private String enteredUserName;
     private Button loginBtn,registerBtn;
     private ImageButton settingsBtn;
-    private ChatRepository repository;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,8 @@ public class Login extends AppCompatActivity {
             Intent i = new Intent(Login.this, UsersActivity.class);
             i.putExtra("connected",true);
             startActivity(i);
+        }else {
+            viewModel.deleteUserDetails();
         }
 
         setContentView(R.layout.activity_login);

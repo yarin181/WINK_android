@@ -12,6 +12,7 @@ import com.example.wink_android.DB.Message;
 import com.example.wink_android.repository.ChatRepository;
 import com.example.wink_android.requests.AddFriendCallback;
 import com.example.wink_android.requests.BasicUserData;
+import com.example.wink_android.requests.LastMessage;
 import com.example.wink_android.requests.LoginRequest;
 import com.example.wink_android.requests.MessageAnswer;
 import com.example.wink_android.requests.MessageRequest;
@@ -36,7 +37,6 @@ public class ApiRequests {
  private int friendId;
  private final ChatRepository repository;
 
-//String.valueOf(R.string.BaseUrl)
 public ApiRequests( ChatRepository repository){
 this.repository=repository;
     retrofit = new Retrofit.Builder()
@@ -91,28 +91,6 @@ this.repository=repository;
         });
     }
 
-//    public void getToken( String username, String password) {
-//        LoginRequest loginRequest=new LoginRequest(username,password);
-//        Call<ResponseBody> tokenCall = webServiceAPI.postToken(loginRequest);
-//        try {
-//            Response<ResponseBody> response = tokenCall.execute();
-//            if (response.isSuccessful()) {
-//                ResponseBody token = response.body();
-//                if (token != null) {
-//                    repository.setStatus("exist");
-//                    repository.setToken(String.valueOf(token));
-////                    Log.i("ApiRequests", "friend id: " + token);
-//                }
-//            } else {
-//                // Handle unsuccessful response
-//                repository.setStatus("not exist");
-//                Log.e("ApiRequests", "Request failed with code: " + response.code());
-//            }
-//        } catch (IOException e) {
-//            // Handle failure
-//            Log.e("ApiRequests", "Request failed: " + e.getMessage());
-//        }
-//    }
     public void getMyUserData(String username,String token) {
         Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token);
 
@@ -144,7 +122,6 @@ this.repository=repository;
 
     }
     public void registerUser(RegisterRequest registerRequest) {
-//        RegisterRequest registerRequest= new RegisterRequest(username,password,displayName,profilePic);
         Call<ResponseBody> answer = webServiceAPI.postUsers(registerRequest);
 
         answer.enqueue(new Callback<ResponseBody>() {
@@ -175,7 +152,12 @@ this.repository=repository;
         if(friends != null){
             for (UserFriend friend: friends) {
                 BasicUserData user=friend.getUser();
-                chats.add(new Chat(friend.getId(), user.getUsername(), user.getDisplayName(), Utilities.compressImage(user.getProfilePic())));
+                LastMessage lastMessage=friend.getLastMessage();
+                if(lastMessage!=null){
+                        chats.add(new Chat(friend.getId(),lastMessage.getContent(),lastMessage.getCreated() ,user.getUsername(), user.getDisplayName(), Utilities.compressImage(user.getProfilePic())));
+                    }else{
+                        chats.add(new Chat(friend.getId(),"" ,"",user.getUsername(), user.getDisplayName(), Utilities.compressImage(user.getProfilePic())));
+                    }
             }
         }
         return chats;
@@ -254,7 +236,7 @@ this.repository=repository;
                 UserFriend friend = response.body();
                 if (friend != null) {
                     BasicUserData user = friend.getUser();
-                    Chat chat = new Chat(friend.getId(),user.getUsername()
+                    Chat chat = new Chat(friend.getId(),"","", user.getUsername()
                             ,user.getDisplayName(), Utilities.compressImage(user.getProfilePic()));
                     repository.add(chat);
                     repository.setStatus("success add chat");
@@ -330,8 +312,14 @@ this.repository=repository;
                     for (Message message:messages) {
                         repository.addMessage(message,friendId);
                     }
-                    if (messages.size()>0) {
+                    if (messages.size()>0)    {
                         Log.i("ApiRequests", " id: " + answers.get(0).getId());
+                        String lastMessageContent = messages.get(0).getContent();
+                        String lastMessageCreated = messages.get(0).getCreated();
+                        Chat updatedChat= repository.getChatById(friendId);
+                        updatedChat.setLastMessageContent(lastMessageContent);
+                        updatedChat.setLastMessageCreated(lastMessageCreated);
+                        repository.updateChat(updatedChat);
                     }
                 } else {
                     // Handle unsuccessful response

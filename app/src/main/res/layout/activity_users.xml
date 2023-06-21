@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <!-- Contacts List -->
+
     <View
         android:id="@+id/background_view"
         android:layout_width="match_parent"
@@ -89,7 +90,8 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -98,22 +100,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/addContact"
-            android:layout_margin="10dp"
-            android:layout_alignEnd="@id/lstChats"
-            android:layout_alignBottom="@id/lstChats"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@null"
-            android:background="@drawable/circular_button_background"
-            android:contentDescription="@string/add_person"
-            />
-        </RelativeLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/ic_add_person"
+        android:backgroundTint="@null"
+        android:contentDescription="@string/add_person"
+        android:focusable="true" />
 
 
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
