@@ -3,11 +3,13 @@ package com.example.wink_android.general;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.icu.text.SimpleDateFormat;
 import android.media.ExifInterface;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 public class Utilities {
     public  static Bitmap stringToBitmap(String string){
@@ -53,6 +55,37 @@ public class Utilities {
     }
 
     public static String compressImage(String base64Image) {
+        try{
+            byte[] decodedBytes = Base64.decode(removePrefixFromBase64Image(base64Image), Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+            // Calculate the desired width and height for the compressed image
+            int desiredWidth = 600;
+            int desiredHeight = 600;
+
+            // Resize the bitmap maintaining aspect ratio
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
+
+            // Compress the bitmap to a ByteArrayOutputStream
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream);
+
+            // Convert the compressed bitmap to a byte array
+            byte[] compressedBytes = outputStream.toByteArray();
+
+            // Encode the byte array to base64 string
+            String compressedBase64Image = Base64.encodeToString(compressedBytes, Base64.DEFAULT);
+
+            return compressedBase64Image;
+        }catch (Exception e){
+            e.printStackTrace();
+            base64Image = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC";
+            return  base64Image; // return default image
+        }
+
+    }
+
+    public static String compressImage2(String base64Image) {
         try{
             byte[] decodedBytes = Base64.decode(removePrefixFromBase64Image(base64Image), Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
@@ -135,5 +168,19 @@ public class Utilities {
         return bitmap;
     }
 
+    public static  String convertToDateTime(String string) {
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM HH:mm");
+
+        try {
+            Date date = inputFormat.parse(string);
+            String outputDate = outputFormat.format(date);
+            return outputDate;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return string;
+    }
 
 }
