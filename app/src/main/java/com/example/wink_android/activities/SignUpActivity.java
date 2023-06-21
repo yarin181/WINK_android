@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.wink_android.R;
 import com.example.wink_android.activities.popupsActivities.SettingsActivity;
@@ -96,6 +97,8 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        viewModel=new ChatViewModel();
+        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
@@ -107,7 +110,6 @@ public class SignUpActivity extends AppCompatActivity {
         circleImageView = findViewById(R.id.circleImageView);
         lonInBtn = findViewById(R.id.logIn);
         signUpBtn = findViewById(R.id.signUp);
-        viewModel=new ChatViewModel();
 
 
         registerRequest=new RegisterRequest();
@@ -144,13 +146,13 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    // Show the popup when the EditText gains focus
-                    popupWindow.showAtLocation(passwordEditText, Gravity.TOP, 0, 0);
+
                     // Schedule the dismissal of the popup after 5 seconds
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            popupWindow.dismiss();
+                            // Show the popup when the EditText gains focus
+                            popupWindow.showAtLocation(passwordEditText, Gravity.TOP, 0, 0);
                         }
                     }, 5000); // 5000 milliseconds = 5 seconds
                 } else {
@@ -250,6 +252,18 @@ public class SignUpActivity extends AppCompatActivity {
             startActivity(intent);
             viewModel.editSettings();
         });
+
+    }
+    private void setTheme() {
+        boolean isDarkMode = viewModel.getTheme();
+        if (isDarkMode) {
+            setTheme(R.style.AppTheme_Dark);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        } else {
+            setTheme(R.style.AppTheme_Day);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
     }
 }

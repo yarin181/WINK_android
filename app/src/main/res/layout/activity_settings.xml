@@ -5,15 +5,19 @@
     android:layout_width="match_parent"
     android:padding="10dp"
     android:layout_height="match_parent"
-    android:background="@drawable/dark_bg"
+    android:background="?android:attr/windowBackground"
     android:gravity="center">
     <ImageButton
         android:id="@+id/backBtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:backgroundTint="@null"
-        android:background="@drawable/ic_back_btn"
-        tools:ignore="MissingConstraints" />
+        android:layout_gravity="end"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/settings"
+        android:scaleType="fitEnd"
+        android:src="@drawable/ic_back_btn"
+        tools:ignore="MissingConstraints"
+        app:tint="?android:attr/color" />
 
     <LinearLayout
 
@@ -34,7 +38,7 @@
             android:fontFamily="@font/andika_new_basic"
             android:gravity="center"
             android:text="SETTINGS"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="35sp" />
         <LinearLayout
             android:layout_width="wrap_content"
@@ -48,7 +52,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic_dark_mode"
-                app:tint="@color/white" />
+                app:tint="?android:attr/textColorPrimary" />
 
             <Switch
                 android:id="@+id/switchTheme"
@@ -56,7 +60,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:text="Dark mode"
-                android:textColor="@color/white"
+                android:textColor="?android:attr/textColorPrimary"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
         </LinearLayout>
         <LinearLayout
@@ -70,14 +74,14 @@
                 android:layout_height="40dp"
                 android:layout_margin="6dp"
                 android:src="@drawable/ic_ip_address"
-                app:tint="@color/white" />
+                app:tint="?android:attr/textColorPrimary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/andika_new_basic"
                 android:text="@string/server_ip_address"
-                android:textColor="@color/white"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -96,12 +100,12 @@
 
                 <EditText
                     android:id="@+id/editTextServerIP"
+                    android:paddingLeft="10dp"
                     android:layout_width="300dp"
                     android:layout_height="45dp"
                     android:layout_margin="13dp"
                     android:background="@drawable/input_background"
                     android:fontFamily="@font/andika_new_basic"
-                    android:hint="@string/enter_ip_address"
                     android:inputType="text"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
@@ -113,7 +117,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/custom_button_background"
+            android:background="@drawable/btn_background"
+            android:textColor="?android:attr/textColorPrimary"
             android:fontFamily="@font/andika_new_basic"
             android:text="Set IP" />
 

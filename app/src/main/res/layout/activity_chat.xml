@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/darkBackground"
+    android:background="?android:attr/colorPrimary"
     android:orientation="vertical">
 
         <LinearLayout
@@ -16,12 +16,18 @@
             android:background="@drawable/contact_bar"
             tools:ignore="MissingConstraints">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <ImageButton
                 android:id="@+id/backBtn"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:backgroundTint="@null"
-                android:background="@drawable/ic_back_btn" />
+                android:layout_gravity="end"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="@string/settings"
+                android:scaleType="fitEnd"
+                android:src="@drawable/ic_back_btn"
+                tools:ignore="MissingConstraints"
+                app:tint="?android:attr/color" />
+
 
             <ImageView
                 android:id="@+id/profilePic"

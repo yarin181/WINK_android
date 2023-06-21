@@ -12,11 +12,12 @@
         android:id="@+id/settingsBtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        app:tint="?android:attr/color"
         android:layout_gravity="end"
         android:background="?android:selectableItemBackground"
         android:contentDescription="@string/settings"
         android:scaleType="fitEnd"
-        android:src="@drawable/ic_settings_dark" />
+        android:src="@drawable/ic_settings_dark"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,6 +45,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/usernameEditText"
                 android:layout_width="300dp"
+                android:paddingLeft="10dp"
                 android:layout_height="45dp"
                 android:layout_margin="13dp"
                 android:textSize="12sp"
@@ -66,6 +68,7 @@
                 android:layout_width="300dp"
                 android:layout_height="45dp"
                 android:layout_margin="13dp"
+                android:paddingLeft="10dp"
                 android:textSize="12sp"
                 android:background="@drawable/input_background"
                 android:fontFamily="@font/andika_new_basic"
@@ -84,6 +87,7 @@
                 android:id="@+id/confirmEditText"
                 android:layout_width="300dp"
                 android:layout_height="45dp"
+                android:paddingLeft="10dp"
                 android:layout_margin="13dp"
                 android:textSize="12sp"
                 android:background="@drawable/input_background"
@@ -103,6 +107,7 @@
             android:id="@+id/displayEditText"
             android:layout_width="300dp"
             android:layout_height="45dp"
+            android:paddingLeft="10dp"
             android:layout_margin="13dp"
             android:textSize="12sp"
             android:background="@drawable/input_background"
@@ -126,7 +131,7 @@
             android:layout_height="40dp"
             android:textColor="?android:attr/textColorPrimary"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/custom_button_background"
+            android:background="@drawable/btn_background"
             android:fontFamily="@font/andika_new_basic"
             android:text="@string/signUp" />
 
@@ -143,7 +148,7 @@
             android:layout_width="120dp"
             android:textColor="?android:attr/textColorPrimary"
             android:layout_height="40dp"
-            android:backgroundTint="@color/custom_button_background"
+            android:background="@drawable/btn_background"
             android:fontFamily="@font/andika_new_basic"
             android:text="@string/login" />
 

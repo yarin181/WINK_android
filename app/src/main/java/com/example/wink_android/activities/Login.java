@@ -16,6 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
@@ -27,7 +28,7 @@ import com.example.wink_android.view.ChatViewModel;
 import java.util.Objects;
 
 public class Login extends AppCompatActivity {
-private ChatViewModel viewModel;
+    private ChatViewModel viewModel;
     private EditText editTextName;
     private EditText editTextPassword;
     private String enteredUserName;
@@ -40,6 +41,9 @@ private ChatViewModel viewModel;
 
         ChatDB.getInstance(this);
         viewModel=new ChatViewModel();
+        setTheme();
+        super.onCreate(savedInstanceState);
+
         if(viewModel.getConnectUser()!= null){
             viewModel.setToken(viewModel.getConnectUser().getToken());
             Intent i = new Intent(Login.this, UsersActivity.class);
@@ -47,10 +51,7 @@ private ChatViewModel viewModel;
             startActivity(i);
         }
 
-        //setTheme();
-       super.onCreate(savedInstanceState);
-       setContentView(R.layout.activity_login);
-
+        setContentView(R.layout.activity_login);
 
         editTextName = findViewById(R.id.editTextText1);
         editTextPassword = findViewById(R.id.editTextTextPassword1);
@@ -58,9 +59,9 @@ private ChatViewModel viewModel;
         registerBtn=findViewById(R.id.button2);
         settingsBtn = findViewById(R.id.settingsButtonLogin);
 
+
+
         settingsBtn.setOnClickListener(v-> {
-            Log.i("in onclick","setting btn");
-            showToast("in setting");
 
             Intent intent = new Intent(Login.this, SettingsActivity.class);
             startActivity(intent);
@@ -107,30 +108,30 @@ private ChatViewModel viewModel;
 
             @Override
             public void onClick(View v) {
-                showToast("in setting");
                 Intent intent = new Intent(Login.this, SignUpActivity.class);
                 startActivity(intent);
             }
         });
 
-
     }
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         setTheme();
     }
-    private void setTheme(){
+    private void setTheme() {
         boolean isDarkMode = viewModel.getTheme();
         if (isDarkMode) {
             setTheme(R.style.AppTheme_Dark);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         } else {
             setTheme(R.style.AppTheme_Day);
-            settingsBtn.setImageResource(R.drawable.ic_setting_day);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-        setContentView(R.layout.activity_login);
+
     }
+
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
