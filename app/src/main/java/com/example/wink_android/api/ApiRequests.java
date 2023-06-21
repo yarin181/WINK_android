@@ -2,22 +2,18 @@ package com.example.wink_android.api;
 
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.annotation.NonNull;
 import com.example.wink_android.DB.Chat;
-import com.example.wink_android.DB.ChatDao;
 import com.example.wink_android.DB.User;
+import com.example.wink_android.general.Constants;
 import com.example.wink_android.general.Utilities;
 import com.example.wink_android.DB.Message;
 import com.example.wink_android.repository.ChatRepository;
-import com.example.wink_android.requests.AddFriendCallback;
 import com.example.wink_android.requests.BasicUserData;
 import com.example.wink_android.requests.LastMessage;
 import com.example.wink_android.requests.LoginRequest;
 import com.example.wink_android.requests.MessageAnswer;
 import com.example.wink_android.requests.MessageRequest;
 import com.example.wink_android.requests.RegisterRequest;
-import com.example.wink_android.requests.ServerAnswer;
 import com.example.wink_android.requests.UserFriend;
 
 import java.io.IOException;
@@ -40,8 +36,7 @@ public class ApiRequests {
 public ApiRequests( ChatRepository repository){
 this.repository=repository;
     retrofit = new Retrofit.Builder()
-         .baseUrl("http://10.0.2.2:5000")
-//                 .callbackExecutor(Executor.newSingleThread)
+         .baseUrl(Constants.Default_URL)
          .addConverterFactory(GsonConverterFactory.create())
          .build();
          webServiceAPI = retrofit.create(WebServiceAPI.class);
@@ -49,7 +44,7 @@ this.repository=repository;
 
     public void changeBaseUrl(String ip) {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://" + ip + ":5000")
+                .baseUrl("http://" + ip + ":" + Constants.Default_PORT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
@@ -59,8 +54,6 @@ this.repository=repository;
     public void getToken(String username, String password) {
         LoginRequest loginRequest=new LoginRequest(username,password);
         Call<ResponseBody> token = webServiceAPI.postToken(loginRequest);
-//        Log.i("ApiRequests", token.toString());
-        // You can enqueue the call to execute it asynchronously
         token.enqueue(new Callback<ResponseBody>() {
 
             @Override
@@ -69,22 +62,21 @@ this.repository=repository;
                     try {
                         String token = response.body().string();
                         repository.setToken("bearer "+token);
-                        repository.setStatus("exist");
-                        // Handle the token
+                        repository.setStatus(Constants.EXIST);
                         Log.i("ApiRequests", "Token: " + token);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    repository.setStatus("not exist");
-                    // Handle error response
+                    repository.setStatus(Constants.NOT_EXIST);
                     Log.e("ApiRequests", "Error: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                repository.setStatus("not exist");
+                //repository.setStatus(Constants.NOT_EXIST);
+                repository.setStatus(Constants.FAILED_CONNECT_TO_SERVER);
                 // Handle failure
                 Log.e("ApiRequests", "Failure: " + t.getMessage());
             }
@@ -102,11 +94,11 @@ this.repository=repository;
                     if (userData != null) {
                         repository.getUserDao().insertUser(new User(userData.getUsername(),
                                 userData.getDisplayName(), Utilities.compressImage(userData.getProfilePic()),token));
-                        repository.setStatus("success user details");
+                        repository.setStatus(Constants.SUCCESSFUL_GET_USER_DATA);
                         Log.i("ApiRequests getMyUserData", "Username: " + userData.getUsername());
                     }
                 } else {
-                    repository.setStatus("failed user details");
+                    repository.setStatus(Constants.FAILED_GET_USER_DATA);
                     // Handle unsuccessful response
                     Log.e("ApiRequests getMyUserData", "Request failed with code: " + response.code());
                 }
@@ -115,7 +107,8 @@ this.repository=repository;
             @Override
             public void onFailure(Call<BasicUserData> call, Throwable t) {
                 // Handle failure
-                repository.setStatus("failed user details");
+               // repository.setStatus(Constants.FAILED_GET_USER_DATA);
+                repository.setStatus(Constants.FAILED_CONNECT_TO_SERVER);
                 Log.e("ApiRequests getMyUserData", "Request failed: " + t.getMessage());
             }
         });
@@ -129,12 +122,12 @@ this.repository=repository;
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-
-
+                        repository.setStatus(Constants.SUCCESSFUL_REGISTER);
                         Log.i("ApiRequests", "new user added");
 
                 } else {
                     // Handle error response
+                    repository.setStatus(Constants.FAILED_REGISTER);
                     Log.e("ApiRequests", "Error: " + response.code());
                 }
             }
@@ -142,6 +135,8 @@ this.repository=repository;
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 // Handle failure
+                //repository.setStatus(Constants.FAILED_REGISTER);
+                repository.setStatus(Constants.FAILED_CONNECT_TO_SERVER);
                 Log.e("ApiRequests", "Failure: " + t.getMessage());
             }
         });
@@ -179,12 +174,12 @@ this.repository=repository;
                         if (chats.size()>0)    {
                             Log.i("ApiRequests", "id: " + chats.get(0).getId());
                         }
-                        repository.setStatus("success get chats");
+                        repository.setStatus(Constants.SUCCESSFUL_GET_CHATS);
                     }
 
                 } else {
                     // Handle unsuccessful response
-                    repository.setStatus("failed get chats");
+                    repository.setStatus(Constants.FAILED_GET_CHATS);
 
                     Log.e("ApiRequests", "Request failed with code: " + response.code());
                 }
@@ -193,38 +188,14 @@ this.repository=repository;
             @Override
             public void onFailure(Call<List<UserFriend>> call, Throwable t) {
                 // Handle failure
-                repository.setStatus("failed get chats");
+                //repository.setStatus(Constants.FAILED_GET_CHATS);
+                repository.setStatus(Constants.FAILED_CONNECT_TO_SERVER);
                 Log.e("ApiRequests", "Request failed: " + t.getMessage());
             }
         });
 
 
     }
-//    public void addFriend( String name, String token) {
-//
-//        LoginRequest request = new LoginRequest(name);
-//        Call<UserFriend> friendCall = webServiceAPI.postChats(request, token);
-//
-//        try {
-//            Response<UserFriend> response = friendCall.execute();
-//            if (response.isSuccessful()) {
-//                UserFriend friend = response.body();
-//                if (friend != null) {
-//                    Chat chat = new Chat(friend.getUser().getUsername(), friend.getUser().getDisplayName(), friend.getUser().getProfilePic());
-//                    repository.add(chat);
-//                    repository.setStatus(response.code());
-//                    Log.i("ApiRequests", "friend id: " + friend.getId());
-//                }
-//            } else {
-//                // Handle unsuccessful response
-//                repository.setStatus(response.code());
-//                Log.e("ApiRequests", "Request failed with code: " + response.code());
-//            }
-//        } catch (IOException e) {
-//            // Handle failure
-//            Log.e("ApiRequests", "Request failed: " + e.getMessage());
-//        }
-//    }
     public void addFriend(String name, String token) {
     LoginRequest request = new LoginRequest(name);
     Call<UserFriend> friendCall = webServiceAPI.postChats(request, token);
@@ -239,7 +210,7 @@ this.repository=repository;
                     Chat chat = new Chat(friend.getId(),"","", user.getUsername()
                             ,user.getDisplayName(), Utilities.compressImage(user.getProfilePic()));
                     repository.add(chat);
-                    repository.setStatus("success add chat");
+                    repository.setStatus(Constants.SUCCESSFUL_ADD_CHAT);
 //                    repository.setStatus(response.code());
                     Log.i("ApiRequests", "friend id: " + friend.getId());
                 }
@@ -247,9 +218,9 @@ this.repository=repository;
                 // Handle unsuccessful response
 //                repository.setStatus(response.code());
                 if(response.code()==400){
-                    repository.setStatus("failed add chat - incorrect user");
+                    repository.setStatus(Constants.FAILED_ADD_CHAT_INCORRECT_USER);
                 }else{
-                    repository.setStatus("failed add chat");
+                    repository.setStatus(Constants.FAILED_ADD_CHAT);
                 }
 
 
@@ -260,7 +231,9 @@ this.repository=repository;
         @Override
         public void onFailure(Call<UserFriend> call, Throwable t) {
             // Handle failure
-            repository.setStatus("failed add chat");
+            //repository.setStatus(Constants.FAILED_ADD_CHAT);
+
+            repository.setStatus(Constants.FAILED_CONNECT_TO_SERVER);
             Log.e("ApiRequests", "Request failed: " + t.getMessage());
         }
     });
@@ -287,6 +260,7 @@ this.repository=repository;
             @Override
             public void onFailure(Call<MessageAnswer> call, Throwable t) {
                 // Handle failure
+                repository.setStatus(Constants.FAILED_CONNECT_TO_SERVER);
                 Log.e("ApiRequests", "Request failed: " + t.getMessage());
             }
         });
@@ -330,6 +304,7 @@ this.repository=repository;
             @Override
             public void onFailure(Call<List<MessageAnswer>>call, Throwable t) {
                 // Handle failure
+                repository.setStatus(Constants.FAILED_CONNECT_TO_SERVER);
                 Log.e("ApiRequests", "Request failed: " + t.getMessage());
             }
         });

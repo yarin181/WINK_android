@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wink_android.DB.Message;
 import com.example.wink_android.R;
+import com.example.wink_android.general.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class Messages_RecycleView_Adapter extends RecyclerView.Adapter<Messages_
     @Override
     public void onBindViewHolder(@NonNull MyVieHolder holder, int position) {
         holder.content.setText(messages.get(position).getContent());
-        holder.time.setText(messages.get(position).getCreated());
+        holder.time.setText(Utilities.convertToDateTime(messages.get(position).getCreated(),false));
 
     }
     //the number of items we displayed

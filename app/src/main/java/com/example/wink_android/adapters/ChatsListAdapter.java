@@ -70,7 +70,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
             holder.tvUsername.setText(current.getOtherUsername());
             //Message lastMessage = current.getLsatMessage();
             holder.tvLastMessage.setText(current.getLastMessageContent());
-            holder.tvDate.setText(Utilities.convertToDateTime(current.getLastMessageCreated()));
+            holder.tvDate.setText(Utilities.convertToDateTime(current.getLastMessageCreated(),true));
 
         }
     }

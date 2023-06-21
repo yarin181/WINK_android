@@ -58,16 +58,18 @@
 
             <TextView
                 android:id="@+id/dateTextView"
-                android:textSize="20sp"
-                android:fontFamily="@font/andika_new_basic"
                 android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:fontFamily="@font/andika_new_basic"
                 android:text="TextView"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.86"
                 app:layout_constraintStart_toEndOf="@+id/usernameTextView"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.206"
                 tools:ignore="SmallSp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

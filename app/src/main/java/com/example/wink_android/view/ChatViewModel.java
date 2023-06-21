@@ -148,4 +148,16 @@ public class ChatViewModel extends ViewModel {
     public void addContactByUsername(String username){
         mRepository.addChat(username);
     }
+
+    public void loadSettings() {
+        mRepository.loadSettings();
+    }
+
+    public void storeSettings() {
+        mRepository.storeSettings();
+    }
+
+    public void setInitialStatus() {
+        mRepository.setInitialStatus();
+    }
 }
