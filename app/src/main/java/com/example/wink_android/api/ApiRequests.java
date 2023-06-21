@@ -56,9 +56,11 @@ this.repository=repository;
     }
 
 
-    public void getToken(String username, String password) {
-        LoginRequest loginRequest=new LoginRequest(username,password);
-        Call<ResponseBody> token = webServiceAPI.postToken(loginRequest);
+    public void getToken(String username, String password,String fireBaseToken) {
+
+
+    LoginRequest loginRequest=new LoginRequest(username,password);
+        Call<ResponseBody> token = webServiceAPI.postToken(loginRequest,fireBaseToken);
 //        Log.i("ApiRequests", token.toString());
         // You can enqueue the call to execute it asynchronously
         token.enqueue(new Callback<ResponseBody>() {
@@ -296,7 +298,7 @@ this.repository=repository;
                    MessageAnswer answer = response.body();
                    if (answer != null) {
                    Message message=new Message(answer.getId(),friendId, answer.getCreated(), answer.getSender().getUsername(), answer.getContent());
-                   repository.addMessage(message);
+                   repository.addMessage(message,friendId);
                    repository.setStatus("success send message");
                    Log.i("ApiRequests", "friend id: " + answer.getId());
                    }

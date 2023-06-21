@@ -76,8 +76,8 @@ public class ChatRepository {
         chatDao.deleteAllChats();
         messageDao.deleteAllMessages();
     }
-    public void repositoryLogIn(String username,String password){
-        API.getToken(username,password);
+    public void repositoryLogIn(String username,String password,String fireBaseToken){
+        API.getToken(username,password,fireBaseToken);
     }
     public void repositoryRegister(RegisterRequest registerRequest){
         API.registerUser(registerRequest);
@@ -198,8 +198,9 @@ public class ChatRepository {
         }
     }
 
-    public void addChat(String username){
-        API.addFriend(username,token);
+    public void addChat(String username) {
+        API.addFriend(username, token);
+    }
 
     public LiveData<List<Message>> getMessages() {
         return messageDao.getAllMessages();

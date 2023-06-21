@@ -63,8 +63,8 @@ public class ChatViewModel extends ViewModel {
     public void setConnectUser(String connectUser) {
        mRepository.getUserDetails(connectUser);
     }
-    public void tryToLogin(String username,String password){
-        mRepository.repositoryLogIn(username,password);
+    public void tryToLogin(String username,String password, String fireBaseToken){
+        mRepository.repositoryLogIn(username,password,fireBaseToken);
     }
     public void tryToRegister(RegisterRequest registerRequest){
         mRepository.repositoryRegister(registerRequest);
