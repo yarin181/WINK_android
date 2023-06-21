@@ -122,7 +122,9 @@ public class ChatViewModel extends ViewModel {
     public void setToken(String token){
         mRepository.setToken(token);
     }
-    public void add(Chat chat){mRepository.add(chat);}
+    public void add(Chat chat){
+        mRepository.add(chat);
+    }
 
     public void delete(Chat chat){mRepository.delete(chat);}
 

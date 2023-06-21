@@ -157,7 +157,7 @@ public class Login extends AppCompatActivity {
         editText.setText(errorMessage); // Set the error message text here
 
         builder.setView(dialogView)
-                .setTitle("Event Alert")
+                .setTitle("Error!")
                 .setPositiveButton("OK", (dialogInterface, i) -> {
                     // Perform any necessary action on positive button click
                     dialogInterface.dismiss();

@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import com.example.wink_android.DB.daoes.SettingsInfoDao;
 import com.example.wink_android.DB.entities.SettingsInfo;
 
-@Database(entities = {User.class, Chat.class, Message.class, SettingsInfo.class}, version = 40)
+@Database(entities = {User.class, Chat.class, Message.class, SettingsInfo.class}, version = 41)
 public abstract class ChatDB extends RoomDatabase {
     private static ChatDB instance;
 

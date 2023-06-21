@@ -19,11 +19,13 @@ import android.widget.PopupWindow;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.wink_android.R;
 import com.example.wink_android.activities.popupsActivities.SettingsActivity;
+import com.example.wink_android.general.Constants;
 import com.example.wink_android.general.OvalImageDrawable;
 import com.example.wink_android.requests.RegisterRequest;
 import com.example.wink_android.view.ChatViewModel;
@@ -219,28 +221,32 @@ public class SignUpActivity extends AppCompatActivity {
 
             // only when all the fields are full
             if(isConfirm && isPassword && isDisplayName && isUsername && isProfilePic){
-                //todo -  enter to the data base here
             registerRequest.setUsername(username);
             registerRequest.setPassword(password);
             registerRequest.setDisplayName(displayName);
             viewModel.tryToRegister(registerRequest);
             }
-
         });
 
 
         viewModel.getStatus().observe(this, v->{
-            if(Objects.equals(v, "exist")){
-                View existPopupView = inflater.inflate(R.layout.popup_already_exist, null);
-                PopupWindow existPopupWindow = new PopupWindow(existPopupView, width, height, true);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Show popup of incorrect username or password
-                        existPopupWindow.showAtLocation(signUpBtn, Gravity.TOP, 0, 0);
-                    }
-                }, 5000);
-            }else if(Objects.equals(v, "not exist")){
+            if(Objects.equals(v, Constants.FAILED_REGISTER)){
+                showAlert("username already exist....");
+                // clear fields
+                usernameEditText.setText("");
+                passwordEditText.setText("");
+                confirmEditText.setText("");
+                displayEditText.setText("");
+                circleImageView.setImageResource(R.drawable.circle_image);
+//                View existPopupView = inflater.inflate(R.layout.popup_already_exist, null);
+//                PopupWindow existPopupWindow = new PopupWindow(existPopupView, width, height, true);
+//                new Handler().postDelayed(() -> {
+//                    //Show popup of incorrect username or password
+//                    existPopupWindow.showAtLocation(signUpBtn, Gravity.TOP, 0, 0);
+//                }, 5000);
+            } else if (Objects.equals(v, Constants.FAILED_CONNECT_TO_SERVER)){
+                    showAlert("connection to server failed....");
+            } else if(Objects.equals(v, Constants.SUCCESSFUL_REGISTER)){
                 finish();
             }
         });
@@ -249,6 +255,7 @@ public class SignUpActivity extends AppCompatActivity {
             startActivity(intent);
             viewModel.editSettings();
         });
+
 
     }
     private void setTheme() {
@@ -261,7 +268,23 @@ public class SignUpActivity extends AppCompatActivity {
             setTheme(R.style.AppTheme_Day);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+    }
+    private void showAlert(String errorMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.popup_incorrect_url, null);
+        EditText editText = dialogView.findViewById(R.id.popup_incorrect_tv); // Replace with your actual EditText ID
+        editText.setText(errorMessage); // Set the error message text here
 
+        builder.setView(dialogView)
+                .setTitle("Error!")
+                .setPositiveButton("OK", (dialogInterface, i) -> {
+                    // Perform any necessary action on positive button click
+                    dialogInterface.dismiss();
+                })
+                .setCancelable(true)
+                .show();
+        viewModel.setInitialStatus();
     }
 }
 
