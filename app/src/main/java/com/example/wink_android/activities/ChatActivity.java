@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Base64;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -48,12 +49,13 @@ public class ChatActivity extends AppCompatActivity {
     ChatViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        viewModel=new ChatViewModel();
+        setTheme();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
 
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        viewModel = new ChatViewModel();
 
         Intent intent = getIntent();
         chatId = (intent.getIntExtra("id",DEFAULT_INT));
@@ -119,6 +121,18 @@ public class ChatActivity extends AppCompatActivity {
     private void setConnectUser(){
         binding.contactName.setText(chat.getOtherUsername());
         binding.profilePic.setImageBitmap(Utilities.stringToBitmap(chat.getOtherProfilePic()));
+    }
+    private void setTheme() {
+        boolean isDarkMode = viewModel.getTheme();
+        if (isDarkMode) {
+            setTheme(R.style.AppTheme_Dark);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        } else {
+            setTheme(R.style.AppTheme_Day);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
     }
 //    private String getCurrentTime() {
 //        Calendar calendar = Calendar.getInstance();

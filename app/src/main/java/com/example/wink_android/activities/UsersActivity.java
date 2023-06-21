@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.DB.Message;
 import com.example.wink_android.DB.User;
+import com.example.wink_android.R;
 import com.example.wink_android.activities.popupsActivities.AddUserActivity;
 import com.example.wink_android.activities.popupsActivities.SettingsActivity;
 import com.example.wink_android.adapters.ChatsListAdapter;
@@ -60,13 +62,16 @@ public class UsersActivity extends AppCompatActivity {
     boolean flag =false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+        viewModel.updateChats();
+        setTheme();
         super.onCreate(savedInstanceState);
+
         binding = ActivityUsersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         chatDB = ChatDB.getInstance(getApplicationContext());
 
-        viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-        viewModel.updateChats();
+
         Intent thisIntent = getIntent();
         if(thisIntent.getBooleanExtra("connected",false)){
             setConnectUser();
@@ -186,9 +191,15 @@ public class UsersActivity extends AppCompatActivity {
 
     private void setConnectUser(){
         user = viewModel.getConnectUser();
-//        binding.userPhoto.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(user.getProfilePic())));
-        binding.userPhoto.setImageBitmap(Utilities.stringToBitmap(user.getProfilePic()));
+        binding.userPhoto.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(user.getProfilePic())));
+        //binding.userPhoto.setImageBitmap(Utilities.stringToBitmap(user.getProfilePic()));
         binding.userName.setText(user.getDisplayName());
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setTheme();
     }
 
 //
@@ -242,4 +253,18 @@ public class UsersActivity extends AppCompatActivity {
 ////        }
 ////        usersAdapter.notifyDataSetChanged();
 //    }
+    private void setTheme() {
+        boolean isDarkMode = viewModel.getTheme();
+        if (isDarkMode) {
+            setTheme(R.style.AppTheme_Dark);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        } else {
+            setTheme(R.style.AppTheme_Day);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+    }
 }
+
+

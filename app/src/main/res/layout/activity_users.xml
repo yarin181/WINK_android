@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/darkBackground"
+    android:background="?android:attr/colorPrimary"
     android:layout_height="match_parent">
 
     <!-- Contacts List -->
@@ -66,15 +66,17 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
+                app:tint="?android:attr/color"
                 android:layout_toStartOf="@+id/logoutButton"
                 android:background="?android:selectableItemBackground"
                 android:contentDescription="@string/settings"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_settings" />
+                android:src="@drawable/ic_settings_dark" />
 
             <ImageButton
                 android:id="@+id/logoutButton"
                 android:layout_width="60dp"
+                app:tint="?android:attr/color"
                 android:layout_height="48dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"

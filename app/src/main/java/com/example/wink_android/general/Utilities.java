@@ -7,6 +7,9 @@ import android.icu.text.SimpleDateFormat;
 import android.media.ExifInterface;
 import android.util.Base64;
 
+import com.example.wink_android.R;
+import com.example.wink_android.repository.ChatRepository;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
