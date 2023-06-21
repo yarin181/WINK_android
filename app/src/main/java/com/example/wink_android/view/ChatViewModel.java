@@ -29,6 +29,16 @@ public class ChatViewModel extends ViewModel {
         status=  mRepository.getStatus();
         messages = mRepository.getMessages();
     }
+
+    public LiveData<Message> getLastMessageForChat(int id) {
+        return mRepository.getLastMessageForChat(id);
+    }
+
+    //get messages by id
+    public Message getMessageById(int id){
+        return mRepository.getMessageById(id);
+    }
+
     public void deleteUserDetails(){
         mRepository.deleteUserDetailsFromRepo();
         //        mRepository.getUserDao().deleteAllUsers();
@@ -54,6 +64,9 @@ public class ChatViewModel extends ViewModel {
     public void switchThemMode(){
         mRepository.switchTheme();
     }
+    public boolean getTheme(){
+        return mRepository.getTheme();
+    }
 
     public User getConnectUser() {
 //        mRepository.
@@ -73,6 +86,8 @@ public class ChatViewModel extends ViewModel {
     public void updateChats(){
         mRepository.repositoryUpdateChats();
     }
+
+
 
     public void updateMessagesByChatId(int chatId){
         mRepository.updateMessagesByChatId(chatId);
@@ -133,5 +148,17 @@ public class ChatViewModel extends ViewModel {
 
     public void addContactByUsername(String username){
         mRepository.addChat(username);
+    }
+
+    public void loadSettings() {
+        mRepository.loadSettings();
+    }
+
+    public void storeSettings() {
+        mRepository.storeSettings();
+    }
+
+    public void setInitialStatus() {
+        mRepository.setInitialStatus();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.wink_android.DB;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -12,28 +13,55 @@ import java.util.List;
 public class Chat {
     @PrimaryKey
     private final int id;
-
     private String otherUsername;
     private String otherDisplayName;
     private String otherProfilePic;
+    private String lastMessageContent;
 
-    @Ignore
-    Message lsatMessage;
+    private String lastMessageCreated;
 
-    public Chat(int id, String otherUsername, String otherDisplayName, String otherProfilePic) {
+//    @Ignore
+//    Message lsatMessage;
+
+    public Chat(int id,String lastMessageContent,String lastMessageCreated, String otherUsername, String otherDisplayName, String otherProfilePic) {
         this.id = id;
+        this.lastMessageContent = lastMessageContent;
+        this.lastMessageCreated = lastMessageCreated;
         this.otherUsername = otherUsername;
         this.otherDisplayName = otherDisplayName;
         this.otherProfilePic = otherProfilePic;
     }
 
-    public Message getLsatMessage() {
-        return lsatMessage;
+    public String getLastMessageContent() {
+        return lastMessageContent;
     }
 
-    public void setLsatMessage(Message lsatMessage) {
-        this.lsatMessage = lsatMessage;
+    public void setLastMessageContent(String lastMessageContent) {
+        this.lastMessageContent = lastMessageContent;
     }
+
+    public String getLastMessageCreated() {
+        return lastMessageCreated;
+    }
+
+    public void setLastMessageCreated(String lastMessageCreated) {
+        this.lastMessageCreated = lastMessageCreated;
+    }
+//    public int getLastMessageId() {
+//        return lastMessageId;
+//    }
+//
+//    public void setLastMessageId(int lastMessageId) {
+//        this.lastMessageId = lastMessageId;
+//    }
+
+//    public Message getLsatMessage() {
+//        return lsatMessage;
+//    }
+//
+//    public void setLsatMessage(Message lsatMessage) {
+//        this.lsatMessage = lsatMessage;
+//    }
 
     @NonNull
     public String getOtherUsername() {

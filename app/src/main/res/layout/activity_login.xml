@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/demo_bg"
+    android:background="?android:attr/windowBackground"
     android:gravity="center"
     tools:context=".activities.Login">
 
@@ -29,7 +29,7 @@
             android:fontFamily="@font/andika_new_basic"
             android:gravity="center"
             android:text="@string/login"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="35sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -41,8 +41,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextText1"
-                android:layout_width="300dp"
-                android:layout_height="45dp"
+                android:layout_width="320dp"
+                android:paddingLeft="10dp"
+                android:layout_height="55dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/input_background"
                 android:fontFamily="@font/andika_new_basic"
@@ -62,8 +63,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextPassword1"
-                android:layout_width="300dp"
-                android:layout_height="45dp"
+                android:layout_width="320dp"
+                android:paddingLeft="10dp"
+                android:layout_height="55dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/input_background"
                 android:fontFamily="@font/andika_new_basic"
@@ -76,12 +78,13 @@
         <Button
             android:id="@+id/button"
             android:layout_width="120dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:layout_marginBottom="30dp"
-            android:backgroundTint="@color/custom_button_background"
+            android:background="@drawable/btn_background"
             android:fontFamily="@font/andika_new_basic"
-            android:text="@string/login" />
+            android:text="@string/login"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -90,14 +93,15 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/andika_new_basic"
             android:text="@string/not_register"
-            android:textColor="@color/white" />
+            android:textColor="?android:attr/textColorPrimary" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:textColor="?android:attr/textColorPrimary"
             android:layout_margin="15dp"
-            android:backgroundTint="@color/custom_button_background"
+            android:background="@drawable/btn_background"
             android:fontFamily="@font/andika_new_basic"
             android:text="@string/signUp" />
 
@@ -122,7 +126,7 @@
                 android:fontFamily="@font/andika_new_basic"
                 android:gravity="center"
                 android:text="@string/wink_since_2023"
-                android:textColor="@color/white"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -136,9 +140,10 @@
         android:background="?android:selectableItemBackground"
         android:contentDescription="@string/settings"
         android:scaleType="fitEnd"
-        android:src="@drawable/ic_settings"
+        android:src="@drawable/ic_settings_dark"
         tools:layout_editor_absoluteX="347dp"
         tools:layout_editor_absoluteY="16dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        app:tint="?android:attr/color" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
