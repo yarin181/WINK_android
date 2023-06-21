@@ -171,10 +171,15 @@ public class Utilities {
         return bitmap;
     }
 
-    public static  String convertToDateTime(String string) {
+    public static  String convertToDateTime(String string,boolean isDate) {
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM HH:mm");
+        SimpleDateFormat outputFormat;
+        if (isDate){
+            outputFormat = new SimpleDateFormat("dd/MM HH:mm");
+        }else {
+            outputFormat = new SimpleDateFormat("HH:mm");
+        }
 
         try {
             Date date = inputFormat.parse(string);

@@ -52,6 +52,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintTop_toBottomOf="@+id/contactBar"
         app:layout_constraintBottom_toTopOf="@+id/inputLayout"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,22 +72,21 @@
             <EditText
                 android:id="@+id/massageInput"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:hint="@string/type_a_message"
-                android:textColorHint="#99E4DDDD"
+                android:paddingTop="5dp"
                 android:inputType="text"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textColorHint="#99E4DDDD" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonSend"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="-1dp"
-                android:backgroundTint="@null"
+                android:layout_marginTop="0dp"
                 android:background="@drawable/unable_send_btn"
-                />
+                android:backgroundTint="@null" />
 
         </RelativeLayout>
 

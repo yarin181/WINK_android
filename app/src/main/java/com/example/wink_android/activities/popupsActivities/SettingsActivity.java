@@ -53,6 +53,8 @@ public class SettingsActivity extends AppCompatActivity {
             if(isValidURL(url)){
                 chatViewModel.setIP(binding.editTextServerIP.getText().toString());
                 Toast.makeText(this, "IP Changed to : " + binding.editTextServerIP.getText().toString(), Toast.LENGTH_SHORT).show();
+                binding.editTextServerIP.setText("");
+                binding.editTextServerIP.setHint("The current IP: " + chatViewModel.getIp());
             }
             else{
 
@@ -72,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         });
 
-        binding.editTextServerIP.setHint("The current URL: " + chatViewModel.getIp());
+        binding.editTextServerIP.setHint("The current IP: " + chatViewModel.getIp());
 
     }
 

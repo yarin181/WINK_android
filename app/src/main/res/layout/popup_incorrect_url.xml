@@ -8,7 +8,8 @@
 
     <!-- Customize your popup content here -->
 
-    <TextView
+    <EditText
+        android:id="@+id/popup_incorrect_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="The url is incorrect!"

@@ -13,7 +13,6 @@ import java.util.List;
 public class Chat {
     @PrimaryKey
     private final int id;
-
     private String otherUsername;
     private String otherDisplayName;
     private String otherProfilePic;

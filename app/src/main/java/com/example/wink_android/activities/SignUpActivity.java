@@ -173,21 +173,18 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-        confirmEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    confirm = confirmEditText.getText().toString().trim();
-                    if (!confirm.equals(password) || confirm.isEmpty()) {
-                        confirmEditText.setBackgroundResource(R.drawable.input_failure);
-                        isConfirm = false;
-                    } else {
-                        confirmEditText.setBackgroundResource(R.drawable.input_success);
-                        isConfirm = true;
-                    }
+        confirmEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                confirm = confirmEditText.getText().toString().trim();
+                if (!confirm.equals(password) || confirm.isEmpty()) {
+                    confirmEditText.setBackgroundResource(R.drawable.input_failure);
+                    isConfirm = false;
+                } else {
+                    confirmEditText.setBackgroundResource(R.drawable.input_success);
+                    isConfirm = true;
                 }
-
             }
+
         });
         displayEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -242,7 +239,7 @@ public class SignUpActivity extends AppCompatActivity {
                         //Show popup of incorrect username or password
                         existPopupWindow.showAtLocation(signUpBtn, Gravity.TOP, 0, 0);
                     }
-                }, 5000); // 5000 milliseconds = 5 seconds
+                }, 5000);
             }else if(Objects.equals(v, "not exist")){
                 finish();
             }
