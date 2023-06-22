@@ -11,7 +11,7 @@
         android:drawable="@drawable/ic_add_person"
         android:gravity="center"
         android:paddingRight="4dp"
-        android:width="35dp"
-        android:height="35dp"/>
+        android:width="40dp"
+        android:height="40dp"/>
 
 </layer-list>

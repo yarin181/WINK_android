@@ -33,5 +33,8 @@ public class AddUserActivity extends AppCompatActivity {
                 (Toast.makeText(this, "Not a Valid username", Toast.LENGTH_LONG)).show();
             }
         });
+        binding.closeBtn.setOnClickListener(view -> {
+            finish();
+        });
     }
 }

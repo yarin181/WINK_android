@@ -120,7 +120,7 @@ public class ChatActivity extends AppCompatActivity {
     }
     private void setConnectUser(){
         binding.contactName.setText(chat.getOtherUsername());
-        binding.profilePic.setImageBitmap(Utilities.stringToBitmap(chat.getOtherProfilePic()));
+        binding.profilePic.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(chat.getOtherProfilePic())));
     }
     private void setTheme() {
         boolean isDarkMode = viewModel.getTheme();

@@ -3,10 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="10dp"
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground"
     android:gravity="center"
     tools:context=".activities.Login">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/settingsButtonLogin"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@string/settings"
+            android:scaleType="fitEnd"
+            android:src="@drawable/ic_settings_dark"
+            app:tint="?android:attr/color" />
+    </RelativeLayout>
 
     <LinearLayout
 
@@ -42,7 +61,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextText1"
                 android:layout_width="320dp"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:layout_height="55dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/input_background"
@@ -132,18 +151,6 @@
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/settingsButtonLogin"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="end"
-        android:background="?android:selectableItemBackground"
-        android:contentDescription="@string/settings"
-        android:scaleType="fitEnd"
-        android:src="@drawable/ic_settings_dark"
-        tools:layout_editor_absoluteX="347dp"
-        tools:layout_editor_absoluteY="16dp"
-        tools:ignore="MissingConstraints"
-        app:tint="?android:attr/color" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
