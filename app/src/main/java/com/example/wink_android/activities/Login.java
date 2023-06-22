@@ -44,6 +44,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if(viewModel.getConnectUser()!= null){
+            finish();
             viewModel.setToken(viewModel.getConnectUser().getToken());
             Intent i = new Intent(Login.this, UsersActivity.class);
             i.putExtra("connected",true);
@@ -120,13 +121,6 @@ public class Login extends AppCompatActivity {
 
 
     }
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        viewModel.deleteUserDetails();
-        setTheme();
-    }
-
 
     private void setTheme() {
         boolean isDarkMode = viewModel.getTheme();
@@ -141,9 +135,6 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 
     private void showAlert(String errorMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

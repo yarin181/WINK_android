@@ -134,9 +134,5 @@ public class ChatActivity extends AppCompatActivity {
         }
 
     }
-//    private String getCurrentTime() {
-//        Calendar calendar = Calendar.getInstance();
-//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-//        return sdf.format(calendar.getTime());
-//    }
+
 }
