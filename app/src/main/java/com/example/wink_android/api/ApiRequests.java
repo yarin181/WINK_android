@@ -51,9 +51,13 @@ this.repository=repository;
     }
 
 
-    public void getToken(String username, String password) {
-        LoginRequest loginRequest=new LoginRequest(username,password);
-        Call<ResponseBody> token = webServiceAPI.postToken(loginRequest);
+    public void getToken(String username, String password,String fireBaseToken) {
+
+
+    LoginRequest loginRequest=new LoginRequest(username,password);
+        Call<ResponseBody> token = webServiceAPI.postToken(loginRequest,fireBaseToken);
+//        Log.i("ApiRequests", token.toString());
+        // You can enqueue the call to execute it asynchronously
         token.enqueue(new Callback<ResponseBody>() {
 
             @Override
@@ -241,6 +245,7 @@ this.repository=repository;
 
     public void sendMessage(int id,String message,String token) {
         MessageRequest messageRequest=new MessageRequest(message);
+        friendId=id;
 //        Call<UserFriend> friendCall = webServiceAPI.postChats(request, token);
         Call<MessageAnswer> messageAnswerCall= webServiceAPI.postChatsIdMessages(id,token,messageRequest);
         messageAnswerCall.enqueue(new Callback<MessageAnswer>() {
@@ -248,9 +253,12 @@ this.repository=repository;
             public void onResponse(Call<MessageAnswer> call, Response<MessageAnswer> response) {
                 if (response.isSuccessful()) {
                    MessageAnswer answer = response.body();
-                    if (answer != null) {
-                        Log.i("ApiRequests", "friend id: " + answer.getId());
-                    }
+                   if (answer != null) {
+//                   Message message=new Message(answer.getId(),friendId, answer.getCreated(), answer.getSender().getUsername(), answer.getContent());
+//                   repository.addMessage(message,friendId);
+//                   repository.setStatus("success send message");
+                   Log.i("ApiRequests", "friend id: " + answer.getId());
+                   }
                 } else {
                     // Handle unsuccessful response
                     Log.e("ApiRequests", "Request failed with code: " + response.code());
@@ -269,7 +277,8 @@ this.repository=repository;
         List<Message> messages=new ArrayList<>();
         if(answers !=null){
             for (MessageAnswer answer: answers) {
-                messages.add(new Message(answer.getId(),id,answer.getCreated(),answer.getSender().getUsername(),answer.getContent()));
+//                messages.add(new Message())
+                messages.add(new Message(answer.getId(),id,answer.getCreated(),answer.getSender().getDisplayName(),answer.getContent()));
             }
         }
         return messages;
@@ -286,7 +295,7 @@ this.repository=repository;
                     for (Message message:messages) {
                         repository.addMessage(message,friendId);
                     }
-                    if (messages.size()>0)    {
+                    if (messages.size()>0) {
                         Log.i("ApiRequests", " id: " + answers.get(0).getId());
                         String lastMessageContent = messages.get(0).getContent();
                         String lastMessageCreated = messages.get(0).getCreated();
