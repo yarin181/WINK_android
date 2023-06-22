@@ -66,6 +66,8 @@ public class ChatActivity extends AppCompatActivity {
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+
         // back to the contact list
         binding.backBtn.setOnClickListener(view -> {
             this.finish();
