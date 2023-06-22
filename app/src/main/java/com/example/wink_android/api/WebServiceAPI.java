@@ -22,7 +22,7 @@ import retrofit2.http.Path;
 
 public interface WebServiceAPI {
     @POST("/api/Tokens/") // Replace "token" with your actual endpoint path
-    Call<ResponseBody> postToken(@Body LoginRequest loginRequest);
+    Call<ResponseBody> postToken(@Body LoginRequest loginRequest, @Header("Authorization") String fireBaseToken);
     @GET("/api/Users/{username}/")
     Call<BasicUserData> getUsersUsername(@Path("username") String username, @Header("Authorization") String token);
     @POST("/api/Users/")
