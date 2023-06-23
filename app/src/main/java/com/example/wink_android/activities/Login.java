@@ -121,6 +121,11 @@ public class Login extends AppCompatActivity {
 
 
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setTheme();
+    }
 
     private void setTheme() {
         boolean isDarkMode = viewModel.getTheme();

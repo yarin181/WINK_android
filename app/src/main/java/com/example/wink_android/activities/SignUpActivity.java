@@ -265,7 +265,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -302,6 +301,10 @@ public class SignUpActivity extends AppCompatActivity {
                 isProfilePic = true;
             }
         }
+    }@Override
+    protected void onStart() {
+        super.onStart();
+        setTheme();
     }
     private Bitmap createCircularBitmap(Bitmap bitmap) {
         int diameter = Math.min(bitmap.getWidth(), bitmap.getHeight());
