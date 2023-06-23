@@ -73,18 +73,18 @@ public class ChatViewModel extends ViewModel {
         return mRepository.getConnectedUser();
     }
 
-    public void setConnectUser(String connectUser) {
-       mRepository.getUserDetails(connectUser);
+    public void setConnectUser(String connectUser,String fireBaseToken) {
+       mRepository.getUserDetails(connectUser,fireBaseToken);
     }
-    public void tryToLogin(String username,String password, String fireBaseToken){
-        mRepository.repositoryLogIn(username,password,fireBaseToken);
+    public void tryToLogin(String username,String password){
+        mRepository.repositoryLogIn(username,password);
     }
     public void tryToRegister(RegisterRequest registerRequest){
         mRepository.repositoryRegister(registerRequest);
     }
     //making the api update the chats
-    public void updateChats(){
-        mRepository.repositoryUpdateChats();
+    public void updateChats(String fireBaseToken){
+        mRepository.repositoryUpdateChats(fireBaseToken,getConnectUser().getUsername());
     }
 
 
