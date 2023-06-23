@@ -87,8 +87,8 @@ this.repository=repository;
         });
     }
 
-    public void getMyUserData(String username,String token,String fireBaseToken) {
-        Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token,fireBaseToken);
+    public void getMyUserData(String username,String token) {
+        Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token);
 
         userData.enqueue(new Callback<BasicUserData>() {
             @Override
@@ -161,8 +161,8 @@ this.repository=repository;
         }
         return chats;
     }
-    public void getFriends(String token,String fireBaseToken,String username) {
-    Call <List<UserFriend>> chats = webServiceAPI.getChats(token,fireBaseToken,username);
+    public void getFriends(String token,String fireBaseToken) {
+    Call <List<UserFriend>> chats = webServiceAPI.getChats(token,fireBaseToken);
         //Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token);
 
         chats.enqueue(new Callback<List<UserFriend>>() {

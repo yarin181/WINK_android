@@ -24,11 +24,13 @@ public interface WebServiceAPI {
     @POST("/api/Tokens/") // Replace "token" with your actual endpoint path
     Call<ResponseBody> postToken(@Body LoginRequest loginRequest);
     @GET("/api/Users/{username}/")
-    Call<BasicUserData> getUsersUsername(@Path("username") String username, @Header("Authorization") String token,@Header("fireBaseToken") String fireBaseToken);
+    Call<BasicUserData> getUsersUsername(@Path("username") String username, @Header("Authorization") String token);
     @POST("/api/Users/")
     Call<ResponseBody> postUsers(@Body RegisterRequest registerRequest );
     @GET("api/Chats/")
-    Call <List<UserFriend>>getChats(@Header("Authorization") String token,@Header("fireBaseToken") String fireBaseToken,@Header("fireBaseSender") String username);
+    Call <List<UserFriend>>getChats(
+            @Header("Authorization") String token
+            ,@Header("FireBaseToken") String fireBaseToken);
     @POST("api/Chats/")
     Call <UserFriend> postChats(@Body LoginRequest loginRequest ,@Header("Authorization") String token);
     @POST("api/Chats/{id}/Messages")

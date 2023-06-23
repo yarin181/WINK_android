@@ -54,9 +54,9 @@ public class ChatRepository {
     }
 
     //making the api update the chats
-    public void repositoryUpdateChats(String fireBaseToken,String username){
+    public void repositoryUpdateChats(String fireBaseToken){
         Thread thread = new Thread(() -> {
-            API.getFriends(token,fireBaseToken,username);
+            API.getFriends(token,fireBaseToken);
         });
         thread.start();
     }
@@ -210,7 +210,7 @@ public class ChatRepository {
             return;
         }else{
             new Thread(()->{
-               API.getMyUserData(username,token,fireBaseToken);
+               API.getMyUserData(username,token);
             }).start();
         }
     }

@@ -3,8 +3,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.Gravity;
@@ -22,6 +29,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.FileProvider;
 
 import com.example.wink_android.R;
 import com.example.wink_android.activities.popupsActivities.SettingsActivity;
@@ -30,16 +38,22 @@ import com.example.wink_android.general.OvalImageDrawable;
 import com.example.wink_android.requests.RegisterRequest;
 import com.example.wink_android.view.ChatViewModel;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import android.util.Base64;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 
 public class SignUpActivity extends AppCompatActivity {
+
 
 
     private EditText usernameEditText;
@@ -64,37 +78,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     private RegisterRequest registerRequest;
     private ChatViewModel viewModel;
+    private static final int REQUEST_IMAGE_GALLERY = 2;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
-
-
-    private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Uri selectedImageUri = result.getData().getData();
-
-                    InputStream inputStream = null;
-                    try {
-                        inputStream = getContentResolver().openInputStream(selectedImageUri);
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-                    // Convert bitmap to byte array and the to base 64
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                    byte[] byteArray = byteArrayOutputStream.toByteArray();
-                    String profilePic = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                    registerRequest.setProfilePic(profilePic);
-
-                    circleImageView.setImageDrawable(new OvalImageDrawable(bitmap));
-                    isProfilePic = true;
-
-                }
-            }
-    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,8 +99,6 @@ public class SignUpActivity extends AppCompatActivity {
         circleImageView = findViewById(R.id.circleImageView);
         lonInBtn = findViewById(R.id.logIn);
         signUpBtn = findViewById(R.id.signUp);
-
-
         registerRequest=new RegisterRequest();
 
 
@@ -131,35 +116,22 @@ public class SignUpActivity extends AppCompatActivity {
                         usernameEditText.setBackgroundResource(R.drawable.input_success);
                         isUsername = true;
                     }
-
+                }
+                else{
+                    usernameEditText.setBackgroundResource(R.drawable.input_background);
                 }
             }
         });
 
-        // Initialize the popup layout
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_password, null);
-
-        // Create the popup window
-        int width = WindowManager.LayoutParams.MATCH_PARENT;
-        int height = WindowManager.LayoutParams.WRAP_CONTENT;
-        PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
         passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
+                    passwordEditText.setBackgroundResource(R.drawable.input_background);
+                    showAlert("The password must contain:\n" + "1. At least one capital letter.\n"
+                            + "2. At least one digit.\n" +  "3. Length of 8-16 characters.");
 
-                    // Schedule the dismissal of the popup after 5 seconds
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Show the popup when the EditText gains focus
-                            popupWindow.showAtLocation(passwordEditText, Gravity.TOP, 0, 0);
-                        }
-                    }, 5000); // 5000 milliseconds = 5 seconds
                 } else {
-                    // Dismiss the popup when the EditText loses focus
-                    popupWindow.dismiss();
                     password = passwordEditText.getText().toString().trim();
                     // regular expression that asks for at least one digit and one capital letter, length between 8-16
                     boolean isValidPassword = password.matches("^(?=.*[A-Z])(?=.*\\d).{8,16}$");
@@ -186,6 +158,10 @@ public class SignUpActivity extends AppCompatActivity {
                     isConfirm = true;
                 }
             }
+            else{
+                confirmEditText.setBackgroundResource(R.drawable.input_background);
+            }
+
 
         });
         displayEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -201,12 +177,14 @@ public class SignUpActivity extends AppCompatActivity {
                         isDisplayName = true;
                     }
                 }
+                else{
+                    displayEditText.setBackgroundResource(R.drawable.input_background);
+                }
 
             }
         });
         circleImageView.setOnClickListener(view -> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            pickImageLauncher.launch(intent);
+            openImageSelectionOptions();
         });
         lonInBtn.setOnClickListener(v -> {
             this.finish();
@@ -218,6 +196,9 @@ public class SignUpActivity extends AppCompatActivity {
             passwordEditText.getOnFocusChangeListener().onFocusChange(passwordEditText, false);
             confirmEditText.getOnFocusChangeListener().onFocusChange(confirmEditText, false);
             displayEditText.getOnFocusChangeListener().onFocusChange(displayEditText, false);
+            if(!isProfilePic){
+               circleImageView.setBackgroundResource(R.drawable.lack_circle_image);
+            }
 
             // only when all the fields are full
             if(isConfirm && isPassword && isDisplayName && isUsername && isProfilePic){
@@ -229,8 +210,11 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-        viewModel.getStatus().observe(this, v->{
-            if(Objects.equals(v, Constants.FAILED_REGISTER)){
+        viewModel.getStatus().observe(this, v-> {
+//            if(Objects.equals(v, "exist")){
+//                showAlert("This username is already exist, choose another username");
+//            }else if(Objects.equals(v, "not exist")){
+            if (Objects.equals(v, Constants.FAILED_REGISTER)) {
                 showAlert("username already exist....");
                 // clear fields
                 usernameEditText.setText("");
@@ -238,24 +222,19 @@ public class SignUpActivity extends AppCompatActivity {
                 confirmEditText.setText("");
                 displayEditText.setText("");
                 circleImageView.setImageResource(R.drawable.circle_image);
-//                View existPopupView = inflater.inflate(R.layout.popup_already_exist, null);
-//                PopupWindow existPopupWindow = new PopupWindow(existPopupView, width, height, true);
-//                new Handler().postDelayed(() -> {
-//                    //Show popup of incorrect username or password
-//                    existPopupWindow.showAtLocation(signUpBtn, Gravity.TOP, 0, 0);
-//                }, 5000);
-            } else if (Objects.equals(v, Constants.FAILED_CONNECT_TO_SERVER)){
-                    showAlert("connection to server failed....");
-            } else if(Objects.equals(v, Constants.SUCCESSFUL_REGISTER)){
+            } else if (Objects.equals(v, Constants.FAILED_CONNECT_TO_SERVER)) {
+                showAlert("connection to server failed....");
+            } else if (Objects.equals(v, Constants.SUCCESSFUL_REGISTER)) {
                 finish();
             }
+
         });
+
         settingsBtn.setOnClickListener(v-> {
             Intent intent = new Intent(SignUpActivity.this, SettingsActivity.class);
             startActivity(intent);
             viewModel.editSettings();
         });
-
 
     }
     private void setTheme() {
@@ -269,15 +248,108 @@ public class SignUpActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
+//    private void showAlert(String errorMessage) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        LayoutInflater inflater = getLayoutInflater();
+//        View dialogView = inflater.inflate(R.layout.popup_incorrect_url, null);
+//        EditText editText = dialogView.findViewById(R.id.popup_incorrect_tv); // Replace with your actual EditText ID
+//        editText.setText(errorMessage); // Set the error message text here
+//
+//        builder.setView(dialogView)
+//                .setTitle("Error!")
+//                .setPositiveButton("OK", (dialogInterface, i) -> {
+//                    // Perform any necessary action on positive button click
+//                    dialogInterface.dismiss();
+//                })
+//                .setCancelable(true)
+//                .show();
+//        viewModel.setInitialStatus();
+//    }
+    private void openImageSelectionOptions() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Image Source");
+        builder.setItems(new CharSequence[]{"Gallery", "Camera"}, (dialog, which) -> {
+            switch (which) {
+                case 0:
+                    openGallery();
+                    break;
+                case 1:
+                    openCamera();
+                    break;
+            }
+        });
+        builder.show();
+    }
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
+    }
+
+
+    private void openCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null) {
+            Bitmap imageBitmap = null;
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    imageBitmap = (Bitmap) extras.get("data");
+                }
+            } else if (requestCode == REQUEST_IMAGE_GALLERY) {
+                Uri selectedImageUri = data.getData();
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(selectedImageUri);
+                    imageBitmap = BitmapFactory.decodeStream(inputStream);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (imageBitmap != null) {
+                // Create a circular bitmap
+                Bitmap circularBitmap = createCircularBitmap(imageBitmap);
+
+                circleImageView.setImageBitmap(circularBitmap);
+
+                // Convert bitmap to byte array and then to base 64
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                circularBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                String profilePic = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                registerRequest.setProfilePic(profilePic);
+
+                isProfilePic = true;
+            }
+        }
+    }
+    private Bitmap createCircularBitmap(Bitmap bitmap) {
+        int diameter = Math.min(bitmap.getWidth(), bitmap.getHeight());
+        Bitmap circularBitmap = Bitmap.createBitmap(diameter, diameter, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(circularBitmap);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        float radius = diameter / 2f;
+        canvas.drawCircle(radius, radius, radius, paint);
+        return circularBitmap;
+    }
+
     private void showAlert(String errorMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_incorrect_url, null);
-        EditText editText = dialogView.findViewById(R.id.popup_incorrect_tv); // Replace with your actual EditText ID
+        View dialogView = inflater.inflate(R.layout.popup, null);
+        EditText editText = dialogView.findViewById(R.id.text); // Replace with your actual EditText ID
         editText.setText(errorMessage); // Set the error message text here
-
         builder.setView(dialogView)
-                .setTitle("Error!")
                 .setPositiveButton("OK", (dialogInterface, i) -> {
                     // Perform any necessary action on positive button click
                     dialogInterface.dismiss();
@@ -286,7 +358,9 @@ public class SignUpActivity extends AppCompatActivity {
                 .show();
         viewModel.setInitialStatus();
     }
+
 }
+
 
 
 

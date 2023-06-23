@@ -36,13 +36,13 @@
                 android:src="@drawable/circle_image" />
 
             <TextView
+                android:textColor="?android:attr/textColorPrimary"
                 android:id="@+id/contactName"
                 android:layout_width="0dp"
                 android:layout_marginStart="20dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColorHint="@color/white"
-                android:textColor="@color/white"
                 android:padding="8dp"
                 android:hint="user's name" />
 
@@ -84,6 +84,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="0dp"
                 android:background="@drawable/unable_send_btn"
                 android:backgroundTint="@null" />

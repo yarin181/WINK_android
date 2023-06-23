@@ -13,6 +13,7 @@ import com.example.wink_android.repository.ChatRepository;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Locale;
 
 public class Utilities {
     public  static Bitmap stringToBitmap(String string){
@@ -171,24 +172,43 @@ public class Utilities {
         return bitmap;
     }
 
-    public static  String convertToDateTime(String string,boolean isDate) {
-
-        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)");
-        SimpleDateFormat outputFormat;
-        if (isDate){
-            outputFormat = new SimpleDateFormat("dd/MM HH:mm");
-        }else {
-            outputFormat = new SimpleDateFormat("HH:mm");
-        }
-
-        try {
-            Date date = inputFormat.parse(string);
-            String outputDate = outputFormat.format(date);
-            return outputDate;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return string;
+//    public static  String convertToDateTime(String string,boolean isDate) {
+//
+//        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)");
+//        SimpleDateFormat outputFormat;
+//        if (isDate){
+//            outputFormat = new SimpleDateFormat("dd/MM HH:mm");
+//        }else {
+//            outputFormat = new SimpleDateFormat("HH:mm");
+//        }
+//
+//        try {
+//            Date date = inputFormat.parse(string);
+//            String outputDate = outputFormat.format(date);
+//            return outputDate;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return string;
+//    }
+public static String convertToDateTime(String string, boolean isDate) {
+    SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)", Locale.ENGLISH);
+    SimpleDateFormat outputFormat;
+    if (isDate) {
+        outputFormat = new SimpleDateFormat("dd/MM HH:mm", Locale.ENGLISH);
+    } else {
+        outputFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
     }
+
+    try {
+        Date date = inputFormat.parse(string);
+        String outputDate = outputFormat.format(date);
+        return outputDate;
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return string;
+}
+
 
 }
