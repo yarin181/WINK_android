@@ -54,9 +54,9 @@ public class ChatRepository {
     }
 
     //making the api update the chats
-    public void repositoryUpdateChats(){
+    public void repositoryUpdateChats(String fireBaseToken,String username){
         Thread thread = new Thread(() -> {
-            API.getFriends(token);
+            API.getFriends(token,fireBaseToken,username);
         });
         thread.start();
     }
@@ -78,15 +78,15 @@ public class ChatRepository {
         User u=userDao.getUser();
         return u;
     }
-    public synchronized void deleteUserDetailsFromRepo(){
+    public void deleteUserDetailsFromRepo(){
 
             userDao.deleteAllUsers();
             chatDao.deleteAllChats();
             messageDao.deleteAllMessages();
 
     }
-    public void repositoryLogIn(String username,String password,String fireBaseToken){
-        API.getToken(username,password,fireBaseToken);
+    public void repositoryLogIn(String username,String password){
+        API.getToken(username,password);
     }
     public void repositoryRegister(RegisterRequest registerRequest){
         API.registerUser(registerRequest);
@@ -204,13 +204,13 @@ public class ChatRepository {
     public LiveData<Chat> getChatByUsername(String username){
         return chatDao.getChatByUsername(username);
     }
-    public void getUserDetails(String username){
+    public void getUserDetails(String username,String fireBaseToken){
         User user = userDao.getUser();
         if (user != null){
             return;
         }else{
             new Thread(()->{
-               API.getMyUserData(username,token);
+               API.getMyUserData(username,token,fireBaseToken);
             }).start();
         }
     }

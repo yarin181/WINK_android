@@ -39,7 +39,6 @@ public class Login extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextPassword;
     private String enteredUserName;
-    private String fireBaseToken;
     private Button loginBtn,registerBtn;
     private ImageButton settingsBtn;
     @SuppressLint("MissingInflatedId")
@@ -47,10 +46,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         ChatDB.getInstance(this);
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
-            String newToken= instanceIdResult.getToken();
-            fireBaseToken=newToken;
-        });
+
         viewModel=new ChatViewModel();
         viewModel.loadSettings();
         setTheme();
@@ -90,7 +86,7 @@ public class Login extends AppCompatActivity {
                 editTextName.setText("");
                 editTextPassword.setText("");
                 enteredUserName = name;
-                viewModel.tryToLogin(name,password,fireBaseToken);
+                viewModel.tryToLogin(name,password);
 
             }
         });
