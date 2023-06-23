@@ -28,6 +28,7 @@ import com.example.wink_android.activities.popupsActivities.SettingsActivity;
 import com.example.wink_android.general.Constants;
 import com.example.wink_android.repository.ChatRepository;
 import com.example.wink_android.view.ChatViewModel;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.w3c.dom.Text;
 
@@ -38,6 +39,7 @@ public class Login extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextPassword;
     private String enteredUserName;
+    private String fireBaseToken;
     private Button loginBtn,registerBtn;
     private ImageButton settingsBtn;
     @SuppressLint("MissingInflatedId")
@@ -45,6 +47,10 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         ChatDB.getInstance(this);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
+            String newToken= instanceIdResult.getToken();
+            fireBaseToken=newToken;
+        });
         viewModel=new ChatViewModel();
         viewModel.loadSettings();
         setTheme();
@@ -84,7 +90,7 @@ public class Login extends AppCompatActivity {
                 editTextName.setText("");
                 editTextPassword.setText("");
                 enteredUserName = name;
-                viewModel.tryToLogin(name,password);
+                viewModel.tryToLogin(name,password,fireBaseToken);
 
             }
         });
