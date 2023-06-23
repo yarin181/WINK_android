@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -29,23 +30,24 @@ public class NotificationService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        if (remoteMessage.getNotification() != null) {
-            createNotificationChannel();
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
-//                    .setSmallIcon(R.drawable.icon)
-                    .setContentTitle(remoteMessage.getNotification().getTitle())
-                    .setContentText(remoteMessage.getNotification().getBody())
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-            if (ActivityCompat.checkSelfPermission(this, "android.permission.USE_NOTIFICATION")
-                    == PackageManager.PERMISSION_GRANTED) {
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-                notificationManager.notify(1, builder.build());
-            }
-        }
-        String temp=remoteMessage.getData().get("text");
+//        if (remoteMessage.getNotification() != null) {
+//            createNotificationChannel();
+//            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
+////                    .setSmallIcon(R.drawable.icon)
+//                    .setContentTitle(remoteMessage.getNotification().getTitle())
+//                    .setContentText(remoteMessage.getNotification().getBody())
+//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//            if (ActivityCompat.checkSelfPermission(this, "android.permission.USE_NOTIFICATION")
+//                    == PackageManager.PERMISSION_GRANTED) {
+//                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//                notificationManager.notify(1, builder.build());
+//            }
+//        }
+//        String temp=remoteMessage.getData().get("text");
 
         int a=1;
+        Log.i("notification","fire base works");
 //        super.onMessageReceived(message);
     }
 

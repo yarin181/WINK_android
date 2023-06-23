@@ -51,11 +51,11 @@ this.repository=repository;
     }
 
 
-    public void getToken(String username, String password,String fireBaseToken) {
+    public void getToken(String username, String password) {
 
 
     LoginRequest loginRequest=new LoginRequest(username,password);
-        Call<ResponseBody> token = webServiceAPI.postToken(loginRequest,fireBaseToken);
+        Call<ResponseBody> token = webServiceAPI.postToken(loginRequest);
 //        Log.i("ApiRequests", token.toString());
         // You can enqueue the call to execute it asynchronously
         token.enqueue(new Callback<ResponseBody>() {
@@ -87,8 +87,8 @@ this.repository=repository;
         });
     }
 
-    public void getMyUserData(String username,String token) {
-        Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token);
+    public void getMyUserData(String username,String token,String fireBaseToken) {
+        Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token,fireBaseToken);
 
         userData.enqueue(new Callback<BasicUserData>() {
             @Override
@@ -161,8 +161,8 @@ this.repository=repository;
         }
         return chats;
     }
-    public void getFriends(String token) {
-    Call <List<UserFriend>> chats = webServiceAPI.getChats(token);
+    public void getFriends(String token,String fireBaseToken,String username) {
+    Call <List<UserFriend>> chats = webServiceAPI.getChats(token,fireBaseToken,username);
         //Call<BasicUserData> userData = webServiceAPI.getUsersUsername(username,token);
 
         chats.enqueue(new Callback<List<UserFriend>>() {
