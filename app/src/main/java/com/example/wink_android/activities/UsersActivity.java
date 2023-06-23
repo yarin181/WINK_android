@@ -68,27 +68,31 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-        viewModel.updateChats(fireBaseToken);
         setTheme();
         super.onCreate(savedInstanceState);
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
-            String newToken= instanceIdResult.getToken();
-            fireBaseToken=newToken;
-        });
+
         binding = ActivityUsersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         chatDB = ChatDB.getInstance(getApplicationContext());
-
-
         Intent thisIntent = getIntent();
         if(thisIntent.getBooleanExtra("connected",false)){
             setConnectUser();
         }else{
             String receivedString = thisIntent.getStringExtra("nameFromLogin");
-            viewModel.setConnectUser(receivedString,fireBaseToken); /// edit to the name got from Login Page/
+            viewModel.setConnectUser(receivedString); /// edit to the name got from Login Page/
         }
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
+            String newToken= instanceIdResult.getToken();
+            fireBaseToken=newToken;
+        });
+        viewModel.updateChats(fireBaseToken);
 
 
+//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
+//            String newToken= instanceIdResult.getToken();
+//            fireBaseToken=newToken;
+//        });
+//        viewModel.updateChats(fireBaseToken);
         activityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -202,6 +206,7 @@ public class UsersActivity extends AppCompatActivity {
         binding.userPhoto.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(user.getProfilePic())));
         //binding.userPhoto.setImageBitmap(Utilities.stringToBitmap(user.getProfilePic()));
         binding.userName.setText(user.getDisplayName());
+
     }
 
     @Override

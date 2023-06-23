@@ -73,8 +73,8 @@ public class ChatViewModel extends ViewModel {
         return mRepository.getConnectedUser();
     }
 
-    public void setConnectUser(String connectUser,String fireBaseToken) {
-       mRepository.getUserDetails(connectUser,fireBaseToken);
+    public void setConnectUser(String connectUser) {
+       mRepository.getUserDetails(connectUser);
     }
     public void tryToLogin(String username,String password){
         mRepository.repositoryLogIn(username,password);
@@ -84,7 +84,7 @@ public class ChatViewModel extends ViewModel {
     }
     //making the api update the chats
     public void updateChats(String fireBaseToken){
-        mRepository.repositoryUpdateChats(fireBaseToken,getConnectUser().getUsername());
+        mRepository.repositoryUpdateChats(fireBaseToken);
     }
 
 
