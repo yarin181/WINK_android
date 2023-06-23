@@ -54,9 +54,9 @@ public class ChatRepository {
     }
 
     //making the api update the chats
-    public void repositoryUpdateChats(String fireBaseToken,String username){
+    public void repositoryUpdateChats(String fireBaseToken){
         Thread thread = new Thread(() -> {
-            API.getFriends(token,fireBaseToken,username);
+            API.getFriends(token,fireBaseToken);
         });
         thread.start();
     }
@@ -125,22 +125,9 @@ public class ChatRepository {
     }
 
     public synchronized void add(Chat chat){
-        chatDao.getAllChats().observeForever(chats -> {
-            if (chats != null) {
-                boolean chatExists = false;
-                for (Chat existingChat : chats) {
-                    if (existingChat.getId() == chat.getId()) {
-                        chatExists = true;
-                        break;
-                    }
-                }
-                if (!chatExists) {
-                    chatDao.insertChat(chat);
-                }
-            } else {
-                chatDao.insertChat(chat);
-            }
-        });
+        if (chatDao.getChatById(chat.getId()) == null) {
+            chatDao.insertChat(chat);
+        }
     }
 
     public void delete(Chat chat){
@@ -166,23 +153,9 @@ public class ChatRepository {
     }
 
     public void addMessage(Message message,int id){
-        messageDao.getMessagesByChatId(id).observeForever(messages -> {
-            if (messages != null) {
-                boolean messageExists = false;
-                for (Message existingMessage : messages) {
-                    if (existingMessage.getId() == message.getId()) {
-                        messageExists = true;
-                        break;
-                    }
-                }
-                if (!messageExists) {
-                    messageDao.insertMessage(message);
-                }
-            } else {
-                messageDao.insertMessage(message);
-            }
-        });
-        //messageDao.insertMessage(message);
+        if (messageDao.getMessageById(message.getId()) == null) {
+            messageDao.insertMessage(message);
+        }
     }
 
     //send a message to the api
@@ -197,14 +170,14 @@ public class ChatRepository {
     public LiveData<Chat> getChatByUsername(String username){
         return chatDao.getChatByUsername(username);
     }
-    public void getUserDetails(String username,String fireBaseToken){
+    public void getUserDetails(String username){
         //userDao.getUser("yoav")
         User user = userDao.getUser();
         if (user != null){
             return;
         }else{
             new Thread(()->{
-               API.getMyUserData(username,token,fireBaseToken);
+               API.getMyUserData(username,token);
             }).start();
         }
     }
