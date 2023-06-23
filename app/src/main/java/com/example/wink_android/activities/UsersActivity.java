@@ -54,6 +54,7 @@ public class UsersActivity extends AppCompatActivity {
     private List<Chat> chats;
     private ArrayAdapter<Chat> chatsAdapter;
     private ChatDB chatDB;
+    private String fireBaseToken;
 
     private ChatViewModel viewModel;
 
@@ -67,10 +68,13 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-        viewModel.updateChats();
+        viewModel.updateChats(fireBaseToken);
         setTheme();
         super.onCreate(savedInstanceState);
-
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
+            String newToken= instanceIdResult.getToken();
+            fireBaseToken=newToken;
+        });
         binding = ActivityUsersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         chatDB = ChatDB.getInstance(getApplicationContext());
@@ -81,7 +85,7 @@ public class UsersActivity extends AppCompatActivity {
             setConnectUser();
         }else{
             String receivedString = thisIntent.getStringExtra("nameFromLogin");
-            viewModel.setConnectUser(receivedString); /// edit to the name got from Login Page/
+            viewModel.setConnectUser(receivedString,fireBaseToken); /// edit to the name got from Login Page/
         }
 
 
@@ -160,7 +164,7 @@ public class UsersActivity extends AppCompatActivity {
         });
 
         binding.swipeRefreshLayout.setOnRefreshListener(() -> {
-            viewModel.updateChats();
+            viewModel.updateChats(fireBaseToken);
             binding.swipeRefreshLayout.setRefreshing(false);
         });
 
