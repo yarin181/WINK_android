@@ -1,23 +1,17 @@
 package com.example.wink_android.activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -25,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 
-import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
 //import com.example.wink_android.Manifest;
 import android.Manifest;
@@ -33,11 +26,8 @@ import android.Manifest;
 import com.example.wink_android.R;
 import com.example.wink_android.activities.popupsActivities.SettingsActivity;
 import com.example.wink_android.general.Constants;
-import com.example.wink_android.repository.ChatRepository;
 import com.example.wink_android.view.ChatViewModel;
 
-
-import org.w3c.dom.Text;
 
 import java.util.Objects;
 
@@ -48,6 +38,7 @@ public class Login extends AppCompatActivity {
     private String enteredUserName;
     private Button loginBtn,registerBtn;
     private ImageButton settingsBtn;
+    private  static boolean booleanIsFirstLunch = true;
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("MissingInflatedId")
     @Override
@@ -60,15 +51,19 @@ public class Login extends AppCompatActivity {
 //        viewModel.deleteUserDetails();
         setTheme();
         super.onCreate(savedInstanceState);
-
-        if(viewModel.getConnectUser()!= null){
-            viewModel.setToken(viewModel.getConnectUser().getToken());
-            Intent i = new Intent(Login.this, UsersActivity.class);
-            i.putExtra("connected",true);
-            startActivity(i);
-        }else {
-            viewModel.deleteUserDetails();
+        if(booleanIsFirstLunch){
+            booleanIsFirstLunch = false;
+            if(viewModel.getConnectUser()!= null){
+                finish();
+                viewModel.setToken(viewModel.getConnectUser().getToken());
+                Intent i = new Intent(Login.this, UsersActivity.class);
+                i.putExtra("connected",true);
+                startActivity(i);
+            }else {
+                viewModel.deleteUserDetails();
+            }
         }
+
 
         setContentView(R.layout.activity_login);
 
@@ -82,7 +77,24 @@ public class Login extends AppCompatActivity {
             String params[]={Manifest.permission.POST_NOTIFICATIONS};
             ActivityCompat.requestPermissions(this,params,1);
         }
+        editTextName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextName.setBackgroundResource(R.drawable.input_background);
+                }
 
+            }
+        });
+        editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextPassword.setBackgroundResource(R.drawable.input_background);
+                }
+
+            }
+        });
 
         settingsBtn.setOnClickListener(v-> {
 
@@ -112,21 +124,7 @@ public class Login extends AppCompatActivity {
                 i.putExtra("nameFromLogin",enteredUserName);
                 startActivity(i);
             }else if(Objects.equals(v, Constants.NOT_EXIST)) {
-                // Initialize the popup layout
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                // Create the popup window
-                int width = WindowManager.LayoutParams.MATCH_PARENT;
-                int height = WindowManager.LayoutParams.WRAP_CONTENT;
-                View popupView = inflater.inflate(R.layout.popup_incorrect_details, null);
-                PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
-
-                editTextName.setBackgroundResource(R.drawable.input_failure);
-                editTextPassword.setBackgroundResource(R.drawable.input_failure);
-
-                new Handler().postDelayed(() -> {
-                    //Show popup of incorrect username or password
-                    popupWindow.showAtLocation(loginBtn, Gravity.TOP, 0, 0);
-                }, 500);
+                showAlert("The password or the username is incorrect");
             }
         });
 
@@ -147,40 +145,33 @@ public class Login extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,params,1);
         }
     }
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        viewModel.deleteUserDetails();
-        setTheme();
-    }
-
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        viewModel.deleteUserDetails();
+//        setTheme();
+//    }
 
     private void setTheme() {
         boolean isDarkMode = viewModel.getTheme();
         if (isDarkMode) {
-            setTheme(R.style.AppTheme_Dark);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         } else {
-            setTheme(R.style.AppTheme_Day);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
     }
 
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 
     private void showAlert(String errorMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_incorrect_url, null);
-        EditText editText = dialogView.findViewById(R.id.popup_incorrect_tv); // Replace with your actual EditText ID
+        View dialogView = inflater.inflate(R.layout.popup, null);
+        EditText editText = dialogView.findViewById(R.id.text); // Replace with your actual EditText ID
         editText.setText(errorMessage); // Set the error message text here
 
         builder.setView(dialogView)
-                .setTitle("Event Alert")
                 .setPositiveButton("OK", (dialogInterface, i) -> {
                     // Perform any necessary action on positive button click
                     dialogInterface.dismiss();

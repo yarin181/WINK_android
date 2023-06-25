@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dark mode theme -->
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/dark_bg</item>
-        <item name="android:colorPrimary">@color/colorSecondary</item>
-        <item name="android:color">@color/black</item>
-        <item name="android:textColorPrimary">@color/white</item>
-    </style>
-    <!-- Day mode theme -->
-    <style name="AppTheme.Day" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/day_bg</item>
-        <item name="android:colorPrimary">#B693F4</item>
-        <item name="android:color">@color/black</item>
-        <item name="android:textColorPrimary">@color/black</item>
-        <!-- Customize other attributes as needed -->
+    <style name="CustomAlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 </resources>
