@@ -1,39 +1,33 @@
 package com.example.wink_android.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-
 import com.example.wink_android.DB.Chat;
-import com.example.wink_android.DB.Message;
+
 import com.example.wink_android.R;
 import com.example.wink_android.adapters.Messages_RecycleView_Adapter;
 
 import com.example.wink_android.databinding.ActivityChatBinding;
+import com.example.wink_android.general.Constants;
 import com.example.wink_android.general.OvalImageDrawable;
 import com.example.wink_android.general.Utilities;
 import com.example.wink_android.view.ChatViewModel;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
-    private ArrayList<Message> messagesArr;
     private final int DEFAULT_INT = 0;
 
 
@@ -64,9 +58,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
         // back to the contact list
-        binding.backBtn.setOnClickListener(view -> {
-            this.finish();
-        });
+        binding.backBtn.setOnClickListener(view -> this.finish());
 
         viewModel.updateMessagesByChatId(chat.getId());
         binding.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
@@ -115,10 +107,34 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        viewModel.getStatus().observe(this, v->{
+           if (Objects.equals(v, Constants.FAILED_CONNECT_TO_SERVER)){
+                showAlert("connection to server failed....");
+                viewModel.setInitialStatus();
+            }
+
+        });
     }
     private void setConnectUser(){
         binding.contactName.setText(chat.getOtherUsername());
         binding.profilePic.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(chat.getOtherProfilePic())));
     }
 
+    private void showAlert(String errorMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.popup, null);
+        EditText editText = dialogView.findViewById(R.id.text); // Replace with your actual EditText ID
+        editText.setText(errorMessage); // Set the error message text here
+
+        builder.setView(dialogView)
+                .setTitle("Error!")
+                .setPositiveButton("OK", (dialogInterface, i) -> {
+                    // Perform any necessary action on positive button click
+                    dialogInterface.dismiss();
+                })
+                .setCancelable(true)
+                .show();
+
+    }
 }

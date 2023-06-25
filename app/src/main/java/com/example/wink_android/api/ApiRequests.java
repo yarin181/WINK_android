@@ -254,9 +254,10 @@ this.repository=repository;
                 if (response.isSuccessful()) {
                    MessageAnswer answer = response.body();
                    if (answer != null) {
-//                   Message message=new Message(answer.getId(),friendId, answer.getCreated(), answer.getSender().getUsername(), answer.getContent());
-//                   repository.addMessage(message,friendId);
-//                   repository.setStatus("success send message");
+                       Message message=new Message(answer.getId(),id,answer.getCreated(),answer.getSender().getUsername(),answer.getContent());
+                       repository.addMessage(message,friendId);
+                       repository.setStatus(Constants.SUCCESSFUL_SEND_MESSAGE);
+                       repository.reloadChatLastMessage(friendId);
                    Log.i("ApiRequests", "friend id: " + answer.getId());
                    }
                 } else {
@@ -278,7 +279,7 @@ this.repository=repository;
         if(answers !=null){
             for (MessageAnswer answer: answers) {
 //                messages.add(new Message())
-                messages.add(new Message(answer.getId(),id,answer.getCreated(),answer.getSender().getDisplayName(),answer.getContent()));
+                messages.add(new Message(answer.getId(),id,answer.getCreated(),answer.getSender().getUsername(),answer.getContent()));
             }
         }
         return messages;

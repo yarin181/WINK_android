@@ -30,4 +30,6 @@ public class Constants {
     public static final int Default_PORT = 5000;
 
     public static final String FAILED_CONNECT_TO_SERVER = "failed connect to the server";
+    public static final String DEFAULT_BASE64_STRING = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC";
+
 }

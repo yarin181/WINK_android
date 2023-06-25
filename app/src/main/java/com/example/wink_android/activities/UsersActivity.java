@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.LiveData;
@@ -29,6 +32,7 @@ import com.example.wink_android.activities.popupsActivities.SettingsActivity;
 import com.example.wink_android.adapters.ChatsListAdapter;
 import com.example.wink_android.adapters.RecyclerViewItemClickListener;
 import com.example.wink_android.databinding.ActivityUsersBinding;
+import com.example.wink_android.general.Constants;
 import com.example.wink_android.general.OvalImageDrawable;
 import com.example.wink_android.general.Utilities;
 import com.example.wink_android.view.ChatViewModel;
@@ -77,18 +81,16 @@ public class UsersActivity extends AppCompatActivity {
             String receivedString = thisIntent.getStringExtra("nameFromLogin");
             viewModel.setConnectUser(receivedString); /// edit to the name got from Login Page/
         }
+
+
+
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
             String newToken= instanceIdResult.getToken();
             fireBaseToken=newToken;
+            viewModel.updateChats(fireBaseToken);
         });
-        viewModel.updateChats(fireBaseToken);
 
 
-//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
-//            String newToken= instanceIdResult.getToken();
-//            fireBaseToken=newToken;
-//        });
-//        viewModel.updateChats(fireBaseToken);
         activityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -123,29 +125,8 @@ public class UsersActivity extends AppCompatActivity {
         viewModel.getChats().observe(this, v -> {
             if (v != null && v.size() != 0) {
                 adapter.setChats(v);
-                // Set the last message of each chat
-//                Thread thread = new Thread(() -> {
-//                    for (Chat chat : v) {
-//                        if (chat.getLastMessageId() > 0) {
-//                            Message message = viewModel.getMessageById(chat.getLastMessageId());
-//                            if (message != null) {
-//                                chat.setLsatMessage(message);
-//                            }else
-//                            {
-//                                int x=5;
-//                            }
-//                        }
-//                    }
-//                    // Post a runnable to update the adapter on the main thread (UI thread)
-//                    new Handler(Looper.getMainLooper()).post(() -> {
-//
-//                    });
-//                });
-//                thread.start();
             }
         });
-
-
 
         binding.addContact.setOnClickListener(view -> {
             Intent intent = new Intent(UsersActivity.this, AddUserActivity.class);
@@ -172,19 +153,20 @@ public class UsersActivity extends AppCompatActivity {
 
         viewModel.getStatus().observe(this,v->{
             //the user details arrived successfully
-            if(Objects.equals(v, "success user details")){
+            if(Objects.equals(v, Constants.SUCCESSFUL_LOGIN)){
                 setConnectUser();
             //the user tried to add a chat the doesn't exist
             }else if(Objects.equals(v, "failed add chat - incorrect user")){
-                //todo - alert that the user doesn't exist
+                showAlert("failed add chat - incorrect user");
             //disconnect the user
-            } else{
-                Toast.makeText(getApplicationContext(), v, Toast.LENGTH_SHORT).show();
-                //todo - disconnect if the user is incorrect
+            } else if (Objects.equals(v, Constants.FAILED_CONNECT_TO_SERVER)) {
+                showAlert(Constants.FAILED_CONNECT_TO_SERVER);
+//                Toast.makeText(getApplicationContext(), v, Toast.LENGTH_SHORT).show();
+//                //todo - disconnect if the user is incorrect
             }
         });
-
     }
+
 
     @Override
     protected void onRestart() {
@@ -199,7 +181,23 @@ public class UsersActivity extends AppCompatActivity {
         binding.userName.setText(user.getDisplayName());
 
     }
+    private void showAlert(String errorMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.popup, null);
+        EditText editText = dialogView.findViewById(R.id.text); // Replace with your actual EditText ID
+        editText.setText(errorMessage); // Set the error message text here
 
+        builder.setView(dialogView)
+                .setTitle("Error!")
+                .setPositiveButton("OK", (dialogInterface, i) -> {
+                    // Perform any necessary action on positive button click
+                    dialogInterface.dismiss();
+                })
+                .setCancelable(true)
+                .show();
+        viewModel.setInitialStatus();
+    }
 }
 
 

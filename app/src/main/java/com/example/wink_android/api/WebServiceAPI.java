@@ -30,7 +30,7 @@ public interface WebServiceAPI {
     @GET("api/Chats/")
     Call <List<UserFriend>>getChats(
             @Header("Authorization") String token
-            ,@Header("FireBaseToken") String fireBaseToken);
+            ,@Header("FireBaseToken") String FireBaseToken);
     @POST("api/Chats/")
     Call <UserFriend> postChats(@Body LoginRequest loginRequest ,@Header("Authorization") String token);
     @POST("api/Chats/{id}/Messages")
