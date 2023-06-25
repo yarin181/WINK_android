@@ -170,6 +170,9 @@ public class ChatRepository {
     public LiveData<Chat> getChatByUsername(String username){
         return chatDao.getChatByUsername(username);
     }
+    public Chat RepositoryGetRealChatByUsername(String username){
+        return chatDao.getRealChatByUsername(username);
+    }
     public void getUserDetails(String username){
         //userDao.getUser("yoav")
         User user = userDao.getUser();

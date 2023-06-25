@@ -3,6 +3,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,18 +19,23 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
 
 import com.example.wink_android.DB.Chat;
 import com.example.wink_android.DB.ChatDB;
+//import com.example.wink_android.Manifest;
+import android.Manifest;
+//import com.example.wink_android.Manifest;
 import com.example.wink_android.R;
 import com.example.wink_android.activities.popupsActivities.SettingsActivity;
 import com.example.wink_android.general.Constants;
 import com.example.wink_android.repository.ChatRepository;
 import com.example.wink_android.view.ChatViewModel;
-import com.google.firebase.iid.FirebaseInstanceId;
+
 
 import org.w3c.dom.Text;
 
@@ -41,6 +48,7 @@ public class Login extends AppCompatActivity {
     private String enteredUserName;
     private Button loginBtn,registerBtn;
     private ImageButton settingsBtn;
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +78,10 @@ public class Login extends AppCompatActivity {
         registerBtn=findViewById(R.id.button2);
         settingsBtn = findViewById(R.id.settingsButtonLogin);
 
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            String params[]={Manifest.permission.POST_NOTIFICATIONS};
+            ActivityCompat.requestPermissions(this,params,1);
+        }
 
 
         settingsBtn.setOnClickListener(v-> {
@@ -78,6 +90,7 @@ public class Login extends AppCompatActivity {
             startActivity(intent);
             viewModel.editSettings();
         });
+
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +139,13 @@ public class Login extends AppCompatActivity {
 
 
 
+    }
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    private void askForAccess(){
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            String params[]={Manifest.permission.POST_NOTIFICATIONS};
+            ActivityCompat.requestPermissions(this,params,1);
+        }
     }
     @Override
     protected void onRestart() {

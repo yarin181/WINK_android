@@ -26,6 +26,8 @@ public interface ChatDao {
     @Query("SELECT * FROM chats WHERE otherUsername = :username")
     LiveData<Chat> getChatByUsername(String username);
 
+    @Query("SELECT * FROM chats WHERE otherUsername = :username")
+    Chat getRealChatByUsername(String username);
 
     @Query("SELECT * FROM chats WHERE id = :id")
     Chat getChatById(int id);
