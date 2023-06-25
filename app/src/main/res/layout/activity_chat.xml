@@ -72,6 +72,7 @@
             <EditText
                 android:id="@+id/massageInput"
                 android:layout_width="match_parent"
+                android:paddingRight="55dp"
                 android:layout_height="50dp"
                 android:hint="@string/type_a_message"
                 android:paddingTop="5dp"
