@@ -27,12 +27,14 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.List;
 
+
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
 public class NotificationService extends FirebaseMessagingService {
     private ChatViewModel viewModel;
     public NotificationService() {
     viewModel=new ChatViewModel();
     }
+
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {

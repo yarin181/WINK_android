@@ -78,6 +78,8 @@ public class UsersActivity extends AppCompatActivity {
             viewModel.setConnectUser(receivedString); /// edit to the name got from Login Page/
         }
 
+
+
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
             String newToken= instanceIdResult.getToken();
             fireBaseToken=newToken;
