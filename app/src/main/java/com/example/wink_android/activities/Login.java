@@ -48,7 +48,6 @@ public class Login extends AppCompatActivity {
         ChatDB.getInstance(this);
 
         viewModel=new ChatViewModel();
-        viewModel.deleteUserDetails();
         viewModel.loadSettings();
         setTheme();
         super.onCreate(savedInstanceState);

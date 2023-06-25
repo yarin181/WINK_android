@@ -17,6 +17,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingLeft="10dp"
             android:background="#DCD6E6">
 
             <TextView
@@ -49,7 +50,6 @@
                 android:id="@+id/userPhotoImageView"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -59,7 +59,7 @@
             <TextView
                 android:id="@+id/dateTextView"
                 android:layout_width="75dp"
-                android:layout_height="17dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/andika_new_basic"
                 android:text="TextView"
