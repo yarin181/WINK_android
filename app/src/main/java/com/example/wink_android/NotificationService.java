@@ -18,6 +18,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.wink_android.DB.Chat;
+import com.example.wink_android.DB.ChatDB;
 import com.example.wink_android.activities.ChatActivity;
 import com.example.wink_android.activities.UsersActivity;
 import com.example.wink_android.view.ChatViewModel;
