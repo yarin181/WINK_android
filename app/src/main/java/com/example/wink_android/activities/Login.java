@@ -31,6 +31,7 @@ public class Login extends AppCompatActivity {
     private String enteredUserName;
     private Button loginBtn,registerBtn;
     private ImageButton settingsBtn;
+    private  static boolean booleanIsFirstLunch = true;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +40,21 @@ public class Login extends AppCompatActivity {
 
         viewModel=new ChatViewModel();
         viewModel.loadSettings();
-//        viewModel.deleteUserDetails();
         setTheme();
         super.onCreate(savedInstanceState);
-
-        if(viewModel.getConnectUser()!= null){
-            finish();
-            viewModel.setToken(viewModel.getConnectUser().getToken());
-            Intent i = new Intent(Login.this, UsersActivity.class);
-            i.putExtra("connected",true);
-            startActivity(i);
-        }else {
-            viewModel.deleteUserDetails();
+        if(booleanIsFirstLunch){
+            booleanIsFirstLunch = false;
+            if(viewModel.getConnectUser()!= null){
+                finish();
+                viewModel.setToken(viewModel.getConnectUser().getToken());
+                Intent i = new Intent(Login.this, UsersActivity.class);
+                i.putExtra("connected",true);
+                startActivity(i);
+            }else {
+                viewModel.deleteUserDetails();
+            }
         }
+
 
         setContentView(R.layout.activity_login);
 
@@ -121,20 +124,13 @@ public class Login extends AppCompatActivity {
 
 
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setTheme();
-    }
 
     private void setTheme() {
         boolean isDarkMode = viewModel.getTheme();
         if (isDarkMode) {
-            setTheme(R.style.AppTheme_Dark);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         } else {
-            setTheme(R.style.AppTheme_Day);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 

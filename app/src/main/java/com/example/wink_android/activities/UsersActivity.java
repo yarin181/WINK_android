@@ -63,8 +63,8 @@ public class UsersActivity extends AppCompatActivity {
     boolean flag =false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-        setTheme();
         super.onCreate(savedInstanceState);
 
         binding = ActivityUsersBinding.inflate(getLayoutInflater());
@@ -186,7 +186,11 @@ public class UsersActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setConnectUser();
+    }
 
     private void setConnectUser(){
         user = viewModel.getConnectUser();
@@ -196,24 +200,6 @@ public class UsersActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setTheme();
-    }
-
-    private void setTheme() {
-        boolean isDarkMode = viewModel.getTheme();
-        if (isDarkMode) {
-            setTheme(R.style.AppTheme_Dark);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-        } else {
-            setTheme(R.style.AppTheme_Day);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
-    }
 }
 
 

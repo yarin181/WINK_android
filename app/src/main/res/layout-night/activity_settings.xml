@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:padding="10dp"
     android:layout_height="match_parent"
-    android:background="@drawable/day_bg"
+    android:background="@drawable/dark_bg"
     android:gravity="center">
     <ImageButton
         android:id="@+id/backBtn"

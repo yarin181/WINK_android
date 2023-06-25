@@ -21,10 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         chatViewModel = new ChatViewModel();
-        setTheme();
         super.onCreate(savedInstanceState);
-
-
         com.example.wink_android.databinding.ActivitySettingsBinding binding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -37,7 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
             Toast.makeText(this, "Theme Changed", Toast.LENGTH_SHORT).show();
             chatViewModel.switchThemMode();
             setTheme();
-            recreate();
         });
         binding.btnSetIP.setOnClickListener((View v) -> {
             String ip = binding.editTextServerIP.getText().toString().trim();
@@ -64,14 +60,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         boolean isDarkMode = chatViewModel.getTheme();
         if (isDarkMode) {
-            setTheme(R.style.AppTheme_Dark);
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
-            setTheme(R.style.AppTheme_Day);
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
     }
