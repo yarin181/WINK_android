@@ -86,7 +86,6 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         viewModel=new ChatViewModel();
-        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
@@ -202,10 +201,10 @@ public class SignUpActivity extends AppCompatActivity {
             // only when all the fields are full
             if(isConfirm && isPassword && isDisplayName && isUsername && isProfilePic){
                 //todo -  enter to the data base here
-            registerRequest.setUsername(username);
-            registerRequest.setPassword(password);
-            registerRequest.setDisplayName(displayName);
-            viewModel.tryToRegister(registerRequest);
+                registerRequest.setUsername(username);
+                registerRequest.setPassword(password);
+                registerRequest.setDisplayName(displayName);
+                viewModel.tryToRegister(registerRequest);
             }
 
         });
@@ -223,18 +222,6 @@ public class SignUpActivity extends AppCompatActivity {
             startActivity(intent);
             viewModel.editSettings();
         });
-
-    }
-    private void setTheme() {
-        boolean isDarkMode = viewModel.getTheme();
-        if (isDarkMode) {
-            setTheme(R.style.AppTheme_Dark);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-        } else {
-            setTheme(R.style.AppTheme_Day);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
 
     }
     private void openImageSelectionOptions() {
@@ -264,7 +251,6 @@ public class SignUpActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

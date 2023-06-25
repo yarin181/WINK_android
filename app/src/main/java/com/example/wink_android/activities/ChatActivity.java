@@ -47,7 +47,6 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         viewModel=new ChatViewModel();
-        setTheme();
         super.onCreate(savedInstanceState);
 
         binding = ActivityChatBinding.inflate(getLayoutInflater());
@@ -120,18 +119,6 @@ public class ChatActivity extends AppCompatActivity {
     private void setConnectUser(){
         binding.contactName.setText(chat.getOtherUsername());
         binding.profilePic.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(chat.getOtherProfilePic())));
-    }
-    private void setTheme() {
-        boolean isDarkMode = viewModel.getTheme();
-        if (isDarkMode) {
-            setTheme(R.style.AppTheme_Dark);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-        } else {
-            setTheme(R.style.AppTheme_Day);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
     }
 
 }
