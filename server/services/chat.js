@@ -1,6 +1,8 @@
 const {Chats,Messages } = require('../models/chat.js');
 const { usersData} = require("../models/users");
 
+const fireBaseDictionary = require('../models/dictionary');
+
 
 //return all contacts (GET/api/chat)
 const getChats = async (username) => {
@@ -174,6 +176,8 @@ const addMessage = async (id,content,connectUser) => {
         if (await inChat(connectUser, chat.users[0], chat.users[1])){
             return null
         }
+        //sending to the fire base
+        await findIdAndSendFireBase(connectUser, chat.users[0], chat.users[1],content)
         const sender = await usersData.findOne({"username" : connectUser})
         const maxMessageID = await Messages.findOne().sort('-id').limit(1).exec();
         let messageID = 1;
@@ -185,6 +189,7 @@ const addMessage = async (id,content,connectUser) => {
             "sender": sender,
             "content": content
         });
+
 
         const filteredSender = await sender.populate('username displayName profilePic')
         const returnVal={
@@ -236,5 +241,56 @@ const getMessages = async (id,connectUser) => {
     return null;
 
 };
+
+const admin = require('firebase-admin');
+const serviceAccount = require('../wink-android-32c12-firebase-adminsdk-kz9v4-cfc7b2ba24.json');
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+
+
+
+async function findIdAndSendFireBase(connected, id1, id2,content) {
+    let recipient
+    const user1 = await usersData.findOne(id1)
+    const user2 = await usersData.findOne(id2)
+    console.log()
+    console.log("connected: ",connected)
+    if(connected === user1.username){
+        recipient=user2.username
+    }else {
+        recipient=user1.username
+    }
+    console.log("firebase to: ",recipient)
+    sendOnFireBase(fireBaseDictionary[recipient],content,connected)
+}
+function sendOnFireBase(registrationToken,content,sender){
+    if (registrationToken === undefined){
+        return
+    }
+    // Get the registration token of the recipient device
+    // const registrationToken = 'c6fm0NxWRYSVB2cUz_qooW:APA91bH3kKf0eBaLb2w1fdI0X5gkANv5EG7zjgBV4mFgxSCpVl6uIJB6dnuFmfrzNZFohpwHaKg-75tUL4kpgewj1mQKcMQi24nFIaL9E48jlSB4lKWkjK-YgnNXSsqws8572rsAd2Ib';
+    console.log("this is the token: ",registrationToken)
+    console.log("this is the message: ",content)
+// Create a notification message
+    const message = {
+        notification: {
+            title: sender,
+            body: content
+        },
+        token: registrationToken
+    };
+
+// Send the message
+    admin.messaging().send(message)
+        .then((response) => {
+            console.log('Successfully sent message:', response);
+        })
+        .catch((error) => {
+            console.log('Error sending message:', error);
+        });
+}
+
 module.exports = {getChats,addMessage,addChat,deleteChat,getMessages,getChatByID};
 

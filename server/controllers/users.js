@@ -1,4 +1,5 @@
 const service = require('../services/users.js')
+
 const registerUser = async (req,res) =>{
    if (!(req.body.username && req.body.password && req.body.displayName && req.body.profilePic)) {
       // If the request body does not match the expected format.
