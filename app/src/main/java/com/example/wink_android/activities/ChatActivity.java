@@ -1,29 +1,19 @@
 package com.example.wink_android.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-
 import com.example.wink_android.DB.Chat;
-import com.example.wink_android.DB.Message;
+
 import com.example.wink_android.R;
 import com.example.wink_android.adapters.Messages_RecycleView_Adapter;
 
@@ -33,17 +23,11 @@ import com.example.wink_android.general.OvalImageDrawable;
 import com.example.wink_android.general.Utilities;
 import com.example.wink_android.view.ChatViewModel;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
-    private ArrayList<Message> messagesArr;
     private final int DEFAULT_INT = 0;
 
 
@@ -74,9 +58,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
         // back to the contact list
-        binding.backBtn.setOnClickListener(view -> {
-            this.finish();
-        });
+        binding.backBtn.setOnClickListener(view -> this.finish());
 
         viewModel.updateMessagesByChatId(chat.getId());
         binding.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
@@ -141,8 +123,8 @@ public class ChatActivity extends AppCompatActivity {
     private void showAlert(String errorMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_incorrect_url, null);
-        EditText editText = dialogView.findViewById(R.id.popup_incorrect_tv); // Replace with your actual EditText ID
+        View dialogView = inflater.inflate(R.layout.popup, null);
+        EditText editText = dialogView.findViewById(R.id.text); // Replace with your actual EditText ID
         editText.setText(errorMessage); // Set the error message text here
 
         builder.setView(dialogView)

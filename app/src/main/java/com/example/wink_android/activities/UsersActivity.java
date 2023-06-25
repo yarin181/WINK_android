@@ -125,29 +125,8 @@ public class UsersActivity extends AppCompatActivity {
         viewModel.getChats().observe(this, v -> {
             if (v != null && v.size() != 0) {
                 adapter.setChats(v);
-                // Set the last message of each chat
-//                Thread thread = new Thread(() -> {
-//                    for (Chat chat : v) {
-//                        if (chat.getLastMessageId() > 0) {
-//                            Message message = viewModel.getMessageById(chat.getLastMessageId());
-//                            if (message != null) {
-//                                chat.setLsatMessage(message);
-//                            }else
-//                            {
-//                                int x=5;
-//                            }
-//                        }
-//                    }
-//                    // Post a runnable to update the adapter on the main thread (UI thread)
-//                    new Handler(Looper.getMainLooper()).post(() -> {
-//
-//                    });
-//                });
-//                thread.start();
             }
         });
-
-
 
         binding.addContact.setOnClickListener(view -> {
             Intent intent = new Intent(UsersActivity.this, AddUserActivity.class);
@@ -186,10 +165,8 @@ public class UsersActivity extends AppCompatActivity {
 //                //todo - disconnect if the user is incorrect
             }
         });
-
-
-
     }
+
 
     @Override
     protected void onRestart() {

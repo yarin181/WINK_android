@@ -1,6 +1,6 @@
 package com.example.wink_android.activities;
 import android.annotation.SuppressLint;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
