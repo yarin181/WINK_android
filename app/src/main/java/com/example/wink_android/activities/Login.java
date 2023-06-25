@@ -1,6 +1,6 @@
 package com.example.wink_android.activities;
 import android.annotation.SuppressLint;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -173,6 +173,7 @@ public class Login extends AppCompatActivity {
         editText.setText(errorMessage); // Set the error message text here
 
         builder.setView(dialogView)
+                .setTitle("Error!")
                 .setPositiveButton("OK", (dialogInterface, i) -> {
                     // Perform any necessary action on positive button click
                     dialogInterface.dismiss();

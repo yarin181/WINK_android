@@ -44,8 +44,8 @@ public class ChatRepository {
     }
 
     //get the last message for a chat
-    public LiveData<Message> getLastMessageForChat(int id) {
-        return messageDao.getLastMessageForChat();
+    public Message getLastMessageForChat(int id) {
+        return messageDao.getLastMessageForChat(id);
     }
 
     public Message getMessageById(int id){
@@ -169,11 +169,12 @@ public class ChatRepository {
     public LiveData<Chat> getChatByUsername(String username){
         return chatDao.getChatByUsername(username);
     }
+
     public Chat RepositoryGetRealChatByUsername(String username){
         return chatDao.getRealChatByUsername(username);
     }
+
     public void getUserDetails(String username){
-        //userDao.getUser("yoav")
         User user = userDao.getUser();
         if (user != null){
             return;
@@ -218,5 +219,18 @@ public class ChatRepository {
 
     public void setInitialStatus() {
         status.setValue(" ");
+    }
+
+    public void reloadChatLastMessage(int friendId) {
+        Chat chat = chatDao.getChatById(friendId);
+        if (chat != null) {
+            Message lastMessage = messageDao.getLastMessageForChat(friendId);
+            if (lastMessage == null) {
+                return;
+            }
+            chat.setLastMessageContent(lastMessage.getContent());
+            chat.setLastMessageCreated(lastMessage.getCreated());
+        }
+        chatDao.updateChat(chat);
     }
 }

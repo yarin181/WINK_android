@@ -30,7 +30,7 @@ public class ChatViewModel extends ViewModel {
         messages = mRepository.getMessages();
     }
 
-    public LiveData<Message> getLastMessageForChat(int id) {
+    public Message getLastMessageForChat(int id) {
         return mRepository.getLastMessageForChat(id);
     }
     public Chat viewModalGetRealChatByUsername(String username){
@@ -126,7 +126,9 @@ public class ChatViewModel extends ViewModel {
     public void setToken(String token){
         mRepository.setToken(token);
     }
-    public void add(Chat chat){mRepository.add(chat);}
+    public void add(Chat chat){
+        mRepository.add(chat);
+    }
 
     public void delete(Chat chat){mRepository.delete(chat);}
 

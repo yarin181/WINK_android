@@ -33,6 +33,7 @@ import androidx.core.content.FileProvider;
 
 import com.example.wink_android.R;
 import com.example.wink_android.activities.popupsActivities.SettingsActivity;
+import com.example.wink_android.general.Constants;
 import com.example.wink_android.general.OvalImageDrawable;
 import com.example.wink_android.requests.RegisterRequest;
 import com.example.wink_android.view.ChatViewModel;
@@ -210,13 +211,23 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-        viewModel.getStatus().observe(this, v->{
-            if(Objects.equals(v, "exist")){
-                showAlert("This username is already exist, choose another username");
-            }else if(Objects.equals(v, "not exist")){
+        viewModel.getStatus().observe(this, v-> {
+            if (Objects.equals(v, Constants.FAILED_REGISTER)) {
+                showAlert("username already exist....");
+                // clear fields
+                usernameEditText.setText("");
+                passwordEditText.setText("");
+                confirmEditText.setText("");
+                displayEditText.setText("");
+                circleImageView.setImageResource(R.drawable.circle_image);
+            } else if (Objects.equals(v, Constants.FAILED_CONNECT_TO_SERVER)) {
+                showAlert("connection to server failed....");
+            } else if (Objects.equals(v, Constants.SUCCESSFUL_REGISTER)) {
                 finish();
             }
+
         });
+
         settingsBtn.setOnClickListener(v-> {
             Intent intent = new Intent(SignUpActivity.this, SettingsActivity.class);
             startActivity(intent);
@@ -300,6 +311,7 @@ public class SignUpActivity extends AppCompatActivity {
         canvas.drawCircle(radius, radius, radius, paint);
         return circularBitmap;
     }
+
     private void showAlert(String errorMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
