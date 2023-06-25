@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:orientation="vertical"
-        android:background="@drawable/sent_message_bubble"
+        android:background="@drawable/sent_message_bubble_day"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         tools:ignore="MissingConstraints">
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:textSize="16sp"
-                android:textColor="@android:color/white"
+                android:textColor="@color/black"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
