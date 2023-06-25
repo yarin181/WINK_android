@@ -123,26 +123,10 @@ public class ChatRepository {
         return chatDao.getAllChats();
     }
 
-    public void add(Chat chat){
+    public synchronized void add(Chat chat){
         if (chatDao.getChatById(chat.getId()) == null) {
             chatDao.insertChat(chat);
         }
-//        chatDao.getAllChats().observeForever(chats -> {
-//            if (chats != null) {
-//                boolean chatExists = false;
-//                for (Chat existingChat : chats) {
-//                    if (existingChat.getId() == chat.getId()) {
-//                        chatExists = true;
-//                        break;
-//                    }
-//                }
-//                if (!chatExists) {
-//                    chatDao.insertChat(chat);
-//                }
-//            } else {
-//                chatDao.insertChat(chat);
-//            }
-//        });
     }
 
     public void delete(Chat chat){
@@ -171,24 +155,6 @@ public class ChatRepository {
         if (messageDao.getMessageById(message.getId()) == null) {
             messageDao.insertMessage(message);
         }
-
-//        messageDao.getMessagesByChatId(id).observeForever(messages -> {
-//            if (messages != null) {
-//                boolean messageExists = false;
-//                for (Message existingMessage : messages) {
-//                    if (existingMessage.getId() == message.getId()) {
-//                        messageExists = true;
-//                        break;
-//                    }
-//                }
-//                if (!messageExists) {
-//                    messageDao.insertMessage(message);
-//                }
-//            } else {
-//                messageDao.insertMessage(message);
-//            }
-//        });
-//        //messageDao.insertMessage(message);
     }
 
     //send a message to the api
@@ -203,7 +169,12 @@ public class ChatRepository {
     public LiveData<Chat> getChatByUsername(String username){
         return chatDao.getChatByUsername(username);
     }
-    public void getUserDetails(String username,String fireBaseToken){
+    public Chat RepositoryGetRealChatByUsername(String username){
+        return chatDao.getRealChatByUsername(username);
+    }
+
+    public void getUserDetails(String username){
+        //userDao.getUser("yoav")
         User user = userDao.getUser();
         if (user != null){
             return;

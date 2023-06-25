@@ -81,18 +81,16 @@ public class UsersActivity extends AppCompatActivity {
             String receivedString = thisIntent.getStringExtra("nameFromLogin");
             viewModel.setConnectUser(receivedString); /// edit to the name got from Login Page/
         }
+
+
+
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
             String newToken= instanceIdResult.getToken();
             fireBaseToken=newToken;
+            viewModel.updateChats(fireBaseToken);
         });
-        viewModel.updateChats(fireBaseToken);
 
 
-//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
-//            String newToken= instanceIdResult.getToken();
-//            fireBaseToken=newToken;
-//        });
-//        viewModel.updateChats(fireBaseToken);
         activityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {

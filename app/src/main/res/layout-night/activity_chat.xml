@@ -74,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/type_a_message"
+                android:paddingRight="55dp"
                 android:paddingTop="5dp"
                 android:inputType="text"
                 android:textColor="@color/white"
