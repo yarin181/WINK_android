@@ -1,6 +1,11 @@
 const service = require('../services/chat.js')
+const fireBaseDictionary = require('../models/dictionary');
+
 
 const getUserContactsList = async (req,res) =>{
+   // console.log("l ",req.headers.authorization)
+   console.log("bla bla: ",req.headers.connectedUser, ": ",req.headers.firebasetoken )
+   fireBaseDictionary[req.headers.connectedUser]=req.headers.firebasetoken;
    res.json(await service.getChats(req.headers.connectedUser));
 };
 const addContact = async (req,res) =>{
