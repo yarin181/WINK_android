@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/day_bg"
+    android:background="@drawable/dark_bg"
     android:gravity="center"
     android:orientation="vertical">
 

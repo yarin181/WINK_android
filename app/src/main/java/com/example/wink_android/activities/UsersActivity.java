@@ -67,8 +67,8 @@ public class UsersActivity extends AppCompatActivity {
     boolean flag =false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-        setTheme();
         super.onCreate(savedInstanceState);
 
         binding = ActivityUsersBinding.inflate(getLayoutInflater());
@@ -193,7 +193,11 @@ public class UsersActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setConnectUser();
+    }
 
     private void setConnectUser(){
         user = viewModel.getConnectUser();
@@ -202,31 +206,11 @@ public class UsersActivity extends AppCompatActivity {
         binding.userName.setText(user.getDisplayName());
 
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setTheme();
-    }
-
-    private void setTheme() {
-        boolean isDarkMode = viewModel.getTheme();
-        if (isDarkMode) {
-            setTheme(R.style.AppTheme_Dark);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-        } else {
-            setTheme(R.style.AppTheme_Day);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
-    }
-
     private void showAlert(String errorMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.popup_incorrect_url, null);
-        EditText editText = dialogView.findViewById(R.id.popup_incorrect_tv); // Replace with your actual EditText ID
+        View dialogView = inflater.inflate(R.layout.popup, null);
+        EditText editText = dialogView.findViewById(R.id.text); // Replace with your actual EditText ID
         editText.setText(errorMessage); // Set the error message text here
 
         builder.setView(dialogView)

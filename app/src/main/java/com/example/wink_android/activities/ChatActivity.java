@@ -10,7 +10,11 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -53,7 +57,6 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         viewModel=new ChatViewModel();
-        setTheme();
         super.onCreate(savedInstanceState);
 
         binding = ActivityChatBinding.inflate(getLayoutInflater());
@@ -134,18 +137,7 @@ public class ChatActivity extends AppCompatActivity {
         binding.contactName.setText(chat.getOtherUsername());
         binding.profilePic.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(chat.getOtherProfilePic())));
     }
-    private void setTheme() {
-        boolean isDarkMode = viewModel.getTheme();
-        if (isDarkMode) {
-            setTheme(R.style.AppTheme_Dark);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
-        } else {
-            setTheme(R.style.AppTheme_Day);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
-    }
     private void showAlert(String errorMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -163,10 +155,4 @@ public class ChatActivity extends AppCompatActivity {
                 .show();
 
     }
-
-//    private String getCurrentTime() {
-//        Calendar calendar = Calendar.getInstance();
-//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-//        return sdf.format(calendar.getTime());
-//    }
 }

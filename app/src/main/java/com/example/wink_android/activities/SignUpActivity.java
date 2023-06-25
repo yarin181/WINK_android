@@ -87,7 +87,6 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         viewModel=new ChatViewModel();
-        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
@@ -202,18 +201,17 @@ public class SignUpActivity extends AppCompatActivity {
 
             // only when all the fields are full
             if(isConfirm && isPassword && isDisplayName && isUsername && isProfilePic){
-            registerRequest.setUsername(username);
-            registerRequest.setPassword(password);
-            registerRequest.setDisplayName(displayName);
-            viewModel.tryToRegister(registerRequest);
+                //todo -  enter to the data base here
+                registerRequest.setUsername(username);
+                registerRequest.setPassword(password);
+                registerRequest.setDisplayName(displayName);
+                viewModel.tryToRegister(registerRequest);
             }
+
         });
 
 
         viewModel.getStatus().observe(this, v-> {
-//            if(Objects.equals(v, "exist")){
-//                showAlert("This username is already exist, choose another username");
-//            }else if(Objects.equals(v, "not exist")){
             if (Objects.equals(v, Constants.FAILED_REGISTER)) {
                 showAlert("username already exist....");
                 // clear fields
@@ -237,34 +235,6 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
     }
-    private void setTheme() {
-        boolean isDarkMode = viewModel.getTheme();
-        if (isDarkMode) {
-            setTheme(R.style.AppTheme_Dark);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-        } else {
-            setTheme(R.style.AppTheme_Day);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-    }
-//    private void showAlert(String errorMessage) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        LayoutInflater inflater = getLayoutInflater();
-//        View dialogView = inflater.inflate(R.layout.popup_incorrect_url, null);
-//        EditText editText = dialogView.findViewById(R.id.popup_incorrect_tv); // Replace with your actual EditText ID
-//        editText.setText(errorMessage); // Set the error message text here
-//
-//        builder.setView(dialogView)
-//                .setTitle("Error!")
-//                .setPositiveButton("OK", (dialogInterface, i) -> {
-//                    // Perform any necessary action on positive button click
-//                    dialogInterface.dismiss();
-//                })
-//                .setCancelable(true)
-//                .show();
-//        viewModel.setInitialStatus();
-//    }
     private void openImageSelectionOptions() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Image Source");
@@ -292,7 +262,6 @@ public class SignUpActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
