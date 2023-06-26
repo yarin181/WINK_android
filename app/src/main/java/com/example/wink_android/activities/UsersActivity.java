@@ -83,8 +83,10 @@ public class UsersActivity extends AppCompatActivity {
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
             String newToken= instanceIdResult.getToken();
             fireBaseToken=newToken;
+            viewModel.setRepositoryFireBaseToken(fireBaseToken);
             viewModel.updateChats(fireBaseToken);
         });
+        viewModel.setIsLogdIn(true);
 
 
         activityLauncher = registerForActivityResult(
@@ -158,6 +160,7 @@ public class UsersActivity extends AppCompatActivity {
 
         binding.logoutButton.setOnClickListener(v ->{
             viewModel.deleteUserDetails();
+            viewModel.setIsLogdIn(false);
             Intent i = new Intent(UsersActivity.this, Login.class);
             startActivity(i);
             finish();

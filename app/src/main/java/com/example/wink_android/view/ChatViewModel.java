@@ -17,6 +17,7 @@ public class ChatViewModel extends ViewModel {
 
     private ChatRepository mRepository;
 
+
     private LiveData<List<Chat>> chats;
     private LiveData<List<Message>> messages;
 //    private String token;
@@ -37,6 +38,18 @@ public class ChatViewModel extends ViewModel {
         return mRepository.RepositoryGetRealChatByUsername(username);
     }
 
+    public void setIsLogdIn(Boolean logdIn) {
+       mRepository.setIsLogdIn(logdIn);
+    }
+    public Boolean getIsLogdIn(){
+       return mRepository.getIsLogdIn();
+    }
+    public void setRepositoryFireBaseToken(String token){
+        mRepository.setFireBaseToken(token);
+    }
+    public String getRepositoryFireBaseToken(){
+        return mRepository.getFireBaseToken();
+    }
     //get messages by id
     public Message getMessageById(int id){
         return mRepository.getMessageById(id);
