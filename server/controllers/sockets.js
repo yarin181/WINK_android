@@ -1,4 +1,9 @@
 const connectedUsers = new Map();
+let io;
+let numOfMessages=1;
+function setIO(ioReference){
+    io = ioReference
+}
 
 function assignNewSocket(username,io){
     io.on('connection', (socket) => {
@@ -22,23 +27,28 @@ function sendWithSocket(recipient,io){
     }
 }
 
-function socketOnConnection (io){
 
-    let numOfMessages=1
+function sendAlertToSocket(to,from){
+    if(connectedUsers.get(to) !== undefined){
+        io.to(connectedUsers.get(to)).emit('message',{ num : numOfMessages, sender: from })
+        numOfMessages++;
+    }
+}
+
+function socketOnConnection (io){
     io.on('connection', (socket) => {
         socket.on('join',(data) => {
             if(!connectedUsers.has(socket.id)){
                 connectedUsers.set( data , socket.id)
                 socket.join(10)
             }
+
         });
         socket.on('messageSent',(from,to) => {
             if(connectedUsers.get(to) !== undefined){
                 io.to(connectedUsers.get(to)).emit('message',{ num : numOfMessages, sender: from })
             }
             numOfMessages++
-
-
         });
 
         // Remove the user from connectedUsers map when they disconnect
@@ -50,6 +60,7 @@ function socketOnConnection (io){
                 }
             }
         });
+
 
     });
 }
@@ -88,4 +99,4 @@ function socketOnConnection (io){
 
 
 
-module.exports = {socketOnConnection};
+module.exports = {socketOnConnection,connectedUsers,sendAlertToSocket,setIO};
