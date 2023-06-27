@@ -16,6 +16,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:paddingLeft="20dp"
             android:layout_height="match_parent"
             android:background="#DCD6E6">
 
@@ -25,9 +26,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/andika_new_basic"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black"
+                android:layout_marginTop="7dp"
                 android:maxLines="1"
+                android:textColor="@color/black"
                 android:ellipsize="end"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -37,12 +38,12 @@
             <TextView
                 android:id="@+id/usernameTextView"
                 android:layout_width="115dp"
+                android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/andika_new_basic"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="TextView"
-                android:textColor="@color/black"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintStart_toEndOf="@+id/userPhotoImageView"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +52,7 @@
                 android:id="@+id/userPhotoImageView"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -61,12 +62,12 @@
             <TextView
                 android:id="@+id/dateTextView"
                 android:layout_width="75dp"
-                android:textColor="@color/black"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/andika_new_basic"
                 android:text="TextView"
-                android:textSize="10sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.86"
