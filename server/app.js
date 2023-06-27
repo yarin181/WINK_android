@@ -19,6 +19,7 @@ const io = new Server(server, {
     }
 });
 app.set("io", io);
+sockets.setIO(io);
 
 app.use(cors());
 
@@ -42,6 +43,7 @@ app.use('/api/Tokens',tokenRouter);
 sockets.socketOnConnection(io)
 
 server.listen(process.env.PORT)
+
 
 // const admin = require('firebase-admin');
 // const serviceAccount = require('./wink-android-32c12-firebase-adminsdk-kz9v4-cfc7b2ba24.json');
