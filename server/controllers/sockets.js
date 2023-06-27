@@ -27,6 +27,7 @@ function sendWithSocket(recipient,io){
     }
 }
 
+
 function sendAlertToSocket(to,from){
     if(connectedUsers.get(to) !== undefined){
         io.to(connectedUsers.get(to)).emit('message',{ num : numOfMessages, sender: from })
