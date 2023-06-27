@@ -30,8 +30,8 @@ public interface MessageDao {
     LiveData<List<Message>> getAllMessages();
 
     //get last message for chat
-    @Query("SELECT * FROM messages LIMIT 1")
-    LiveData<Message> getLastMessageForChat();
+    @Query("SELECT * FROM messages WHERE chatId = :chatId ORDER BY id DESC LIMIT 1")
+    Message getLastMessageForChat(int chatId);
 
     //get messages by id
     @Query("SELECT * FROM messages WHERE id = :id")

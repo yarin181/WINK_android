@@ -1,7 +1,7 @@
 const {Chats,Messages } = require('../models/chat.js');
 const { usersData} = require("../models/users");
-
 const fireBaseDictionary = require('../models/dictionary');
+const {sendAlertToSocket} = require("../controllers/sockets")
 
 
 //return all contacts (GET/api/chat)
@@ -106,8 +106,6 @@ const addChat = async (username, newContact) => {
     return null;
 };
 
-
-
 //get contact by id (GET/api/chat/{id})
 const getChatByID = async (id,connectUser) => {
     const chat = await Chats.findOne({ "id": id });
@@ -162,8 +160,6 @@ const getChatByID = async (id,connectUser) => {
     return null;
 };
 
-
-
 //Delete chat by id (POST/api/chat/{id}
 const deleteChat = async (id) => {
     return Chats.deleteOne({"id":id});
@@ -182,6 +178,7 @@ const addMessage = async (id,content,connectUser) => {
         //sending to the fire base
         await findIdAndSendFireBase(connectUser, chat.users[0], chat.users[1],content)
         const sender = await usersData.findOne({"username" : connectUser})
+        const recipient  = await getRecipient(connectUser, chat.users[0], chat.users[1]);
         const maxMessageID = await Messages.findOne().sort('-id').limit(1).exec();
         let messageID = 1;
         if (maxMessageID && maxMessageID.id) {
@@ -208,10 +205,24 @@ const addMessage = async (id,content,connectUser) => {
         await newMessage.save();
         chat.messages.push(newMessage);
         await chat.save();
+        sendAlertToSocket(recipient.username,filteredSender.username)
+
         return returnVal;
+
     }
     return null
 };
+
+const getRecipient = async (connectUser ,id1, id2) =>{
+    const user1 = await usersData.findOne(id1)
+    const user2 = await usersData.findOne(id2)
+    if (user1 !== connectUser){
+        return user1;
+    }
+    return user2;
+
+}
+
 const inChat= async (connected,id1,id2) =>{
     //check that the sender is in the chat
     const user1 = await usersData.findOne(id1)
@@ -252,20 +263,18 @@ admin.initializeApp({
 });
 
 
-
-
 async function findIdAndSendFireBase(connected, id1, id2,content) {
     let recipient
     const user1 = await usersData.findOne(id1)
     const user2 = await usersData.findOne(id2)
-    console.log()
-    console.log("connected: ",connected)
+    //console.log()
+    //console.log("connected: ",connected)
     if(connected === user1.username){
         recipient=user2.username
     }else {
         recipient=user1.username
     }
-    console.log("firebase to: ",recipient)
+    //console.log("firebase to: ",recipient)
     sendOnFireBase(fireBaseDictionary[recipient],content,connected)
 }
 function sendOnFireBase(registrationToken,content,sender){
@@ -274,8 +283,8 @@ function sendOnFireBase(registrationToken,content,sender){
     }
     // Get the registration token of the recipient device
     // const registrationToken = 'c6fm0NxWRYSVB2cUz_qooW:APA91bH3kKf0eBaLb2w1fdI0X5gkANv5EG7zjgBV4mFgxSCpVl6uIJB6dnuFmfrzNZFohpwHaKg-75tUL4kpgewj1mQKcMQi24nFIaL9E48jlSB4lKWkjK-YgnNXSsqws8572rsAd2Ib';
-    console.log("this is the token: ",registrationToken)
-    console.log("this is the message: ",content)
+    //console.log("this is the token: ",registrationToken)
+    //console.log("this is the message: ",content)
 // Create a notification message
     const message = {
         notification: {
@@ -288,10 +297,10 @@ function sendOnFireBase(registrationToken,content,sender){
 // Send the message
     admin.messaging().send(message)
         .then((response) => {
-            console.log('Successfully sent message:', response);
+            //console.log('Successfully sent message:', response);
         })
         .catch((error) => {
-            console.log('Error sending message:', error);
+            //console.log('Error sending message:', error);
         });
 }
 function sendReloadChatsOnFireBase(registrationToken){
