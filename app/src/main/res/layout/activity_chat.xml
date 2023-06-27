@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#BC9CF4"
+    android:background="@color/lightPurple"
     android:orientation="vertical">
 
         <LinearLayout
@@ -42,9 +42,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColorHint="@color/white"
-                android:padding="8dp"
-                android:hint="user's name" />
+                android:padding="8dp" />
 
         </LinearLayout>
 
@@ -52,6 +50,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/chat_bg_day"
         android:layout_marginBottom="5dp"
         app:layout_constraintTop_toBottomOf="@+id/contactBar"
         app:layout_constraintBottom_toTopOf="@+id/inputLayout"
@@ -77,8 +76,8 @@
                 android:hint="@string/type_a_message"
                 android:paddingTop="5dp"
                 android:inputType="text"
-                android:textColor="@color/white"
-                android:textColorHint="#99E4DDDD" />
+                android:textColor="@color/black"
+                android:textColorHint="#99807B7B" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonSend"
