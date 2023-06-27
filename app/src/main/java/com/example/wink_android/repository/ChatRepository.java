@@ -20,6 +20,8 @@ import java.util.List;
 
 public class ChatRepository {
     private ChatDB chatDB;
+    private String fireBaseToken;
+    private Boolean isLogdIn;
     private final UserDao userDao;
     private MessageDao messageDao;
     private final ChatDao chatDao;
@@ -41,6 +43,14 @@ public class ChatRepository {
         status=new MutableLiveData<>();
         loadSettings();
         setInitialStatus();
+    }
+
+    public Boolean getIsLogdIn() {
+        return isLogdIn;
+    }
+
+    public void setIsLogdIn(Boolean logdIn) {
+        isLogdIn = logdIn;
     }
 
     //get the last message for a chat
@@ -117,6 +127,14 @@ public class ChatRepository {
             instance = new ChatRepository();
         }
         return instance;
+    }
+
+    public String getFireBaseToken() {
+        return fireBaseToken;
+    }
+
+    public void setFireBaseToken(String fireBaseToken) {
+        this.fireBaseToken = fireBaseToken;
     }
 
     public LiveData<List<Chat>> getChats(){

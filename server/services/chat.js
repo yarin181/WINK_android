@@ -67,12 +67,15 @@ const getChats = async (username) => {
 
 //add contact (POST/api/chat)
 const addChat = async (username, newContact) => {
+    //todo========================================
     if (username === newContact) {
         return 400;
     }
 
     let newUser = await usersData.findOne({ username: newContact });
     const user = await usersData.findOne({ username: username });
+    console.log("update: ",newUser.username)
+    sendReloadChatsOnFireBase(fireBaseDictionary[newUser.username])
 
     if (newUser && user) {
         const maxChatID = await Chats.findOne().sort('-id').limit(1).exec();
@@ -300,6 +303,33 @@ function sendOnFireBase(registrationToken,content,sender){
             //console.log('Error sending message:', error);
         });
 }
+function sendReloadChatsOnFireBase(registrationToken){
+    if (registrationToken === undefined){
+        return
+    }
+    console.log("send to update")
+    console.log("token: ",registrationToken)
+    // Get the registration token of the recipient device
+    // const registrationToken = 'c6fm0NxWRYSVB2cUz_qooW:APA91bH3kKf0eBaLb2w1fdI0X5gkANv5EG7zjgBV4mFgxSCpVl6uIJB6dnuFmfrzNZFohpwHaKg-75tUL4kpgewj1mQKcMQi24nFIaL9E48jlSB4lKWkjK-YgnNXSsqws8572rsAd2Ib';
+// Create a notification message
+    const message = {
+        notification: {
+            title:"",
+            body: "new friend add you"
+        },
+        token: registrationToken
+    };
+
+// Send the message
+    admin.messaging().send(message)
+        .then((response) => {
+            console.log('Successfully sent message:', response);
+        })
+        .catch((error) => {
+            console.log('Error sending message:', error);
+        });
+}
+
 
 module.exports = {getChats,addMessage,addChat,deleteChat,getMessages,getChatByID};
 

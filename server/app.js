@@ -21,6 +21,7 @@ const io = new Server(server, {
 app.set("io", io);
 sockets.setIO(io);
 
+
 app.use(cors());
 
 //connect to mongoose
