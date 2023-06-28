@@ -216,7 +216,7 @@ const addMessage = async (id,content,connectUser) => {
 const getRecipient = async (connectUser ,id1, id2) =>{
     const user1 = await usersData.findOne(id1)
     const user2 = await usersData.findOne(id2)
-    if (user1 !== connectUser){
+    if (user1.username !== connectUser){
         return user1;
     }
     return user2;
@@ -289,9 +289,13 @@ function sendOnFireBase(registrationToken,content,sender){
     const message = {
         notification: {
             title: sender,
-            body: content
+            body: content,
         },
-        token: registrationToken
+        token: registrationToken,
+        data: {
+            key:"fromServer"
+        }
+
     };
 
 // Send the message
@@ -315,9 +319,12 @@ function sendReloadChatsOnFireBase(registrationToken){
     const message = {
         notification: {
             title:"",
-            body: "new friend add you"
+            body: "new friend add you",
         },
-        token: registrationToken
+        token: registrationToken,
+        data: {
+            key:"fromServer"
+        }
     };
 
 // Send the message

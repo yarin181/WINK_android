@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -47,15 +48,30 @@ public class Login extends AppCompatActivity {
 
         ChatDB.getInstance(this);
 
+
         viewModel=new ChatViewModel();
 //        viewModel.deleteUserDetails();
         viewModel.loadSettings();
         setTheme();
         super.onCreate(savedInstanceState);
+        if (getIntent().getExtras() != null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras.containsKey("key")) {
+                getIntent().removeExtra("key");
+                if(viewModel.getConnectUser()!= null){
+                    viewModel.setToken(viewModel.getConnectUser().getToken());
+                    Intent i = new Intent(Login.this, UsersActivity.class);
+                    i.putExtra("connected",true);
+                    startActivity(i);
+                }
+
+
+            }
+
+        }
         if(booleanIsFirstLunch){
             booleanIsFirstLunch = false;
             if(viewModel.getConnectUser()!= null){
-                finish();
                 viewModel.setToken(viewModel.getConnectUser().getToken());
                 Intent i = new Intent(Login.this, UsersActivity.class);
                 i.putExtra("connected",true);

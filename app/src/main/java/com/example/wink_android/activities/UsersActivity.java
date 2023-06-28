@@ -37,9 +37,9 @@ import com.example.wink_android.general.OvalImageDrawable;
 import com.example.wink_android.general.Utilities;
 import com.example.wink_android.view.ChatViewModel;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdReceiver;
-import com.google.firebase.iid.InstanceIdResult;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,14 +82,22 @@ public class UsersActivity extends AppCompatActivity {
             viewModel.setConnectUser(receivedString); /// edit to the name got from Login Page/
         }
 
-
-
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
-            String newToken= instanceIdResult.getToken();
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                return;
+            }
+            String newToken= task.getResult();
             fireBaseToken=newToken;
             viewModel.setRepositoryFireBaseToken(fireBaseToken);
             viewModel.updateChats(fireBaseToken);
         });
+
+//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
+//            String newToken= instanceIdResult.getToken();
+//            fireBaseToken=newToken;
+//            viewModel.setRepositoryFireBaseToken(fireBaseToken);
+//            viewModel.updateChats(fireBaseToken);
+//        });
         viewModel.setIsLogdIn(true);
 
 
