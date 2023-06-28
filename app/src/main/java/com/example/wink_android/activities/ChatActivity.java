@@ -37,6 +37,7 @@ public class ChatActivity extends AppCompatActivity {
 
     Messages_RecycleView_Adapter adapter;
     ChatViewModel viewModel;
+    boolean firstEnter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -48,7 +49,7 @@ public class ChatActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         chatId = (intent.getIntExtra("id",DEFAULT_INT));
-
+        firstEnter = true;
         chat = viewModel.getChatById(chatId);
         setConnectUser();
         adapter = new Messages_RecycleView_Adapter(this, chat.getOtherUsername());
@@ -58,7 +59,11 @@ public class ChatActivity extends AppCompatActivity {
 
 
         // back to the contact list
-        binding.backBtn.setOnClickListener(view -> this.finish());
+        binding.backBtn.setOnClickListener(view -> {
+            viewModel.updateChats(viewModel.getRepositoryFireBaseToken());
+            this.finish();
+        });
+
 
         viewModel.updateMessagesByChatId(chat.getId());
         binding.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
@@ -70,7 +75,12 @@ public class ChatActivity extends AppCompatActivity {
             adapter.setMessages(messages);
             //if message is added scroll to the last message
             if(current_len != adapter.getItemCount()){
-                binding.recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+                if (firstEnter){
+                    firstEnter = false;
+                    binding.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                }else {
+                    binding.recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+                }
             }
         });
 
@@ -92,6 +102,7 @@ public class ChatActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
 
 
         // insert new msg to the messages array
@@ -116,7 +127,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
     private void setConnectUser(){
-        binding.contactName.setText(chat.getOtherUsername());
+        binding.contactName.setText(chat.getOtherDisplayName());
         binding.profilePic.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(chat.getOtherProfilePic())));
     }
 

@@ -31,7 +31,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         binding.switchTheme.setOnClickListener((View v) -> {
-            Toast.makeText(this, "Theme Changed", Toast.LENGTH_SHORT).show();
             chatViewModel.switchThemMode();
             setTheme();
         });

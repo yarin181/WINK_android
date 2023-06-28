@@ -62,7 +62,7 @@ const getMessagesByID = async (req,res) =>{
 };
 
 function addToFireBaseDictionary(connectedUser,fireBaseToken){
-   console.log("new user in firebase: ",connectedUser, ": ",fireBaseToken )
+
 
    for (const [key, value] of Object.entries(fireBaseDictionary)) {
       if (value === fireBaseToken) {

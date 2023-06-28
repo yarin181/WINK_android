@@ -293,7 +293,7 @@ public class SignUpActivity extends AppCompatActivity {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 circularBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
-                String profilePic = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                String profilePic = "data:image/png;base64," + Base64.encodeToString(byteArray, Base64.DEFAULT);
                 registerRequest.setProfilePic(profilePic);
 
                 isProfilePic = true;

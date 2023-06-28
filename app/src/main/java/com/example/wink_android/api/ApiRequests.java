@@ -257,7 +257,7 @@ this.repository=repository;
                        Message message=new Message(answer.getId(),id,answer.getCreated(),answer.getSender().getUsername(),answer.getContent());
                        repository.addMessage(message,friendId);
                        repository.setStatus(Constants.SUCCESSFUL_SEND_MESSAGE);
-                       repository.reloadChatLastMessage(friendId);
+                       repository.reloadChatLastMessage(id);
                    Log.i("ApiRequests", "friend id: " + answer.getId());
                    }
                 } else {
