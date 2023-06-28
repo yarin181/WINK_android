@@ -240,15 +240,19 @@ public class ChatRepository {
     }
 
     public void reloadChatLastMessage(int friendId) {
-        Chat chat = chatDao.getChatById(friendId);
-        if (chat != null) {
-            Message lastMessage = messageDao.getLastMessageForChat(friendId);
-            if (lastMessage == null) {
-                return;
+        Thread thread = new Thread(() -> {
+            Chat chat = chatDao.getChatById(friendId);
+            if (chat != null) {
+                Message lastMessage = messageDao.getLastMessageForChat(friendId);
+                if (lastMessage == null) {
+                    return;
+                }
+                chat.setLastMessageContent(lastMessage.getContent());
+                chat.setLastMessageCreated(lastMessage.getCreated());
             }
-            chat.setLastMessageContent(lastMessage.getContent());
-            chat.setLastMessageCreated(lastMessage.getCreated());
-        }
-        chatDao.updateChat(chat);
+            chatDao.updateChat(chat);
+        });
+        thread.start();
     }
+
 }

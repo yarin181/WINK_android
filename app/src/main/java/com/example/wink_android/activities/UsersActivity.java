@@ -92,12 +92,6 @@ public class UsersActivity extends AppCompatActivity {
             viewModel.updateChats(fireBaseToken);
         });
 
-//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, instanceIdResult -> {
-//            String newToken= instanceIdResult.getToken();
-//            fireBaseToken=newToken;
-//            viewModel.setRepositoryFireBaseToken(fireBaseToken);
-//            viewModel.updateChats(fireBaseToken);
-//        });
         viewModel.setIsLogdIn(true);
 
 
@@ -133,7 +127,7 @@ public class UsersActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(itemTouchListener);
 
         viewModel.getChats().observe(this, v -> {
-            if (v != null && v.size() != 0) {
+            if (v != null) {
                 adapter.setChats(v);
             }
         });
@@ -152,8 +146,6 @@ public class UsersActivity extends AppCompatActivity {
         binding.logoutButton.setOnClickListener(v ->{
             viewModel.deleteUserDetails();
             viewModel.setIsLogdIn(false);
-            Intent i = new Intent(UsersActivity.this, Login.class);
-            startActivity(i);
             finish();
         });
 
@@ -172,8 +164,6 @@ public class UsersActivity extends AppCompatActivity {
             //disconnect the user
             } else if (Objects.equals(v, Constants.FAILED_CONNECT_TO_SERVER)) {
                 showAlert(Constants.FAILED_CONNECT_TO_SERVER);
-//                Toast.makeText(getApplicationContext(), v, Toast.LENGTH_SHORT).show();
-//                //todo - disconnect if the user is incorrect
             }
         });
     }
@@ -208,6 +198,12 @@ public class UsersActivity extends AppCompatActivity {
                 .setCancelable(true)
                 .show();
         viewModel.setInitialStatus();
+    }
+    public void onBackPressed() {
+        super.onBackPressed();
+        viewModel.deleteUserDetails();
+        viewModel.setIsLogdIn(false);
+        finish();
     }
 }
 

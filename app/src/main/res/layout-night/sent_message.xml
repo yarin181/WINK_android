@@ -8,6 +8,7 @@
     android:layout_marginLeft="45dp"
     android:maxWidth="600dp"
     android:paddingTop="10dp"
+    android:paddingBottom="8dp"
     android:paddingRight="8dp">
 
     <RelativeLayout

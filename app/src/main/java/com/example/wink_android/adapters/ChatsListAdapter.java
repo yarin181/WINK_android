@@ -67,7 +67,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
         if (chats !=null){
             final Chat current = chats.get(position);
             holder.ivProfilePic.setImageDrawable(new OvalImageDrawable(Utilities.stringToBitmap(current.getOtherProfilePic())));
-            holder.tvUsername.setText(current.getOtherUsername());
+            holder.tvUsername.setText(current.getOtherDisplayName());
             //Message lastMessage = current.getLsatMessage();
             holder.tvLastMessage.setText(current.getLastMessageContent());
             holder.tvDate.setText(Utilities.convertToDateTime(current.getLastMessageCreated(),true));
