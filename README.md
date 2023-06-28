@@ -8,15 +8,52 @@ the Log In screen, the Sign Up screen, the Chat screen, the Contact screen, and 
 **MongoDB Server Configuration:**
 
 Before running the server, make sure you have a MongoDB server running with the following configuration:
-
 - Connection String: "mongodb://localhost:27017"
 
-**How to run the Project?<br />**
-* Make sure the MongoDB server is running with the specified configuration.
-* Navigate to the server directory using the command line: `cd server`.
-* Install the dependents of the project `npm install`
-* Run the server by the command line `npm start`
-<br /> 
+
+## Running the Server
+
+Before running the application, make sure the MongoDB server is running with the specified configuration. To run the server:
+1.  Open the command line.
+2.  Navigate to the server directory using the command line: `cd server`.
+3.  Install the dependencies of the project by running the following command: `npm install`.
+4.  Run the server using the command: `npm start`.
+    The server will start running, and the Android application will be able to connect to it.n interact with it.
+
+## Prerequisites
+
+Before running the application, ensure that you have the following:
+
+-   Android Studio installed on your computer.
+-   A compatible Android device connected to your computer via USB, if you want to run the application on a physical cellphone.
+-   (Optional) An Android emulator set up in Android Studio.
+
+
+
+## Getting Started
+
+To run the application, follow these steps:
+1.  Clone or download the repository to your local machine.
+2.  Open Android Studio and select "Open an existing Android Studio project" or "Import project."
+3.  Navigate to the location where you cloned or downloaded the repository and select the project folder.
+4.  Once the project is loaded, you have two options to run the application:
+    a. Emulator: If you want to run the application on an emulator, click on the "Run" button (usually a green triangle) or select "Run" from the toolbar. Select the emulator you want to use from the list of available devices. The application will be installed and launched on the selected emulator.
+    b. Physical Cellphone: If you want to run the application on a physical cellphone, connect your Android device to your computer using a USB cable. Click on the "Run" button or select "Run" from the toolbar. Select your connected Android device from the list of available devices. The application will be installed and launched on your device.
+5.  Once the application is launched on the emulator or the physical cellphone, you can interact with it.
+
+
+
+## Updating Server IP Address
+
+If you want to update the server IP address used by the application, follow these steps:
+1.  Launch the application on your emulator or physical cellphone.
+2.  Navigate to the "Settings" screen within the application.
+3.  Look for the "Server IP Address" field or similar settings option.
+4.  Enter the desired server IP address in the provided field.
+5.  Save the changes.
+6.  The application will now use the updated server IP address for any server-related functionality.
+
+Note: It is important to ensure that the server IP address is accurate and up-to-date for the application to function correctly.
 
 
 **Log In Page:<br />**
