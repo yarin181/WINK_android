@@ -74,12 +74,14 @@
                 android:id="@+id/massageInput"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="@string/type_a_message"
                 android:paddingRight="55dp"
                 android:paddingTop="5dp"
+                android:hint="@string/type_a_message"
                 android:inputType="text"
                 android:textColor="@color/white"
-                android:textColorHint="#99E4DDDD" />
+                android:textColorHint="#99807B7B"
+                android:background="@drawable/edittext_bg" />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonSend"
