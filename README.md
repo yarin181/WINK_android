@@ -48,9 +48,9 @@ To run the application, follow these steps:
 If you want to update the server IP address used by the application, follow these steps:
 1.  Launch the application on your emulator or physical cellphone.
 2.  Navigate to the "Settings" screen within the application.
-3.  Look for the "Server IP Address" field or similar settings option.
+3.  Look for the "Enter server IP Address" field.
 4.  Enter the desired server IP address in the provided field.
-5.  Save the changes.
+5.  Save the changes ("set ip").
 6.  The application will now use the updated server IP address for any server-related functionality.
 
 Note: It is important to ensure that the server IP address is accurate and up-to-date for the application to function correctly.

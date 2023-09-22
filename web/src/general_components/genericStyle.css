@@ -1,0 +1,104 @@
+body {
+    background: linear-gradient(253deg, #2c0735, #613dc1, #97dffc);
+    background-size: 300% 300%;
+    -webkit-animation: Background 25s ease infinite;
+    -moz-animation: Background 25s ease infinite;
+    animation: Background 25s ease infinite;
+}
+body::-webkit-scrollbar{
+    width: 0;
+}
+@-webkit-keyframes Background {
+    0% {
+        background-position: 0% 50%
+    }
+    25% {
+        background-position: 25%25%
+    }
+    50% {
+        background-position: 50% 50%
+    }
+    75% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes Background {
+    0% {
+        background-position: 0% 50%
+    }
+    25% {
+        background-position: 25%25%
+    }
+    50% {
+        background-position: 50% 50%
+    }
+    75% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes Background {
+    0% {
+        background-position: 0% 50%
+    }
+    25% {
+        background-position: 25% 25%
+    }
+    50% {
+        background-position: 50% 50%
+    }
+    75% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+.demo-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url(https://i.imgur.com/wCG2csZ.png);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    /* works with row or column */
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    text-align: center;
+}
+.btn{
+    color: black;
+    background: white;
+    font-weight: bold;
+    border-radius: 25px;
+}
+.btn:hover{
+    background: #d8d8f6;
+    color: black;
+}
+.icon{
+    width:30px;
+    height:30px;
+}
+input{
+    border-radius: 25px;
+}
+
+

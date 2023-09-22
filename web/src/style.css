@@ -1,0 +1,52 @@
+body {
+    background-color: rgba(200, 245, 241);
+    font-family: Bahnschrift Light, serif;
+    min-width:1000px;
+    min-height: 100px;
+}
+.demo-bg {
+    position:fixed;
+    opacity: 0.5;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 250px;
+    background-image: url('../../img/template.jpg');
+    background-size: 100% 100%;
+}
+.btn{
+    color: black;
+    background: white;
+    font-weight: bold;
+    border-radius: 25px;
+}
+.btn:hover{
+    background: rgba(200, 250, 241);
+    color: black;
+}
+.palm{
+    opacity: 0.75;
+    position:fixed;
+    bottom:0;
+    left:0;
+    background-image: url('../../img/palm.png');
+    background-size: 100% 100%;
+    width: 500px;
+    height: 500px;
+}
+.icon{
+    width:30px;
+    height:30px;
+}
+input{
+    border-radius: 25px;
+}
+#insert-btn{
+    margin-left: 0;
+}
+#inputField{
+    border-radius: 25px;
+    margin-left: 5%;
+    margin-right: 4%;
+}
+

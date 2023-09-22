@@ -1,0 +1,41 @@
+#tooltip{
+    height: 130px;
+    float: right;
+    font-size: 18px;
+    font-family: Calibri;
+    background-color: white;
+    color: black;
+    position: absolute;
+    left: 647px;
+    width: 250px;
+    border-radius: 15px;
+    animation: fadeInRight 1s ease-in-out;
+    border-top:1px solid black;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-bottom:1px solid black;
+    padding-left: 10px;
+    padding-top: 10px;
+    top: 31.3%;
+}
+.fadeInLeft:after{
+    content: ' ';
+    width: 0px;
+    height: 0px;
+    border-top: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-bottom:10px solid transparent;
+    border-right:10px solid black;
+    position: absolute;
+    top: 50%;
+    right: 249px;
+}
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+    }
+}

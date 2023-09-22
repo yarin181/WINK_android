@@ -1,0 +1,82 @@
+#log-in-card{
+    opacity: 0.7;
+    border-radius: 30px;
+    position: relative;
+    width: 400px;
+    height: 500px;
+    margin: 5% auto auto;
+    background: rgba(245, 250, 250);
+}
+#log-in-box{
+    position: absolute;
+    padding-top: 25%;
+    padding-left: 10%;
+    font-size: 25px;
+    font-weight: normal;
+    font-family: Bahnschrift Light, serif;
+}
+.log-in-input{
+    position: relative;
+    border-radius: 25px;
+}
+.form-control{
+    border: 2px solid #555;
+    width: 310px;
+    position: relative;
+    border-radius: 25px;
+}
+#logo{
+    position: absolute;
+    width: 50px;
+    height: 60px;
+    margin-left:40%;
+    margin-top:5%;
+}
+#log-in-button-box{
+
+    margin-left: 25%;
+    margin-top: 2%;
+    border-radius: 25px;
+}
+#log-in-btn{
+    margin-left: 5%;
+    position: absolute;
+    width: 35%;
+}
+#sign-up-btn{
+    position: absolute;
+    margin-left: 5%;
+    width: 35%;
+    margin-top: 8%;
+}
+/*.modal-backdrop {*/
+/*    background-color: rgba(0, 0, 0, 0.000001);*/
+/*    z-index: 1;*/
+/*}*/
+/*.modal-dialog{*/
+/*    background-color: rgba(0, 0, 2, 1);*/
+/*    z-index: 10000000000000000000000000000000000000000000000000000000000;*/
+/*}*/
+/*.modal {*/
+/*    z-index: 1052; !* or any value higher than that of the modal backdrop *!*/
+/*}*/
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0);
+    z-index:-1;
+}
+
+.modal {
+    z-index: 9999;
+}
+/*.valid-feedback{*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*}*/
+#alert_message{
+    padding-top: 2%;
+    padding-left: 7.5%;
+    position: absolute;
+    font-size: 16px;
+    color: red;
+    white-space: nowrap;
+}
