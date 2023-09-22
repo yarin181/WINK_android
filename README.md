@@ -1,60 +1,123 @@
 [![My Skills](https://skills.thijs.gg/icons?i=java,firebase,react,js,androidstudio,mongodb,nodejs,git)](https://skills.thijs.gg)
-# WINK - Chat Application 🗨📱
-### ***Overview:***
-The WINK Chat Application is a mobile app developed for Android devices.<br /> 
-It allows users to log in, sign up, and engage in real-time chat conversations. The app consists of five main screens:<br /> 
-the Log In screen, the Sign Up screen, the Chat screen, the Contact screen, and the Settings screen.
 
-**MongoDB Server Configuration:**
+# WINK Chat Application
 
-Before running the server, make sure you have a MongoDB server running with the following configuration:
-- Connection String: "mongodb://localhost:27017"
+Welcome to the WINK Chat Application project! This cross-platform chat application is designed to provide an efficient and scalable messaging solution for users. Whether you're on a web browser or an Android device, WINK has got you covered. In this README, we'll provide an overview of the project, its architecture, and how to get started.
 
+## Table of Contents
 
-## Running the Server
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Architecture](#architecture)
+4. [Getting Started](#getting-started)
+5. [Dependencies](#dependencies)
+6. [WINK - Chat Application 🗨📱 (Android App)](#wink---chat-application--android-app)
+7. [WINK - Chat Application 🗨💻 (web client)](#wink---chat-application--web-client)
 
-Before running the application, make sure the MongoDB server is running with the specified configuration. To run the server:
-1.  Open the command line.
-2.  Navigate to the server directory using the command line: `cd server`.
-3.  Install the dependencies of the project by running the following command: `npm install`.
-4.  Run the server using the command: `npm start`.
-    The server will start running, and the Android application will be able to connect to it.n interact with it.
+## Introduction
 
-## Prerequisites
+WINK Chat Application is a versatile chat platform that enables real-time communication between users. It consists of both a web application and an Android app, ensuring users can chat conveniently from their preferred devices.
 
-Before running the application, ensure that you have the following:
+### Features
 
--   Android Studio installed on your computer.
--   A compatible Android device connected to your computer via USB, if you want to run the application on a physical cellphone.
--   (Optional) An Android emulator set up in Android Studio.
+- **Cross-Platform**: Users can chat seamlessly across web browsers and Android devices.
+- **Efficient Server**: The server is built using Node.js with the Express framework, providing an efficient and scalable foundation for the application.
+- **Database**: MongoDB is used to store and retrieve chat data securely.
+- **Web Client**: The web client is developed using React, offering a responsive and user-friendly interface.
+- **Real-Time Communication**: Socket.IO is implemented for real-time messaging capabilities.
+- **Android App**: An Android app has been created using Android Studio to extend the application's reach.
+- **Android Real-Time Communication**: Firebase is used for real-time communication in the Android app.
+- **Offline Functionality**: SQLite provides local storage for offline functionality in the Android app.
 
+## Architecture
 
+The WINK Chat Application is built on a robust architecture that ensures efficiency and reliability:
 
+- **Server**: The server is built on a RESTful API architecture using Node.js with the Express framework. It handles client requests, manages user accounts, and facilitates real-time messaging using Socket.IO. MongoDB is used as the database to store chat data securely.
+
+- **Web Client**: The web client is constructed with React, providing users with a responsive and intuitive interface. Users can register, log in, and send and receive real-time messages through the server.
+
+- **Android App**: The Android app is developed using Android Studio, extending the application's reach to Android users. Firebase is used to facilitate real-time messaging in the app, and SQLite is employed for local storage, enabling users to access messages even when offline.The app consists of five main screens:<br />
+  the Log In screen, the Sign Up screen, the Chat screen, the Contact screen, and the Settings screen.
+
+    
 ## Getting Started
 
-To run the application, follow these steps:
-1.  Clone or download the repository to your local machine.
-2.  Open Android Studio and select "Open an existing Android Studio project" or "Import project."
-3.  Navigate to the location where you cloned or downloaded the repository and select the project folder.
-4.  Once the project is loaded, you have two options to run the application:
-    a. Emulator: If you want to run the application on an emulator, click on the "Run" button (usually a green triangle) or select "Run" from the toolbar. Select the emulator you want to use from the list of available devices. The application will be installed and launched on the selected emulator.
-    b. Physical Cellphone: If you want to run the application on a physical cellphone, connect your Android device to your computer using a USB cable. Click on the "Run" button or select "Run" from the toolbar. Select your connected Android device from the list of available devices. The application will be installed and launched on your device.
-5.  Once the application is launched on the emulator or the physical cellphone, you can interact with it.
+To get started with the WINK Chat Application, follow these steps:
+
+1. Clone this repository to your local machine:
+
+   ```
+   git clone https://github.com/yarin181/WINK_android.git
+   ```
+2. MongoDB Server Configuration:
+
+    - Before running the server, make sure you have a MongoDB server running with the following configuration:
+
+      ```
+      Connection String: "mongodb://localhost:27017"
+      ```
+
+2. Set up the server:
+
+    - Navigate to the server directory and install dependencies:
+
+      ```
+      cd server
+      npm install
+      ```
+
+    - Start the server:
+
+      ```
+      npm start
+      ```
+
+3. Set up the web client:
+
+    - Navigate to the client directory and install dependencies:
+
+      ```
+      cd client
+      npm install
+      ```
+
+    - Start the web client:
+
+      ```
+      npm start
+      ```
+
+4. Set up the Android app:
+
+    - Open the Android project in Android Studio.
+
+    - Configure Firebase for real-time messaging.
+
+    - Build and run the Android app on your device or emulator.
+
+5. Updating Server IP Address ath the Android app.
+    - At the app navigate to the "Settings" screen within the application.
+    
+    - Set desired server IP address in the provided field.
+
+Now, you can use WINK Chat Application from both the web client and the Android app!
+
+## Dependencies
+
+- Node.js
+- Express
+- MongoDB
+- React
+- Socket.IO
+- Android Studio
+- Firebase (for Android app)
+- SQLite (for Android app)
+
+For specific versions and more detailed dependencies, please refer to the package.json files in the server and client directories.
 
 
-
-## Updating Server IP Address
-
-If you want to update the server IP address used by the application, follow these steps:
-1.  Launch the application on your emulator or physical cellphone.
-2.  Navigate to the "Settings" screen within the application.
-3.  Look for the "Enter server IP Address" field.
-4.  Enter the desired server IP address in the provided field.
-5.  Save the changes ("set ip").
-6.  The application will now use the updated server IP address for any server-related functionality.
-
-Note: It is important to ensure that the server IP address is accurate and up-to-date for the application to function correctly.
-
+# WINK - Chat Application 🗨📱 (Android App)
 
 **Log In Page:<br />**
 The Login page is the entry point for users who have already registered for an account.<br />
@@ -87,8 +150,45 @@ Users can change the app mode between day and night themes to suit their visual 
 Additionally, users can change the IP address configuration for the app to connect to the server.<br />
 This feature allows users to specify a custom IP address if needed.<br />
 The Settings screen is accessible from any activity within the app, providing easy access for users to modify these settings.<br />
+
 **Technologies Used:<br />**
 * Front-end: XML
 * Back-end: Java, js, react
 * Database: MongoDB (using Mongoose), Sqllite
 * Real-time Communication: FireBase
+
+
+# WINK - Chat Application 🗨💻 (web client)
+
+**Log In Page:<br />**
+The Login page is the entry point for users who have already registered for an account.<br />
+It provides a form for users to input their credentials, such as username and password, and a "Log In" button to submit the form.<br />
+If the credentials are valid and the user id exist, the user is granted access to the Chat page.<br />
+Otherwise, an error message is displayed indicating that the login was unsuccessful.<br /><br />
+**Sign Up Page:<br />**
+The Sign-Up page allows new users to create an account by providing required information, such as username,displayname, profile picture, and password - the password should have at least 8 chars at least one capital letter and one digit,<br>
+when the user create the password tooltip with those requirements is presented.<br />
+The Sign-Up page include validation checks to ensure that the entered information is valid, if the username is unique, and provide error messages if any issues arise. <br />  
+Once the user fills out the required information and submits the form, the information is stored securely in the application's database,<br />
+the user is redirected to the Login page to log in with their newly created account.<br /><br />
+**Chat Page:<br />**
+The Chat page is the main interface where users can engage in real-time chat conversations.<br />
+By clicking on the Add friend icon, the connected user can add a friend that already registred to the application.<br/>
+if the user not exsits "in valid userneme" error will be displayed.<br/>
+In the left side of the window the user's contacts will displayed.<br>
+The user can select etch of those contacts and the whole chat between them will displayed.<br/>
+The users can send and receive messages in real-time view the chat history.<br />
+and get real-time updates without needing to refresh the page.<br>
+Also the chat page have features such as user authentication to ensure that only logged-in users can access the chats information, by implemntation JWT.<br/><br>
+
+**Technologies Used:<br />**
+* Front-end: HTML, CSS, Bootstrap, React
+* Back-end: JavaScript
+* Database: MongoDB (using Mongoose)
+* Real-time Communication: WebSocket (using Socket.IO)
+
+**Development Guidelines:**<br>
+* The application follows a modular component-based architecture using React.<br>
+* CSS stylesheets are organized and scoped to their respective components.<br>
+* Code is thoroughly tested to ensure functionality and reliability.
+* Git branching and version control practices are followed for collaborative development.
