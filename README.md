@@ -1,9 +1,15 @@
 [![My Skills](https://skills.thijs.gg/icons?i=java,firebase,react,js,androidstudio,mongodb,nodejs,git)](https://skills.thijs.gg)
 
+
+
+
 # WINK Chat Application
 
 Welcome to the WINK Chat Application project! This cross-platform chat application is designed to provide an efficient and scalable messaging solution for users. Whether you're on a web browser or an Android device, WINK has got you covered. In this README, we'll provide an overview of the project, its architecture, and how to get started.
 
+| Web Interface | Android Application |
+|----------|-----------|
+| ![Untitled video - Made with Clipchamp (1)](https://github.com/yarin181/WINK_android/assets/90701490/7dcb6c99-cc3e-4db3-a74e-e6dec4fb1569) | ![Untitled video - Made with Clipchamp (2)](https://github.com/yarin181/WINK_android/assets/90701490/5b66e5f7-eea7-4ab0-a84c-45bec9969150) |
 ## Table of Contents
 
 1. [Introduction](#introduction)
