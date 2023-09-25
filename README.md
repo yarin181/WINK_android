@@ -9,7 +9,7 @@ Welcome to the WINK Chat Application project! This cross-platform chat applicati
 
 | Web Interface | Android Application |
 |----------|-----------|
-| ![Untitled video - Made with Clipchamp (1)](https://github.com/yarin181/WINK_android/assets/90701490/7dcb6c99-cc3e-4db3-a74e-e6dec4fb1569) | ![Untitled video - Made with Clipchamp (2)](https://github.com/yarin181/WINK_android/assets/90701490/5b66e5f7-eea7-4ab0-a84c-45bec9969150) |
+|![Untitled video - Made with Clipchamp (1)](https://github.com/yarin181/WINK_android/assets/90701490/755a9492-4189-447d-9e2c-c2fe64f9658d)|![Untitled video - Made with Clipchamp (2)](https://github.com/yarin181/WINK_android/assets/90701490/65b5107b-14be-4c8c-91a6-de4702bade0f) |
 ## Table of Contents
 
 1. [Introduction](#introduction)
