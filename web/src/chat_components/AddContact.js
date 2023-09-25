@@ -4,12 +4,6 @@ function AddContact({onAdd,contacts,handleError}){
     const [name, setName] = useState('');
 
     const addContent = () =>{
-        // const isNameInContact = contacts.some(item => item.user.username === name)
-        // if (isNameInContact) {
-        //     handleError(name + " is Already added!");
-        //     setName('');
-        //     return;
-        // }
         if (name === ''){
             handleError('Insert A Valid Name');
             return;

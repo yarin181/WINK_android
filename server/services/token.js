@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken")
 
-const key = "Some super secret key shhhhhhhhhhhhhhhhh!!!!!"
-
+const key = process.env.JWT_KEY;
 const isLoggedInCheck = async (token) => {
     try {
         return await jwt.verify(token, key);

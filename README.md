@@ -72,7 +72,14 @@ To get started with the WINK Chat Application, follow these steps:
       ```
       npm start
       ```
-
+    - Create an `.env.(local/test)` file in the `config` folder with the following variables:
+      ```
+      CONNECTION_STRING=//your mongo connection string
+      PORT=//your port
+      FIREBASE_KEY_PATH=//path to your Firebase key file
+      JWT_KEY=//your JWT key
+      ```
+      you can use the `env.templet` file as a template.
 3. Set up the web client:
 
     - Navigate to the client directory and install dependencies:

@@ -162,10 +162,6 @@ function Chat(props){
         setShowAlert(true);
         setTimeout(() =>setShowAlert(false), 3000);
     }
-    // socket.on('message', async (data) => {
-    //     await setNumOfSocketMessages(data.num)
-    // });
-
     function sendOnSocket(username){
         socket.emit('messageSent',connectUser.username,username)
     }
