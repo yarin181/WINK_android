@@ -3,7 +3,6 @@ const express = require('express')
 const {isLoggedIn} = require("../controllers/token");
 const usersRouter = express.Router();
 
-//not necessary need to see how to handle with this
 usersRouter.route('/')
     .post(registerUser);
 

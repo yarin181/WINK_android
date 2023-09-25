@@ -1,0 +1,177 @@
+#register-card{
+    opacity: 0.7;
+    border-radius: 30px;
+    position: relative;
+    width: 700px;
+    min-width: 700px;
+    margin: 5% auto auto;
+    background: rgba(245, 250, 250);
+    min-height:800px;
+
+}
+.table-style{
+    width: 500px;
+    margin-left: 3%;
+}
+.valid-img{
+    border:2px solid #33bd73;
+}
+.unValid-img {
+    border: 2px solid #a40d2d;
+}
+#top-register-logo{
+    position: absolute;
+    width: 70px;
+    height: 80px;
+    margin-left:46%;
+    margin-top:5%;
+}
+#register-box{
+    position: absolute;
+    padding-top: 18%;
+    padding-right: 20%;
+    padding-left: 10%;
+    font-size: 25px;
+    font-weight: normal;
+    font-family: Bahnschrift Light, serif;
+
+}
+.column-style{
+    text-align: left;
+    text-overflow: ellipsis;
+
+}
+.row-style{
+    height: 80px;
+    width: 20px;
+}
+.input-register-style{
+    position: relative;
+    border-radius: 25px;
+    width: 300px;
+    margin-left: 20%;
+}
+#file-input{
+    position: relative;
+    font-weight: lighter;
+    color: black;
+    width: 250px;
+    border: black;
+    text-align: left;
+}
+.btn-register{
+    position: absolute;
+    font-weight: bold;
+    border-radius: 25px;
+    color: black;
+    width: 40%;
+}
+#log-in-question-register{
+    position: absolute;
+    margin-left:5%;
+    margin-top: 18%;
+}
+#log-in-btn-register{
+    position: absolute;
+    width: 35%;
+    margin-left:15%;
+    margin-top:25%;
+}
+#register-button-table{
+    margin-left: 10%;
+}
+#sign-up-btn-register{
+    position: absolute;
+    width: 35%;
+    margin-left:15%;
+    margin-top: 5%;
+}
+#userPhoto-register{
+    height: 70px;
+    width: 70px;
+}
+
+/*this part if to make the link black */
+a:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+}
+#pic{
+    height: 100px;
+    width: 400px;
+    align-content: center;
+}
+#choose-img{
+    position: relative;
+    margin-right: 50%;
+
+}
+#td-img{
+    position: absolute;
+    margin-top: 2%;
+    margin-left: 10%;
+    width: 100px;
+    height: 100px;
+}
+#log-in-btn-register:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+#log-in-btn-register:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+#log-in-btn-register:active {
+    color: black;
+    background-color: transparent;
+    text-decoration: underline;
+}
+#missing-information-username{
+    color: red;
+    position: absolute;
+    margin-left:36%;
+    margin-top: 8.5%;
+    font-size: 68%;
+}
+#missing-information-password{
+    color: red;
+    position: absolute;
+    margin-left:36%;
+    margin-top: 20%;
+    font-size: 68%;
+}
+#missing-information-confirm{
+    color: red;
+    position: absolute;
+    margin-left:36%;
+    margin-top: 31.5%;
+    font-size: 68%;
+}
+#missing-information-display{
+    color: red;
+    position: absolute;
+    margin-left:36%;
+    margin-top: 43%;
+    font-size: 68%;
+}
+#missing-information-Image{
+    color: red;
+    position: absolute;
+    margin-left:26%;
+    margin-top: 55.5%;
+    font-size: 68%;
+}
+
+/*#alert_message2{*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*    width: 100%;*/
+/*    font-size: 14px;*/
+/*    color: red;*/
+/*    white-space: nowrap;*/
+/*}*/
+/*end of part*/

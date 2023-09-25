@@ -17,3 +17,6 @@ local.properties
 /server/.idea/.gitignore
 /server/.idea/modules.xml
 /server/.idea/vcs.xml
+/server/wink-android-32c12-firebase-adminsdk-kz9v4-cfc7b2ba24.json
+/server/config/.env.local
+/server/config/.env.test

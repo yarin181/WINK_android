@@ -74,7 +74,6 @@ const addChat = async (username, newContact) => {
 
     let newUser = await usersData.findOne({ username: newContact });
     const user = await usersData.findOne({ username: username });
-    console.log("update: ",newUser.username)
     sendReloadChatsOnFireBase(fireBaseDictionary[newUser.username])
 
     if (newUser && user) {
@@ -257,7 +256,7 @@ const getMessages = async (id,connectUser) => {
 };
 
 const admin = require('firebase-admin');
-const serviceAccount = require('../wink-android-32c12-firebase-adminsdk-kz9v4-cfc7b2ba24.json');
+const serviceAccount = require(process.env.FIREBASE_KEY_PATH);
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
@@ -267,25 +266,17 @@ async function findIdAndSendFireBase(connected, id1, id2,content) {
     let recipient
     const user1 = await usersData.findOne(id1)
     const user2 = await usersData.findOne(id2)
-    //console.log()
-    //console.log("connected: ",connected)
     if(connected === user1.username){
         recipient=user2.username
     }else {
         recipient=user1.username
     }
-    //console.log("firebase to: ",recipient)
     sendOnFireBase(fireBaseDictionary[recipient],content,connected)
 }
 function sendOnFireBase(registrationToken,content,sender){
     if (registrationToken === undefined){
         return
     }
-    // Get the registration token of the recipient device
-    // const registrationToken = 'c6fm0NxWRYSVB2cUz_qooW:APA91bH3kKf0eBaLb2w1fdI0X5gkANv5EG7zjgBV4mFgxSCpVl6uIJB6dnuFmfrzNZFohpwHaKg-75tUL4kpgewj1mQKcMQi24nFIaL9E48jlSB4lKWkjK-YgnNXSsqws8572rsAd2Ib';
-    //console.log("this is the token: ",registrationToken)
-    //console.log("this is the message: ",content)
-// Create a notification message
     const message = {
         notification: {
             title: sender,
@@ -304,7 +295,7 @@ function sendOnFireBase(registrationToken,content,sender){
             //console.log('Successfully sent message:', response);
         })
         .catch((error) => {
-            //console.log('Error sending message:', error);
+
         });
 }
 function sendReloadChatsOnFireBase(registrationToken){
@@ -313,9 +304,6 @@ function sendReloadChatsOnFireBase(registrationToken){
     }
     console.log("send to update")
     console.log("token: ",registrationToken)
-    // Get the registration token of the recipient device
-    // const registrationToken = 'c6fm0NxWRYSVB2cUz_qooW:APA91bH3kKf0eBaLb2w1fdI0X5gkANv5EG7zjgBV4mFgxSCpVl6uIJB6dnuFmfrzNZFohpwHaKg-75tUL4kpgewj1mQKcMQi24nFIaL9E48jlSB4lKWkjK-YgnNXSsqws8572rsAd2Ib';
-// Create a notification message
     const message = {
         notification: {
             title:"",
