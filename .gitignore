@@ -20,3 +20,7 @@ local.properties
 /server/wink-android-32c12-firebase-adminsdk-kz9v4-cfc7b2ba24.json
 /server/config/.env.local
 /server/config/.env.test
+web/audit-web-utf8.txt
+server/audit-server.txt
+server/audit-server-utf8.txt
+web/audit-web.txt
